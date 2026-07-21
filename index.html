@@ -31,7 +31,6 @@
       margin: 0 auto;
       
       /* === IMMAGINE DI SFONDO GENERALE === */
-      /* Sostituisci 'sfondo.jpg' con il nome del tuo file o con un link URL di un'immagine web */
       background-image: 
         linear-gradient(rgba(18, 17, 16, 0.85), rgba(18, 17, 16, 0.85)), 
         url('sfondo.jpg');
@@ -39,28 +38,24 @@
       background-position: center;
       background-attachment: fixed;
       background-repeat: no-repeat;
-      background-color: var(--bg-color); /* Fallback se l'immagine non carica */
+      background-color: var(--bg-color);
     }
 
-    /* BANNER TESTATA */
+    /* BANNER TESTATA IN PRIMO PIANO */
     header {
-      text-align: center;
       margin-bottom: 25px;
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 25px 15px;
-      background: linear-gradient(rgba(20, 18, 16, 0.7), rgba(20, 18, 16, 0.9)), url('header.jpg');
-      background-size: cover;
-      background-position: center;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      background: var(--card-bg);
     }
 
-    h1 {
-      color: var(--accent);
-      font-size: 2.2rem;
-      letter-spacing: 1.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    .header-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
     }
 
     /* TRACKER SLOT INCANTESIMO */
@@ -360,9 +355,9 @@
 </head>
 <body>
 
+  <!-- BANNER TESTATA CON L'IMMAGINE IN PRIMO PIANO -->
   <header>
-    <h1>📜 Grimorio del Chierico</h1>
-    <p style="color: var(--text-muted); margin-top: 5px;">Plancia tattica di combattimento e gestione incantesimi</p>
+    <img src="header.jpg" alt="Snorri Hansson - Grimorio del Chierico" class="header-img">
   </header>
 
   <!-- TRACKER SLOT INCANTESIMO -->
