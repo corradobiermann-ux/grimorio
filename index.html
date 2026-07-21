@@ -7,7 +7,6 @@
   <style>
     :root {
       --bg-color: #121110;
-      /* Schede e pannelli semitrasparenti per far intravedere lo sfondo */
       --card-bg: rgba(35, 30, 26, 0.88);
       --card-header-bg: rgba(20, 18, 16, 0.6);
       --accent: #d4a359;
@@ -19,6 +18,7 @@
       --conc-color: #e67e22;
       --ritual-color: #3498db;
       --gold-color: #f1c40f;
+      --danger: #d9534f;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +30,6 @@
       max-width: 1200px;
       margin: 0 auto;
       
-      /* === IMMAGINE DI SFONDO GENERALE === */
       background-image: 
         linear-gradient(rgba(18, 17, 16, 0.85), rgba(18, 17, 16, 0.85)), 
         url('sfondo.jpg');
@@ -65,7 +64,7 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 15px;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
 
@@ -144,6 +143,84 @@
 
     .slot-dot:hover {
       transform: scale(1.2);
+    }
+
+    /* PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY / BLOCCATO) */
+    .prep-stats-panel {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      background: rgba(28, 24, 20, 0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+    }
+
+    .prep-inputs {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 0.9rem;
+    }
+
+    .prep-inputs label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .prep-inputs input {
+      width: 50px;
+      padding: 4px 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--accent);
+      font-weight: bold;
+      text-align: center;
+      outline: none;
+    }
+
+    .prep-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .prep-counter {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .prep-counter span {
+      color: var(--accent);
+    }
+
+    .btn-reset-prep {
+      background: rgba(192, 57, 43, 0.25);
+      color: #e74c3c;
+      border: 1px solid #c0392b;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-reset-prep:hover {
+      background: #c0392b;
+      color: white;
     }
 
     /* CONTROLLI E FILTRI */
@@ -278,6 +355,30 @@
       font-weight: bold;
     }
 
+    .btn-always-prepared {
+      background: rgba(212, 163, 89, 0.18);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: bold;
+      white-space: nowrap;
+      cursor: default;
+    }
+
+    .btn-cantrip-badge {
+      background: rgba(52, 152, 219, 0.18);
+      color: #3498db;
+      border: 1px solid #3498db;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: bold;
+      white-space: nowrap;
+      cursor: default;
+    }
+
     .card-meta {
       font-size: 0.85rem;
       color: var(--text-muted);
@@ -351,11 +452,33 @@
 
     .card-desc::-webkit-scrollbar { width: 4px; }
     .card-desc::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* TOAST NOTIFICA AVVISO */
+    .toast-warning {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #c0392b;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+      z-index: 1000;
+      border: 1px solid #e74c3c;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- BANNER TESTATA CON L'IMMAGINE IN PRIMO PIANO -->
+  <!-- BANNER TESTATA -->
   <header>
     <img src="header.jpg" alt="Snorri Hansson - Grimorio del Chierico" class="header-img">
   </header>
@@ -364,10 +487,29 @@
   <div class="slot-tracker-panel">
     <div class="slot-tracker-header">
       <span class="slot-tracker-title">⚡ Tracker Slot Incantesimo</span>
-      <button class="btn-long-rest" onclick="longRest()">☀️ Riposo Lungo (Ripristina Tutti)</button>
+      <button class="btn-long-rest" onclick="longRest()">☀️ Riposo Lungo (Ripristina Tutti Slot)</button>
     </div>
     <div class="slots-grid" id="slotsGrid">
       <!-- Generato dinamicamente -->
+    </div>
+  </div>
+
+  <!-- PANNELLO INCANTESIMI PREPARATI (STICKY) -->
+  <div class="prep-stats-panel">
+    <div class="prep-inputs">
+      <label>🧙 Livello: 
+        <input type="number" id="clericLevelInput" value="7" min="1" max="20" onchange="updateStatsConfig()">
+      </label>
+      <label>✨ Mod. Saggezza: 
+        <input type="number" id="wisModInput" value="3" min="-5" max="10" onchange="updateStatsConfig()">
+      </label>
+    </div>
+    
+    <div class="prep-actions">
+      <div class="prep-counter">
+        📖 Incantesimi Preparati: <span id="prepCounterText">0 / 10</span>
+      </div>
+      <button class="btn-reset-prep" onclick="resetPreparedSpells()">🧹 Svuota Preparati</button>
     </div>
   </div>
 
@@ -403,6 +545,9 @@
     <!-- Schede incantesimi -->
   </div>
 
+  <!-- MESSAGGIO DI AVVISO TOAST -->
+  <div id="toastMessage" class="toast-warning"></div>
+
   <script>
     let spellsData = [];
     let selectedCategory = "Tutti";
@@ -411,8 +556,35 @@
     // Configurazione Slot Incantesimo Personalizzata (1°:4, 2°:3, 3°:3, 4°:3, 5°:2)
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
 
+    // Elenco Parole Chiave Incantesimi SEMPRE PREPARATI (Italiano e Inglese)
+    const alwaysPreparedKeywords = [
+      "druidcraft", "artifizio druidico",
+      "guida", "guidance",
+      "toll of dead", "toll the dead", "suono di morte", "rintocco dei morti", "tocco della morte",
+      "salvare i morenti", "spare the dying",
+      "resistenza", "resistance",
+      "riparare", "mending",
+      "fiamma sacra", "sacred flame",
+      "amicizia animali", "animal friendship", "amicizia con gli animali",
+      "assorbire elementi", "absorb elements",
+      "cerimonia", "ceremony",
+      "comando", "command",
+      "infliggi ferite", "inflict wounds",
+      "parola guaritrice", "healing word",
+      "vita falsata", "false life",
+      "calmare emozioni", "calm emotions",
+      "percezione delle bestie", "beast sense",
+      "preghiera di guarigione", "prayer of healing",
+      "presagio", "augury"
+    ];
+
     let usedSlots = JSON.parse(localStorage.getItem('cleric_used_slots') || '{}');
     let preparedSpells = JSON.parse(localStorage.getItem('cleric_prepared_spells') || '[]');
+    let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
+    let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
+
+    document.getElementById('clericLevelInput').value = clericLevel;
+    document.getElementById('wisModInput').value = wisMod;
 
     function savePreparedSpells() {
       localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
@@ -420,6 +592,75 @@
 
     function saveUsedSlots() {
       localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
+    }
+
+    function isAlwaysPrepared(spell) {
+      if (!spell || !spell.nome) return false;
+      const name = spell.nome.toLowerCase().trim();
+      return alwaysPreparedKeywords.some(kw => name.includes(kw));
+    }
+
+    function getMaxPrepared() {
+      const lvl = parseInt(document.getElementById('clericLevelInput').value || '7');
+      const mod = parseInt(document.getElementById('wisModInput').value || '3');
+      return Math.max(1, lvl + mod);
+    }
+
+    function getNormalPreparedCount() {
+      return preparedSpells.filter(spellName => {
+        const spell = spellsData.find(s => s.nome === spellName);
+        if (!spell) return true;
+        const level = extractLevel(spell);
+        return level > 0 && !isAlwaysPrepared(spell);
+      }).length;
+    }
+
+    function updateStatsConfig() {
+      clericLevel = parseInt(document.getElementById('clericLevelInput').value || '7');
+      wisMod = parseInt(document.getElementById('wisModInput').value || '3');
+      localStorage.setItem('cleric_level', clericLevel);
+      localStorage.setItem('wis_mod', wisMod);
+      updatePrepCounterUI();
+    }
+
+    function updatePrepCounterUI() {
+      const current = getNormalPreparedCount();
+      const max = getMaxPrepared();
+      const counterText = document.getElementById('prepCounterText');
+      
+      if (counterText) {
+        counterText.textContent = `${current} / ${max}`;
+        if (current >= max) {
+          counterText.style.color = '#e74c3c';
+        } else {
+          counterText.style.color = 'var(--accent)';
+        }
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toastMessage');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+
+    function resetPreparedSpells() {
+      if (preparedSpells.length === 0) {
+        showToast("ℹ️ Nessun incantesimo da svuotare!");
+        return;
+      }
+
+      if (confirm("Vuoi davvero azzerare la lista degli incantesimi preparati? (Gli incantesimi Sempre Preparati rimarranno attivi)")) {
+        preparedSpells = [];
+        savePreparedSpells();
+        setupCategories();
+        renderSpells();
+        updatePrepCounterUI();
+        showToast("🧹 Lista incantesimi preparati svuotata!");
+      }
     }
 
     function toggleSlot(level, index) {
@@ -438,6 +679,7 @@
       usedSlots = {};
       saveUsedSlots();
       renderSlotTracker();
+      showToast("☀️ Riposo Lungo: slot incantesimo ripristinati!");
     }
 
     function renderSlotTracker() {
@@ -466,14 +708,38 @@
     }
 
     function togglePrepared(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+
+      if (spell) {
+        const level = extractLevel(spell);
+
+        if (level === 0) {
+          showToast("✨ I trucchetti (Livello 0) non richiedono preparazione!");
+          return;
+        }
+
+        if (isAlwaysPrepared(spell)) {
+          showToast("✨ Questo incantesimo è Sempre Preparato!");
+          return;
+        }
+      }
+
       if (preparedSpells.includes(spellName)) {
         preparedSpells = preparedSpells.filter(name => name !== spellName);
       } else {
+        const currentCount = getNormalPreparedCount();
+        const max = getMaxPrepared();
+        if (currentCount >= max) {
+          showToast("⚠️ Numero massimo incantesimi raggiunto!");
+          return;
+        }
         preparedSpells.push(spellName);
       }
+      
       savePreparedSpells();
       setupCategories();
       renderSpells();
+      updatePrepCounterUI();
     }
 
     function analyzeTacticalFeatures(spell) {
@@ -491,7 +757,7 @@
 
     function extractLevel(spell) {
       const text = ((spell.livello_scuola || '') + ' ' + (spell.descrizione || '')).substring(0, 300).toLowerCase();
-      if (text.includes("cantrip") || text.includes("trucchetto")) return 0;
+      if (text.includes("cantrip") || text.includes("trucchetto") || text.includes("livello 0") || text.includes("0° livello")) return 0;
 
       const matchEn = text.match(/\b([1-9])(?:st|nd|rd|th)?[-\s]*level\b/);
       if (matchEn) return parseInt(matchEn[1]);
@@ -509,6 +775,7 @@
         renderSlotTracker();
         setupCategories();
         renderSpells();
+        updatePrepCounterUI();
       } catch (error) {
         document.getElementById('spellsGrid').innerHTML = 
           `<p style="color: red;">Errore nel caricamento del file 'incantesimi_chierico.json'. Assicurati che il file sia presente nella cartella!</p>`;
@@ -526,9 +793,14 @@
       const container = document.getElementById('categoriesContainer');
       container.innerHTML = '';
 
+      const totalPreparedShow = spellsData.filter(s => {
+        const lvl = extractLevel(s);
+        return preparedSpells.includes(s.nome) || isAlwaysPrepared(s) || lvl === 0;
+      }).length;
+
       const btnPrepared = document.createElement('button');
       btnPrepared.className = `btn-tag btn-prepared-toggle ${showOnlyPrepared ? 'active' : ''}`;
-      btnPrepared.textContent = `⭐ Solo Preparati (${preparedSpells.length})`;
+      btnPrepared.textContent = `⭐ Solo Preparati / Disponibili (${totalPreparedShow})`;
       btnPrepared.onclick = () => {
         showOnlyPrepared = !showOnlyPrepared;
         setupCategories();
@@ -562,7 +834,9 @@
       grid.innerHTML = '';
 
       const filtered = spellsData.filter(spell => {
-        const isPrepared = preparedSpells.includes(spell.nome);
+        const isAlways = isAlwaysPrepared(spell);
+        const level = extractLevel(spell);
+        const isPrepared = preparedSpells.includes(spell.nome) || isAlways || level === 0;
 
         if (showOnlyPrepared && !isPrepared) return false;
 
@@ -583,7 +857,10 @@
 
       filtered.forEach(s => {
         const card = document.createElement('div');
-        const isPrepared = preparedSpells.includes(s.nome);
+        const isAlways = isAlwaysPrepared(s);
+        const level = extractLevel(s);
+        const isPrepared = preparedSpells.includes(s.nome) || isAlways || level === 0;
+
         card.className = `card ${isPrepared ? 'is-prepared' : ''}`;
         
         const tagsHTML = (s.categorie || []).map(c => `<span class="tag-badge">${c}</span>`).join('');
@@ -594,13 +871,23 @@
         if (isRitual) tacticalHTML += `<span class="badge-tactical badge-ritual">📜 Rituale</span>`;
         if (isCostly) tacticalHTML += `<span class="badge-tactical badge-costly">💎 ${costText}</span>`;
 
+        let prepareButtonHTML = '';
+        if (level === 0) {
+          prepareButtonHTML = `<span class="btn-cantrip-badge">✨ Trucchetto</span>`;
+        } else if (isAlways) {
+          prepareButtonHTML = `<span class="btn-always-prepared">✨ Sempre Preparato</span>`;
+        } else {
+          prepareButtonHTML = `
+            <button class="btn-prepare ${isPrepared ? 'prepared' : ''}" onclick="togglePrepared('${s.nome.replace(/'/g, "\\'")}')">
+              ${isPrepared ? '★ Preparato' : '☆ Prepara'}
+            </button>`;
+        }
+
         card.innerHTML = `
           <div>
             <div class="card-header">
               <div class="card-title">${s.nome}</div>
-              <button class="btn-prepare ${isPrepared ? 'prepared' : ''}" onclick="togglePrepared('${s.nome.replace(/'/g, "\\'")}')">
-                ${isPrepared ? '★ Preparato' : '☆ Prepara'}
-              </button>
+              ${prepareButtonHTML}
             </div>
             <div class="card-meta">${s.livello_scuola} • ${s.tempo_di_lancio}</div>
             
