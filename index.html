@@ -145,7 +145,7 @@
       transform: scale(1.2);
     }
 
-    /* PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY / BLOCCATO) */
+    /* PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY / BLOCCATO IN ALTO) */
     .prep-stats-panel {
       position: sticky;
       top: 10px;
@@ -168,6 +168,7 @@
       display: flex;
       align-items: center;
       gap: 15px;
+      flex-wrap: wrap;
       font-size: 0.9rem;
     }
 
@@ -179,7 +180,7 @@
     }
 
     .prep-inputs input {
-      width: 50px;
+      width: 55px;
       padding: 4px 8px;
       background: var(--tag-bg);
       border: 1px solid var(--border);
@@ -494,7 +495,7 @@
     </div>
   </div>
 
-  <!-- PANNELLO INCANTESIMI PREPARATI (STICKY) -->
+  <!-- PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY) -->
   <div class="prep-stats-panel">
     <div class="prep-inputs">
       <label>🧙 Livello: 
@@ -502,6 +503,12 @@
       </label>
       <label>✨ Mod. Saggezza: 
         <input type="number" id="wisModInput" value="3" min="-5" max="10" onchange="updateStatsConfig()">
+      </label>
+      <label>🎯 CD Incantesimi: 
+        <input type="number" id="spellSaveDcInput" value="14" min="1" max="30" onchange="saveCustomStats()">
+      </label>
+      <label>⚔️ Bonus Attacco Inc.: 
+        <input type="number" id="spellAttackBonusInput" value="6" min="-5" max="30" onchange="saveCustomStats()">
       </label>
     </div>
     
@@ -583,8 +590,27 @@
     let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
     let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
 
+    function getProficiencyBonus(lvl) {
+      return Math.ceil(lvl / 4) + 1;
+    }
+
+    function autoCalcStats() {
+      const prof = getProficiencyBonus(clericLevel);
+      const dc = 8 + prof + wisMod;
+      const atk = prof + wisMod;
+      return { dc, atk };
+    }
+
+    // Impostazione valori iniziali
     document.getElementById('clericLevelInput').value = clericLevel;
     document.getElementById('wisModInput').value = wisMod;
+
+    let savedDc = localStorage.getItem('spell_save_dc');
+    let savedAtk = localStorage.getItem('spell_attack_bonus');
+    const defaultStats = autoCalcStats();
+
+    document.getElementById('spellSaveDcInput').value = savedDc !== null ? savedDc : defaultStats.dc;
+    document.getElementById('spellAttackBonusInput').value = savedAtk !== null ? savedAtk : defaultStats.atk;
 
     function savePreparedSpells() {
       localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
@@ -620,7 +646,22 @@
       wisMod = parseInt(document.getElementById('wisModInput').value || '3');
       localStorage.setItem('cleric_level', clericLevel);
       localStorage.setItem('wis_mod', wisMod);
+
+      // Ricalcola CD e Bonus Attacco automaticamente se cambiano livello o Saggezza
+      const calc = autoCalcStats();
+      document.getElementById('spellSaveDcInput').value = calc.dc;
+      document.getElementById('spellAttackBonusInput').value = calc.atk;
+      localStorage.setItem('spell_save_dc', calc.dc);
+      localStorage.setItem('spell_attack_bonus', calc.atk);
+
       updatePrepCounterUI();
+    }
+
+    function saveCustomStats() {
+      const dc = document.getElementById('spellSaveDcInput').value;
+      const atk = document.getElementById('spellAttackBonusInput').value;
+      localStorage.setItem('spell_save_dc', dc);
+      localStorage.setItem('spell_attack_bonus', atk);
     }
 
     function updatePrepCounterUI() {
