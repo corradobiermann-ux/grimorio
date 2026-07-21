@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grimorio del Chierico - D&D 5e</title>
+  <style>
+    :root {
+      --bg-color: #1a1816;
+      --card-bg: #282420;
+      --accent: #d4a359;
+      --accent-hover: #e5b76e;
+      --text: #e8e3d9;
+      --text-muted: #a0988e;
+      --border: #423b32;
+      --tag-bg: #3d342a;
+      --danger: #d9534f;
+      --conc-color: #e67e22;
+      --ritual-color: #3498db;
+      --gold-color: #f1c40f;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 15px;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    /* TRACKER SLOT INCANTESIMO */
+    .slot-tracker-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 25px;
+    }
+
+    .slot-tracker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .slot-tracker-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .btn-long-rest {
+      background: #2d4a27;
+      color: #92e085;
+      border: 1px solid #48733e;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-long-rest:hover {
+      background: #3b6133;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
+    }
+
+    .slot-level-box {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .slot-level-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .slot-dots {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .slot-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--accent);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .slot-dot.used {
+      background: transparent;
+      border-color: var(--border);
+    }
+
+    .slot-dot:hover {
+      transform: scale(1.2);
+    }
+
+    /* CONTROLLI E FILTRI */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .filters-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-bar input, .level-select select {
+      width: 100%;
+      padding: 12px 15px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .level-select {
+      min-width: 200px;
+    }
+
+    .categories-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-tag {
+      background: var(--tag-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-tag.active, .btn-tag:hover {
+      background: var(--accent);
+      color: #1a1816;
+      font-weight: bold;
+    }
+
+    .btn-prepared-toggle {
+      background: #2a2419;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-prepared-toggle.active {
+      background: var(--accent);
+      color: #1a1816;
+      font-weight: bold;
+    }
+
+    /* SCHEDE INCANTESIMI */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card.is-prepared {
+      border-color: var(--accent);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+
+    .btn-prepare {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .btn-prepare.prepared {
+      background: var(--accent);
+      color: #1a1816;
+      font-weight: bold;
+    }
+
+    .card-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    /* BADGES TATTICI */
+    .tactical-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .badge-tactical {
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-conc {
+      background: rgba(230, 126, 34, 0.15);
+      color: var(--conc-color);
+      border: 1px solid var(--conc-color);
+    }
+
+    .badge-ritual {
+      background: rgba(52, 152, 219, 0.15);
+      color: var(--ritual-color);
+      border: 1px solid var(--ritual-color);
+    }
+
+    .badge-costly {
+      background: rgba(241, 196, 15, 0.15);
+      color: var(--gold-color);
+      border: 1px solid var(--gold-color);
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+
+    .tag-badge {
+      background: var(--tag-bg);
+      color: var(--accent);
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: var(--text);
+      white-space: pre-wrap;
+      max-height: 150px;
+      overflow-y: auto;
+      padding-right: 5px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+
+    .card-desc::-webkit-scrollbar { width: 4px; }
+    .card-desc::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📜 Grimorio del Chierico</h1>
+    <p style="color: var(--text-muted); margin-top: 5px;">Plancia tattica di combattimento e gestione incantesimi</p>
+  </header>
+
+  <!-- TRACKER SLOT INCANTESIMO -->
+  <div class="slot-tracker-panel">
+    <div class="slot-tracker-header">
+      <span class="slot-tracker-title">⚡ Tracker Slot Incantesimo</span>
+      <button class="btn-long-rest" onclick="longRest()">☀️ Riposo Lungo (Ripristina Tutti)</button>
+    </div>
+    <div class="slots-grid" id="slotsGrid">
+      <!-- Generato dinamicamente -->
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="filters-row">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cerca per nome, testo o componente...">
+      </div>
+      
+      <div class="level-select">
+        <select id="levelSelect">
+          <option value="ALL">Tutti i Livelli (0 - 9)</option>
+          <option value="0">Livello 0 (Trucchetti)</option>
+          <option value="1">1° Livello</option>
+          <option value="2">2° Livello</option>
+          <option value="3">3° Livello</option>
+          <option value="4">4° Livello</option>
+          <option value="5">5° Livello</option>
+          <option value="6">6° Livello</option>
+          <option value="7">7° Livello</option>
+          <option value="8">8° Livello</option>
+          <option value="9">9° Livello</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="categories-filter" id="categoriesContainer">
+      <!-- Categorie e filtro Preparati -->
+    </div>
+  </div>
+
+  <div class="grid" id="spellsGrid">
+    <!-- Schede incantesimi -->
+  </div>
+
+  <script>
+    let spellsData = [];
+    let selectedCategory = "Tutti";
+    let showOnlyPrepared = false;
+
+    // Configurazione Slot Incantesimo Personalizzata
+    // 1° Liv: 4 | 2° Liv: 3 | 3° Liv: 3 | 4° Liv: 3 | 5° Liv: 2
+    const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
+
+    let usedSlots = JSON.parse(localStorage.getItem('cleric_used_slots') || '{}');
+    let preparedSpells = JSON.parse(localStorage.getItem('cleric_prepared_spells') || '[]');
+
+    function savePreparedSpells() {
+      localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
+    }
+
+    function saveUsedSlots() {
+      localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
+    }
+
+    function toggleSlot(level, index) {
+      if (!usedSlots[level]) usedSlots[level] = 0;
+      
+      if (index < usedSlots[level]) {
+        usedSlots[level] = index;
+      } else {
+        usedSlots[level] = index + 1;
+      }
+      saveUsedSlots();
+      renderSlotTracker();
+    }
+
+    function longRest() {
+      usedSlots = {};
+      saveUsedSlots();
+      renderSlotTracker();
+    }
+
+    function renderSlotTracker() {
+      const container = document.getElementById('slotsGrid');
+      container.innerHTML = '';
+
+      Object.keys(maxSlotsConfig).forEach(lvl => {
+        const max = maxSlotsConfig[lvl];
+        const used = usedSlots[lvl] || 0;
+
+        const box = document.createElement('div');
+        box.className = 'slot-level-box';
+
+        let dotsHTML = '';
+        for (let i = 0; i < max; i++) {
+          const isUsed = i < used;
+          dotsHTML += `<div class="slot-dot ${isUsed ? 'used' : ''}" title="${isUsed ? 'Slot Usato' : 'Slot Disponibile'}" onclick="toggleSlot(${lvl}, ${i})"></div>`;
+        }
+
+        box.innerHTML = `
+          <div class="slot-level-title">${lvl}° Liv. (${max - used}/${max})</div>
+          <div class="slot-dots">${dotsHTML}</div>
+        `;
+        container.appendChild(box);
+      });
+    }
+
+    function togglePrepared(spellName) {
+      if (preparedSpells.includes(spellName)) {
+        preparedSpells = preparedSpells.filter(name => name !== spellName);
+      } else {
+        preparedSpells.push(spellName);
+      }
+      savePreparedSpells();
+      setupCategories();
+      renderSpells();
+    }
+
+    function analyzeTacticalFeatures(spell) {
+      const text = ((spell.descrizione || '') + ' ' + (spell.tempo_di_lancio || '') + ' ' + (spell.livello_scuola || '')).toLowerCase();
+      
+      const isConc = text.includes('concentration') || text.includes('concentrazione');
+      const isRitual = text.includes('ritual') || text.includes('rituale');
+
+      const costMatch = (spell.descrizione || '').match(/\b(?:worth|costing|valore di|costo di)?\s*(?:at least)?\s*(\d[\d,.]*)\s*(?:gp|mo|monete)\b/i);
+      const isCostly = !!costMatch || (text.includes('gp') && (text.includes('worth') || text.includes('consumes') || text.includes('costo')));
+      const costText = costMatch ? `${costMatch[1]} mo` : "Materiale Costoso";
+
+      return { isConc, isRitual, isCostly, costText };
+    }
+
+    function extractLevel(spell) {
+      const text = ((spell.livello_scuola || '') + ' ' + (spell.descrizione || '')).substring(0, 300).toLowerCase();
+      if (text.includes("cantrip") || text.includes("trucchetto")) return 0;
+
+      const matchEn = text.match(/\b([1-9])(?:st|nd|rd|th)?[-\s]*level\b/);
+      if (matchEn) return parseInt(matchEn[1]);
+
+      const matchIt = text.match(/\b([0-9])°?\s*livello\b/) || text.match(/\blivello\s*([0-9])\b/);
+      if (matchIt) return parseInt(matchIt[1]);
+
+      return -1;
+    }
+
+    async function loadSpells() {
+      try {
+        const response = await fetch('incantesimi_chierico.json');
+        spellsData = await response.json();
+        renderSlotTracker();
+        setupCategories();
+        renderSpells();
+      } catch (error) {
+        document.getElementById('spellsGrid').innerHTML = 
+          `<p style="color: red;">Errore nel caricamento del file 'incantesimi_chierico.json'. Assicurati che il server Python sia attivo!</p>`;
+      }
+    }
+
+    function setupCategories() {
+      const categoriesSet = new Set(["Tutti"]);
+      spellsData.forEach(s => {
+        if (s.categorie) {
+          s.categorie.forEach(cat => categoriesSet.add(cat));
+        }
+      });
+
+      const container = document.getElementById('categoriesContainer');
+      container.innerHTML = '';
+
+      const btnPrepared = document.createElement('button');
+      btnPrepared.className = `btn-tag btn-prepared-toggle ${showOnlyPrepared ? 'active' : ''}`;
+      btnPrepared.textContent = `⭐ Solo Preparati (${preparedSpells.length})`;
+      btnPrepared.onclick = () => {
+        showOnlyPrepared = !showOnlyPrepared;
+        setupCategories();
+        renderSpells();
+      };
+      container.appendChild(btnPrepared);
+
+      const sep = document.createElement('span');
+      sep.style.borderRight = '1px solid var(--border)';
+      sep.style.margin = '0 5px';
+      container.appendChild(sep);
+
+      categoriesSet.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = `btn-tag ${(!showOnlyPrepared && cat === selectedCategory) ? 'active' : ''}`;
+        btn.textContent = cat;
+        btn.onclick = () => {
+          showOnlyPrepared = false;
+          selectedCategory = cat;
+          setupCategories();
+          renderSpells();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function renderSpells() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const selectedLevel = document.getElementById('levelSelect').value;
+      const grid = document.getElementById('spellsGrid');
+      grid.innerHTML = '';
+
+      const filtered = spellsData.filter(spell => {
+        const isPrepared = preparedSpells.includes(spell.nome);
+
+        if (showOnlyPrepared && !isPrepared) return false;
+
+        const matchesCategory = selectedCategory === "Tutti" || (spell.categorie && spell.categorie.includes(selectedCategory));
+        const matchesSearch = spell.nome.toLowerCase().includes(query) || 
+                              (spell.descrizione && spell.descrizione.toLowerCase().includes(query));
+        
+        const spellLevel = extractLevel(spell);
+        const matchesLevel = (selectedLevel === "ALL") || (spellLevel === parseInt(selectedLevel));
+
+        return matchesCategory && matchesSearch && matchesLevel;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Nessun incantesimo trovato con i filtri selezionati.</p>';
+        return;
+      }
+
+      filtered.forEach(s => {
+        const card = document.createElement('div');
+        const isPrepared = preparedSpells.includes(s.nome);
+        card.className = `card ${isPrepared ? 'is-prepared' : ''}`;
+        
+        const tagsHTML = (s.categorie || []).map(c => `<span class="tag-badge">${c}</span>`).join('');
+        
+        const { isConc, isRitual, isCostly, costText } = analyzeTacticalFeatures(s);
+        let tacticalHTML = '';
+        if (isConc) tacticalHTML += `<span class="badge-tactical badge-conc">🎯 Concentrazione</span>`;
+        if (isRitual) tacticalHTML += `<span class="badge-tactical badge-ritual">📜 Rituale</span>`;
+        if (isCostly) tacticalHTML += `<span class="badge-tactical badge-costly">💎 ${costText}</span>`;
+
+        card.innerHTML = `
+          <div>
+            <div class="card-header">
+              <div class="card-title">${s.nome}</div>
+              <button class="btn-prepare ${isPrepared ? 'prepared' : ''}" onclick="togglePrepared('${s.nome.replace(/'/g, "\\'")}')">
+                ${isPrepared ? '★ Preparato' : '☆ Prepara'}
+              </button>
+            </div>
+            <div class="card-meta">${s.livello_scuola} • ${s.tempo_di_lancio}</div>
+            
+            ${tacticalHTML ? `<div class="tactical-badges">${tacticalHTML}</div>` : ''}
+            
+            <div class="card-tags">${tagsHTML}</div>
+          </div>
+          <div class="card-desc">${s.descrizione || 'Nessuna descrizione disponibile.'}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderSpells);
+    document.getElementById('levelSelect').addEventListener('change', renderSpells);
+
+    loadSpells();
+  </script>
+</body>
+</html>

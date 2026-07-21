@@ -1,0 +1,1436 @@
+[
+    {
+        "nome": "Guidance",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:guidance",
+        "descrizione": "Source: Player's Handbook\nDivination cantrip\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Concentration, up to 1 minute\nYou touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one ability check of its choice. It can roll the die before or after making the ability check. The spell then ends.\nSpell Lists. Artificer, Cleric, Druid",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Hand of Radiance (UA)",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:hand-of-radiance",
+        "descrizione": "Source: Unearthed Arcana 36 - Starter Spells\nEvocation cantrip\nCasting Time: 1 action\nRange: 5 feet\nComponents: V, S\nDuration: Instantaneous\nYou raise your hand, and burning radiance erupts from it. Each creature of your choice that you can see within 5 feet of you must succeed on a Constitution saving throw or take 1d6 radiant damage.\nAt Higher Levels: The spell's damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).\nSpell Lists: Cleric",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Light",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:light",
+        "descrizione": "Source: Player's Handbook\nEvocation cantrip\nCasting Time: 1 action\nRange: Touch\nComponents: V, M (a firefly or phosphorescent moss)\nDuration: 1 hour\nYou touch one object that is no larger than 10 feet in any dimension. Until the spell ends, the object sheds bright light in a 20-foot radius and dim light for an additional 20 feet. The light can be colored as you like. Completely covering the object with something opaque blocks the light. The spell ends if you cast it again or dismiss it as an action.\nIf you target an object held or worn by a hostile creature, that creature must succeed on a Dexterity saving throw to avoid the spell.\nSpell Lists. Artificer, Bard, Cleric, Sorcerer, Wizard",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Mending",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:mending",
+        "descrizione": "Source: Player's Handbook\nTransmutation cantrip\nCasting Time: 1 minute\nRange: Touch\nComponents: V, S, M (two lodestones)\nDuration: Instantaneous\nThis spell repairs a single break or tear in an object you touch, such as a broken chain link, two halves of a broken key, a torn cloak, or a leaking wineskin. As long as the break or tear is no larger than 1 foot in any dimension, you mend it, leaving no trace of the former damage.\nThis spell can physically repair a magic item or construct, but the spell can’t restore magic to such an object.\nSpell Lists. Artificer, Bard, Cleric, Druid, Sorcerer, Wizard",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Resistance",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:resistance",
+        "descrizione": "Source: Player's Handbook\nAbjuration cantrip\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a miniature cloak)\nDuration: Concentration, up to 1 minute\nYou touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one saving throw of its choice. It can roll the die before or after the saving throw. The spell then ends.\nSpell Lists. Artificer, Cleric, Druid",
+        "categorie": [
+            "Danno"
+        ]
+    },
+    {
+        "nome": "Sacred Flame",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:sacred-flame",
+        "descrizione": "Source: Player's Handbook\nEvocation cantrip\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nFlame-like radiance descends on a creature that you can see within range. The target must succeed on a Dexterity saving throw or take 1d8 radiant damage. The target gains no benefit from cover for this saving throw.\nAt Higher Levels. The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Spare the Dying",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:spare-the-dying",
+        "descrizione": "Source: Player's Handbook\nNecromancy cantrip\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\nYou touch a living creature that has 0 hit points. The creature becomes stable. This spell has no effect on undead or constructs.\nSpell Lists. Artificer, Cleric",
+        "categorie": [
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Thaumaturgy",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:thaumaturgy",
+        "descrizione": "Source: Player's Handbook\nTransmutation cantrip\nCasting Time: 1 action\nRange: 30 feet\nComponents: V\nDuration: Up to 1 minute\nYou manifest a minor wonder, a sign of supernatural power, within range. You create one of the following magical effects within range:\n\nYour voice booms up to three times as loud as normal for 1 minute.\n\n\nYou cause flames to flicker, brighten, dim, or change color for 1 minute.\n\n\nYou cause harmless tremors in the ground for 1 minute.\n\n\nYou create an instantaneous sound that originates from a point of your choice within range, such as a rumble of thunder, the cry of a raven, or ominous whispers.\n\n\nYou instantaneously cause an unlocked door or window to fly open or slam shut.\n\n\nYou alter the appearance of your eyes for 1 minute.\n\nIf you cast this spell multiple times, you can have up to three of its 1-minute effects active at a time, and you can dismiss such an effect as an action.\nSpell Lists. Cleric",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Toll the Dead",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:toll-the-dead",
+        "descrizione": "Source: Xanathar's Guide to Everything\nNecromancy cantrip\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nYou point at one creature you can see within range, and the sound of a dolorous bell fills the air around it for a moment. The target must succeed on a Wisdom saving throw or take 1d8 necrotic damage. If the target is missing any of its hit points, it instead takes 1d12 necrotic damage.\nAt Higher Levels. The spell’s damage increases by one die when you reach 5th level (2d8 or 2d12), 11th level (3d8 or 3d12), and 17th level (4d8 or 4d12).\nSpell Lists. Cleric, Warlock, Wizard",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Virtue (UA)",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:virtue",
+        "descrizione": "Source: Unearthed Arcana 36 - Starter Spells\nAbjuration cantrip\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: 1 round\nYou touch one creature, imbuing it with vitality. If the target has at least 1 hit point, it gains a number of temporary hit points equal to 1d4 + your spellcasting ability modifier. The temporary hit points are lost when the spell ends.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Word of Radiance",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:word-of-radiance",
+        "descrizione": "Source: Xanathar's Guide to Everything\nEvocation cantrip\nCasting Time: 1 action\nRange: 5 feet\nComponents: V, M (a holy symbol)\nDuration: Instantaneous\nYou utter a divine word, and burning radiance erupts from you. Each creature of your choice that you can see within range must succeed on a Constitution saving throw or take 1d6 radiant damage.\nAt Higher Levels. The spell’s damage increases by 1d6 when you reach 5th level (2d6), 11th level (3d6), and 17th level (4d6).\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Bane",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:bane",
+        "descrizione": "Source: Player's Handbook\n1st-level enchantment\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a drop of blood)\nDuration: Concentration, up to 1 minute\nUp to three creatures of your choice that you can see within range must make Charisma saving throws. Whenever a target that fails this saving throw makes an attack roll or a saving throw before the spell ends, the target must roll a d4 and subtract the number rolled from the attack roll or saving throw.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st.\nSpell Lists. Bard, Cleric",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Bless",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:bless",
+        "descrizione": "Source: Player's Handbook\n1st-level enchantment\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a sprinkling of holy water)\nDuration: Concentration, up to 1 minute\nYou bless up to three creatures of your choice within range. Whenever a target makes an attack roll or a saving throw before the spell ends, the target can roll a d4 and add the number rolled to the attack roll or saving throw.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st.\nSpell Lists. Cleric, Paladin",
+        "categorie": [
+            "Danno"
+        ]
+    },
+    {
+        "nome": "Ceremony",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:ceremony",
+        "descrizione": "Source: Xanathar's Guide to Everything\n1st-level Abjuration (ritual)\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (25 gp worth of powdered silver, which the spell consumes)\nDuration: Instantaneous (see below)\nYou perform one of several religious ceremonies. When you cast the spell, choose one of the following ceremonies, the target of which must be within 10 feet of you throughout the casting.\nAtonement. You touch one willing creature whose alignment has changed, and you make a DC 20 Wisdom (Insight) check. On a successful check, you restore the target to its original alignment.\nBless Water. You touch one vial of water and cause it to become holy water.\nComing of Age. You touch one humanoid who is a young adult. For the next 24 hours, whenever the target makes an ability check, it can roll a d4 and add the number rolled to the ability check. A creature can benefit from this rite only once.\nDedication. You touch one humanoid who wishes to be dedicated to your god’s service. For the next 24 hours, whenever the target makes a saving throw, it can roll a d4 and add the number rolled to the save. A creature can benefit from this rite only once.\nFuneral Rite. You touch one corpse, and for the next 7 days, the target can’t become undead by any means short of a Wish spell.\nWedding. You touch adult humanoids willing to be bonded together in marriage. For the next 7 days, each target gains a +2 bonus to AC while they are within 30 feet of each other. A creature can benefit from this rite again only if widowed.\nSpell Lists. Cleric, Paladin",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Command",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:command",
+        "descrizione": "Source: Player's Handbook\n1st-level enchantment\nCasting Time: 1 action\nRange: 60 feet\nComponents: V\nDuration: 1 round\nYou speak a one-word command to a creature you can see within range. The target must succeed on a Wisdom saving throw or follow the command on its next turn. The spell has no effect if the target is undead, if it doesn’t understand your language, or if your command is directly harmful to it. Some typical commands and their effects follow. You might issue a command other than one described here. If you do so, the DM determines how the target behaves. If the target can’t follow your command, the spell ends.\nApproach. The target moves toward you by the shortest and most direct route, ending its turn if it moves within 5 feet of you.\nDrop. The target drops whatever it is holding and then ends its turn.\nFlee. The target spends its turn moving away from you by the fastest available means.\nGrovel. The target falls prone and then ends its turn.\nHalt. The target doesn’t move and takes no actions. A flying creature stays aloft, provided that it is able to do so. If it must move to stay aloft, it flies the minimum distance needed to remain in the air.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can affect one additional creature for each slot level above 1st. The creatures must be within 30 feet of each other when you target them.\nSpell Lists. Bard (Optional), Cleric, Paladin",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Create or Destroy Water",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:create-or-destroy-water",
+        "descrizione": "Source: Player's Handbook\n1st-level transmutation\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a drop of water if creating water or a few grains of sand if destroying it)\nDuration: Instantaneous\nYou either create or destroy water.\nCreate Water. You create up to 10 gallons of clean water within range in an open container. Alternatively, the water falls as rain in a 30-foot cube within range, extinguishing exposed flames in the area.\nDestroy Water. You destroy up to 10 gallons of water in an open container within range. Alternatively, you destroy fog in a 30-foot cube within range.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you create or destroy 10 additional gallons of water, or the size of the cube increases by 5 feet, for each slot level above 1st.\nSpell Lists. Cleric, Druid",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Cure Wounds",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:cure-wounds",
+        "descrizione": "Source: Player's Handbook\n1st-level evocation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\nA creature you touch regains a number of hit points equal to 1d8 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the healing increases by 1d8 for each slot level above 1st.\nSpell Lists. Artificer, Bard, Cleric, Druid, Paladin, Ranger",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Detect Evil and Good",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:detect-evil-and-good",
+        "descrizione": "Source: Player's Handbook\n1st-level divination\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nFor the duration, you know if there is an aberration, celestial, elemental, fey, fiend, or undead within 30 feet of you, as well as where the creature is located. Similarly, you know if there is a place or object within 30 feet of you that has been magically consecrated or desecrated.\nThe spell can penetrate most barriers, but it is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.\nSpell Lists. Cleric, Paladin",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Detect Magic",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:detect-magic",
+        "descrizione": "Source: Player's Handbook\n1st-level divination (ritual)\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nFor the duration, you sense the presence of magic within 30 feet of you. If you sense magic in this way, you can use your action to see a faint aura around any visible creature or object in the area that bears magic, and you learn its school of magic, if any.\nThe spell can penetrate most barriers, but is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.\nSpell Lists. Artificer, Bard, Cleric, Druid, Paladin, Ranger, Sorcerer, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Detect Poison and Disease",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:detect-poison-and-disease",
+        "descrizione": "Source: Player's Handbook\n1st-level divination (ritual)\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (a yew leaf)\nDuration: Concentration, up to 10 minutes\nFor the duration, you can sense the presence and location of poisons, poisonous creatures, and diseases within 30 feet of you. You also identify the kind of poison, poisonous creature, or disease in each case.\nThe spell can penetrate most barriers, but is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt.\nSpell Lists. Cleric, Druid, Paladin, Ranger",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Guiding Bolt",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:guiding-bolt",
+        "descrizione": "Source: Player's Handbook\n1st-level evocation\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S\nDuration: 1 round\nA flash of light streaks toward a creature of your choice within range. Make a ranged spell attack against the target. On a hit, the target takes 4d6 radiant damage, and the next attack roll made against this target before the end of your next turn has advantage, thanks to the mystical dim light glittering on the target until then.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Guiding Hand (UA)",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Minute R",
+        "url": "https://dnd5e.wikidot.com/spell:guiding-hand-ua",
+        "descrizione": "Source: Unearthed Arcana 36 - Starter Spells\n1st-level divination (ritual)\nCasting Time: 1 minute\nRange: 5 feet\nComponents: V, S\nDuration: Concentration, up to 8 hours\nYou create a Tiny incorporeal hand of shimmering light in an unoccupied space you can see within range. The hand exists for the duration, but it disappears if you teleport or you travel to a different plane of existence.\nWhen the hand appears, you name one major landmark, such as a city, mountain, castle, or battlefield on the same plane of existence as you. Someone in history must have visited the site and mapped it. If the landmark appears on no map in existence, the spell fails. Otherwise, whenever you move toward the hand, it moves away from you at the same speed you moved, and it moves in the direction of the landmark, always remaining 5 feet away from you.\nIf you don’t move toward the hand, it remains in place until you do and beckons for you to follow once every 1d4 minutes.\nSpell Lists. Bard, Cleric, Druid, Wizard",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Healing Word",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:healing-word",
+        "descrizione": "Source: Player's Handbook\n1st-level evocation\nCasting Time: 1 bonus action\nRange: 60 feet\nComponents: V\nDuration: Instantaneous\nA creature of your choice that you can see within range regains hit points equal to 1d4 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the healing increases by 1d4 for each slot level above 1st.\nSpell Lists. Bard, Cleric, Druid",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Inflict Wounds",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:inflict-wounds",
+        "descrizione": "Source: Player's Handbook\n1st-level necromancy\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\nMake a melee spell attack against a creature you can reach. On a hit, the target takes 3d10 necrotic damage.\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d10 for each slot level above 1st.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno"
+        ]
+    },
+    {
+        "nome": "Protection from Evil and Good",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:protection-from-evil-and-good",
+        "descrizione": "Source: Player's Handbook\n1st-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (holy water or powdered silver and iron, which the spell consumes)\nDuration: Concentration, up to 10 minutes\nUntil the spell ends, one willing creature you touch is protected against certain types of creatures: aberrations, celestials, elementals, fey, fiends, and undead.\nThe protection grants several benefits. Creatures of those types have disadvantage on attack rolls against the target. The target also can't be charmed, frightened, or possessed by them. If the target is already charmed, frightened, or possessed by such a creature, the target has advantage on any new saving throw against the relevant effect.\nSpell Lists. Cleric, Druid (Optional), Paladin, Warlock, Wizard",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Purify Food and Drink",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:purify-food-and-drink",
+        "descrizione": "Source: Player's Handbook\n1st-level transmutation (ritual)\nCasting Time: 1 action\nRange: 10 feet\nComponents: V, S\nDuration: Instantaneous\nAll nonmagical food and drink within a 5-foot-radius sphere centered on a point of your choice within range is purified and rendered free of poison and disease.\nSpell Lists. Artificer, Cleric, Druid, Paladin",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Sanctuary",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:sanctuary",
+        "descrizione": "Source: Player's Handbook\n1st-level abjuration\nCasting Time: 1 bonus action\nRange: 30 feet\nComponents: V, S, M (a small silver mirror)\nDuration: 1 minute\nYou ward a creature within range against attack. Until the spell ends, any creature who targets the warded creature with an attack or a harmful spell must first make a Wisdom saving throw. On a failed save, the creature must choose a new target or lose the attack or spell. This spell doesn’t protect the warded creature from area effects, such as the explosion of a fireball.\nIf the warded creature makes an attack, casts a spell that affects an enemy, or deals damage to another creature, this spell ends.\nSpell Lists. Artificer, Cleric",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Shield of Faith",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:shield-of-faith",
+        "descrizione": "Source: Player's Handbook\n1st-level abjuration\nCasting Time: 1 bonus action\nRange: 60 feet\nComponents: V, S, M (a small parchment with a bit of holy text written on it)\nDuration: Concentration, up to 10 minutes\nA shimmering field appears and surrounds a creature of your choice within range, granting it a +2 bonus to AC for the duration.\nSpell Lists. Cleric, Paladin",
+        "categorie": [
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Aid",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:aid",
+        "descrizione": "Source: Player's Handbook\n2nd-level abjuration\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a tiny strip of white cloth)\nDuration: 8 hours\nYour spell bolsters your allies with toughness and resolve. Choose up to three creatures within range. Each target’s hit point maximum and current hit points increase by 5 for the duration.\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, a target’s hit points increase by an additional 5 for each slot level above 2nd.\nSpell Lists. Artificer, Bard (Optional), Cleric, Paladin, Ranger (Optional)",
+        "categorie": [
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Augury",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Minute R",
+        "url": "https://dnd5e.wikidot.com/spell:augury",
+        "descrizione": "Source: Player's Handbook\n2nd-level divination (ritual)\nCasting Time: 1 minute\nRange: Self\nComponents: V, S, M (specially marked sticks, bones, or similar tokens worth at least 25 gp)\nDuration: Instantaneous\nBy casting gem-inlaid sticks, rolling dragon bones, laying out ornate cards, or employing some other divining tool, you receive an omen from an otherworldly entity about the results of a specific course of action that you plan to take within the next 30 minutes. The DM chooses from the following possible omens:\n\nWeal, for good results\n\n\nWoe, for bad results\n\n\nWeal and woe, for both good and bad results\n\n\nNothing, for results that aren’t especially good or bad\n\nThe spell doesn’t take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion. If you cast the spell two or more times before completing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret.\nSpell Lists. Cleric, Druid (Optional), Wizard (Optional)",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Blindness/Deafness",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:blindness-deafness",
+        "descrizione": "Source: Player's Handbook\n2nd-level necromancy\nCasting Time: 1 action\nRange: 30 feet\nComponents: V\nDuration: 1 minute\nYou can blind or deafen a foe. Choose one creature that you can see within range to make a Constitution saving throw. If it fails, the target is either blinded or deafened (your choice) for the duration. At the end of each of its turns, the target can make a Constitution saving throw. On a success, the spell ends.\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.\nSpell Lists. Bard, Cleric, Sorcerer, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Borrowed Knowledge",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:borrowed-knowledge",
+        "descrizione": "Source: Strixhaven: A Curriculum of Chaos\n2nd-level Divination\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (a book worth at least 25 gp)\nDuration: 1 hour\nYou draw on knowledge from spirits of the past. Choose one skill in which you lack proficiency. For the spell's duration, you have proficiency in the chosen skill. The spell ends early if you cast it again.\nSpell Lists. Bard, Cleric, Warlock, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Calm Emotions",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:calm-emotions",
+        "descrizione": "Source: Player's Handbook\n2nd-level enchantment\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nYou attempt to suppress strong emotions in a group of people. Each humanoid in a 20-foot-radius sphere centered on a point you choose within range must make a Charisma saving throw; a creature can choose to fail this saving throw if it wishes. If a creature fails its saving throw, choose one of the following two effects. You can suppress any effect causing a target to be charmed or frightened. When this spell ends, any suppressed effect resumes, provided that its duration has not expired in the meantime.\nAlternatively, you can make a target indifferent about creatures of your choice that it is hostile toward. This indifference ends if the target is attacked or harmed by a spell or if it witnesses any of its friends being harmed. When the spell ends, the creature becomes hostile again, unless the DM rules otherwise.\nSpell Lists. Bard, Cleric",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Continual Flame",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:continual-flame",
+        "descrizione": "Source: Player's Handbook\n2nd-level evocation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (ruby dust worth 50 gp, which the spell consumes)\nDuration: Until dispelled\nA flame, equivalent in brightness to a torch, springs forth from an object that you touch. The effect looks like a regular flame, but it creates no heat and doesn’t use oxygen. A continual flame can be covered or hidden but not smothered or quenched.\nSpell Lists. Artificer, Cleric, Druid (Optional), Wizard",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Enhance Ability",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:enhance-ability",
+        "descrizione": "Source: Player's Handbook\n2nd-level transmutation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (fur or a feather from a beast)\nDuration: Concentration, up to 1 hour\nYou touch a creature and bestow upon it a magical enhancement. Choose one of the following effects; the target gains the effect until the spell ends.\n\nBear’s Endurance. The target has advantage on Constitution checks. It also gains 2d6 temporary hit points, which are lost when the spell ends.\n\n\nBull’s Strength. The target has advantage on Strength checks, and their carrying capacity doubles.\n\n\nCat’s Grace. The target has advantage on Dexterity checks. It also doesn’t take damage from falling 20 feet or less if it isn’t incapacitated.\n\n\nEagle’s Splendor. The target has advantage on Charisma checks.\n\n\nFox’s Cunning. The target has advantage on Intelligence checks.\n\n\nOwl’s Wisdom. The target has advantage on Wisdom checks.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.\nSpell Lists. Artificer, Bard, Cleric, Druid, Ranger (Optional), Sorcerer, Wizard (Optional)",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Find Traps",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:find-traps",
+        "descrizione": "Source: Player's Handbook\n2nd-level divination\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S\nDuration: Instantaneous\nYou sense the presence of any trap within range that is within line of sight.\nA trap, for the purpose of this spell, includes anything that would inflict a sudden or unexpected effect you consider harmful or undesirable, which was specifically intended as such by its creator. Thus, the spell would sense an area affected by the alarm spell, a glyph of warding, or a mechanical pit trap, but it would not reveal a natural weakness in the floor, an unstable ceiling, or a hidden sinkhole.\nThis spell merely reveals that a trap is present. You don’t learn the location of each trap, but you do learn the general nature of the danger posed by a trap you sense.\nSpell Lists. Cleric, Druid, Ranger",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Gentle Repose",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:gentle-repose",
+        "descrizione": "Source: Player's Handbook\n2nd-level necromancy (ritual)\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a pinch of salt and one copper piece placed on each of the corpse’s eyes, which must remain there for the duration)\nDuration: 10 days\nYou touch a corpse or other remains. For the duration, the target is protected from decay and can’t become undead.\nThe spell also effectively extends the time limit on raising the target from the dead, since days spent under the influence of this spell don’t count against the time limit of spells such as raise dead.\nSpell Lists. Cleric, Paladin (Optional), Wizard",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Hold Person",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:hold-person",
+        "descrizione": "Source: Player's Handbook\n2nd-level enchantment\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (a small, straight piece of iron)\nDuration: Concentration, up to 1 minute\nChoose a humanoid that you can see within range. The target must succeed on a Wisdom saving throw or be paralyzed for the duration. At the end of each of its turns, the target can make another Wisdom saving throw. On a success, the spell ends on the target.\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, you can target one additional humanoid for each slot level above 2nd. The humanoids must be within 30 feet of each other when you target them.\nSpell Lists. Bard, Cleric, Druid, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Debuff e Malus",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Lesser Restoration",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:lesser-restoration",
+        "descrizione": "Source: Player's Handbook\n2nd-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\nYou touch a creature and can end either one disease or one condition afflicting it. The condition can be blinded, deafened, paralyzed, or poisoned.\nSpell Lists. Artificer, Bard, Cleric, Druid, Paladin, Ranger",
+        "categorie": [
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Locate Object",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:locate-object",
+        "descrizione": "Source: Player's Handbook\n2nd-level divination\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (a forked twig)\nDuration: Concentration, up to 10 minutes\nDescribe or name an object that is familiar to you. You sense the direction to the object’s location, as long as that object is within 1,000 feet of you. If the object is in motion, you know the direction of its movement.\nThe spell can locate a specific object known to you, as long as you have seen it up close – within 30 feet – at least once. Alternatively, the spell can locate the nearest object of a particular kind, such as a certain kind of apparel, jewelry, furniture, tool, or weapon.\nThis spell can’t locate an object if any thickness of lead, even a thin sheet, blocks a direct path between you and the object.\nSpell Lists. Bard, Cleric, Druid, Paladin, Ranger, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Prayer of Healing",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "10 Minutes",
+        "url": "https://dnd5e.wikidot.com/spell:prayer-of-healing",
+        "descrizione": "Source: Player's Handbook\n2nd-level evocation\nCasting Time: 10 minutes\nRange: 30 feet\nComponents: V\nDuration: Instantaneous\nUp to six creatures of your choice that you can see within range each regain hit points equal to 2d8 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, the healing increases by 1d8 for each slot level above 2nd.\nSpell Lists. Cleric, Paladin (Optional)",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Protection from Poison",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:protection-from-poison",
+        "descrizione": "Source: Player's Handbook\n2nd-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: 1 hour\nYou touch a creature. If it is poisoned, you neutralize the poison. If more than one poison afflicts the target, you neutralize one poison that you know is present, or you neutralize one at random.\nFor the duration, the target has advantage on saving throws against being poisoned, and it has resistance to poison damage.\nSpell Lists. Artificer, Cleric, Druid, Paladin, Ranger",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Silence",
+        "livello_scuola": "Illusion",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:silence",
+        "descrizione": "Source: Player's Handbook\n2nd-level illusion (ritual)\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nFor the duration, no sound can be created within or pass through a 20-foot-radius sphere centered on a point you choose within range. Any creature or object entirely inside the sphere is immune to thunder damage, and creatures are deafened while entirely inside it. Casting a spell that includes a verbal component is impossible there.\nSpell Lists. Bard, Cleric, Ranger",
+        "categorie": [
+            "Danno"
+        ]
+    },
+    {
+        "nome": "Spiritual Weapon",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:spiritual-weapon",
+        "descrizione": "Source: Player's Handbook\n2nd-level evocation\nCasting Time: 1 bonus action\nRange: 60 feet\nComponents: V, S\nDuration: 1 minute\nYou create a floating, spectral weapon within range that lasts for the duration or until you cast this spell again.\nWhen you cast the spell, you can make a melee spell attack against a creature within 5 feet of the weapon. On a hit, the target takes force damage equal to 1d8 + your spellcasting ability modifier.\nAs a bonus action on your turn, you can move the weapon up to 20 feet and repeat the attack against a creature within 5 feet of it.\nThe weapon can take whatever form you choose. Clerics of deities who are associated with a particular weapon (as St. Cuthbert is known for his mace and Thor for his hammer) make this spell’s effect resemble that weapon.\nAt Higher Levels. When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for every two slot levels above the 2nd.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Warding Bond",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:warding-bond",
+        "descrizione": "Source: Player's Handbook\n2nd-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a pair of platinum rings worth at least 50 gp each, which you and target must wear for the duration)\nDuration: 1 hour\nThis spell wards a willing creature you touch and creates a mystic connection between you and the target until the spell ends.\nWhile the target is within 60 feet of you, it gains a +1 bonus to AC and saving throws, and it has resistance to all damage. Also, each time it takes damage, you take the same amount of damage.\nThe spell ends if you drop to 0 hit points or if you and the target become separated by more than 60 feet. It also ends if the spell is cast again on either of the connected creatures. You can also dismiss the spell as an action.\nSpell Lists. Cleric, Paladin (Optional)",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Zone of Truth",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:zone-of-truth",
+        "descrizione": "Source: Player's Handbook\n2nd-level enchantment\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: 10 minutes\nYou create a magical zone that guards against deception in a 15-foot-radius sphere centered on a point of your choice within range. Until the spell ends, a creature that enters the spell’s area for the first time on a turn or starts its turn there must make a Charisma saving throw. On a failed save, a creature can’t speak a deliberate lie while in the radius. You know whether each creature succeeds or fails on its saving throw.\nAn affected creature is aware of the spell and can thus avoid answering questions to which it would normally respond with a lie. Such creatures can be evasive in its answers as long as it remains within the boundaries of the truth.\nSpell Lists. Bard, Cleric, Paladin",
+        "categorie": [
+            "Sociale e Persuasione"
+        ]
+    },
+    {
+        "nome": "Animate Dead",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:animate-dead",
+        "descrizione": "Source: Player's Handbook\n3rd-level necromancy\nCasting Time: 1 minute\nRange: 10 feet\nComponents: V, S, M (a drop of blood, a piece of flesh, and a pinch of bone dust)\nDuration: Instantaneous\nThis spell creates an undead servant. Choose a pile of bones or a corpse of a Medium or Small humanoid within range. Your spell imbues the target with a foul mimicry of life, raising it as an undead creature. The target becomes a skeleton if you chose bones or a zombie if you chose a corpse (the DM has the creature’s game statistics).\nOn each of your turns, you can use a bonus action to mentally command any creature you made with this spell if the creature is within 60 feet of you (if you control multiple creatures, you can command any or all of them at the same time, issuing the same command to each one). You decide what action the creature will take and where it will move during its next turn, or you can issue a general command, such as to guard a particular chamber or corridor. If you issue no commands, the creature only defends itself against hostile creatures. Once given an order, the creature continues to follow it until its task is complete.\nThe creature is under your control for 24 hours, after which it stops obeying any command you’ve given it. To maintain the control of the creature for another 24 hours, you must cast this spell on the creature again before the current 24-hour period ends. This use of the spell reasserts your control over up to four creatures you have animated with this spell, rather than animating a new one.\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, you animate or reassert control over two additional undead creatures for each slot level above 3rd. Each of the creatures must come from a different corpse or pile of bones.\nSpell Lists. Cleric, Wizard",
+        "categorie": [
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Aura of Vitality",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:aura-of-vitality",
+        "descrizione": "Source: Player's Handbook\n3rd-level evocation\nCasting Time: 1 action\nRange: Self (30-foot radius)\nComponents: V\nDuration: Concentration, up to 1 minute\nHealing energy radiates from you in an aura with a 30-foot radius. Until the spell ends, the aura moves with you, centered on you. You can use a bonus action to cause one creature in the aura (including you) to regain 2d6 hit points.\nSpell Lists. Cleric (Optional), Druid (Optional), Paladin",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Beacon of Hope",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:beacon-of-hope",
+        "descrizione": "Source: Player's Handbook\n3rd-level abjuration\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S\nDuration: Concentration, up to 1 minute\nThis spell bestows hope and vitality. Choose any number of creatures within range. For the duration, each target has advantage on Wisdom saving throws and death saving throws, and regains the maximum number of hit points possible from any healing.\nSpell Lists. Cleric",
+        "categorie": [
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Bestow Curse",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:bestow-curse",
+        "descrizione": "Source: Player's Handbook\n3rd-level necromancy\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Concentration, up to 1 minute\nYou touch a creature, and that creature must succeed on a Wisdom saving throw or become cursed for the duration of the spell. When you cast this spell, choose the nature of the curse from the following options:\n\nChoose one ability score. While cursed, the target has disadvantage on ability checks and saving throws made with that ability score.\n\n\nWhile cursed, the target has disadvantage on attack rolls against you.\n\n\nWhile cursed, the target must make a Wisdom saving throw at the start of each of its turns. If it fails, it wastes its action that turn doing nothing.\n\n\nWhile the target is cursed, your attacks and spells deal an extra 1d8 necrotic damage to the target.\n\nA remove curse spell ends this effect. At the DM's option, you may choose an alternative curse effect, but it should be no more powerful than those described above. The DM has final say on such a curse's effect.\nAt Higher Levels. If you cast this spell using a spell slot of 4th level or higher, the duration is concentration, up to 10 minutes. If you use a spell slot of 5th level or higher, the duration is 8 hours. If you use a spell slot of 7th level or higher, the duration is 24 hours. If you use a 9th level spell slot, the spell lasts until it is dispelled. Using a spell slot of 5th level or higher grants a duration that doesn't require concentration.\nSpell Lists. Bard, Cleric, Wizard",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Clairvoyance",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "10 Minutes",
+        "url": "https://dnd5e.wikidot.com/spell:clairvoyance",
+        "descrizione": "Source: Player's Handbook\n3rd-level divination\nCasting Time: 10 minutes\nRange: 1 mile\nComponents: V, S, M (a focus worth at least 100 gp, either a jeweled horn for hearing or a glass eye for seeing)\nDuration: Concentration, up to 10 minutes\nYou create an invisible sensor within range in a location familiar to you (a place you have visited or seen before) or in an obvious location that is unfamiliar to you (such as behind a door, around a corner, or in a grove of trees). The sensor remains in place for the duration, and it can’t be attacked or otherwise interacted with.\nWhen you cast the spell, you choose seeing or hearing. You can use the chosen sense through the sensor as if you were in its space. As your action, you can switch between seeing and hearing. A creature that can see the sensor (such as a creature benefitting from see invisibility or truesight) sees a luminous, intangible orb about the size of your fist.\nSpell Lists. Bard, Cleric, Sorcerer, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Create Food and Water",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:create-food-and-water",
+        "descrizione": "Source: Player's Handbook\n3rd-level conjuration\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S\nDuration: Instantaneous\nYou create 45 pounds of food and 30 gallons of water on the ground or in containers within range, enough to sustain up to fifteen humanoids or five steeds for 24 hours. The food is bland but nourishing, and spoils if uneaten after 24 hours. The water is clean and doesn’t go bad.\nSpell Lists. Artificer, Cleric, Paladin",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Daylight",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:daylight",
+        "descrizione": "Source: Player's Handbook\n3rd-level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: 1 hour\nA 60-foot-radius sphere of light spreads out from a point you choose within range. The sphere is bright light and sheds dim light for an additional 60 feet.\nIf you chose a point on an object you are holding or one that isn’t being worn or carried, the light shines from the object with and moves with it. Completely covering the affected object with an opaque object, such as a bowl or a helm, blocks the light.\nIf any of this spell’s area overlaps with an area of darkness created by a spell of 3rd level or lower, the spell that created the darkness is dispelled.\nSpell Lists. Cleric, Druid, Paladin, Ranger, Sorcerer",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Dispel Magic",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:dispel-magic",
+        "descrizione": "Source: Player's Handbook\n3rd-level abjuration\nCasting Time: 1 action\nRange: 120 feet\nComponents: V, S\nDuration: Instantaneous\nChoose any creature, object, or magical effect within range. Any spell of 3rd level or lower on the target ends. For each spell of 4th level or higher on the target, make an ability check using your spellcasting ability. The DC equals 10 + the spell's level. On a successful check, the spell ends.\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, you automatically end the effects of a spell on the target if the spell's level is equal to or less than the level of the spell slot you used.\nSpell Lists. Artificer, Bard, Cleric, Druid, Paladin, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Fast Friends",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:fast-friends",
+        "descrizione": "Source: Acquisitions Inc.\n3rd-level enchantment\nCasting Time: 1 action\nRange: 30 feet\nComponents: V\nDuration: Concentration, up to 1 hour\nWhen you cast this spell, choose one humanoid within range that can see and hear you, and that can understand you. The creature must succeed on a Wisdom saving throw or become charmed by you for the duration. While the creature is charmed in this way, it undertakes to perform any services or activities you ask of it in a friendly manner, to the best of its ability.\nYou can set the creature new tasks when a previous task is completed, or if you decide to end its current task. If the service or activity might cause harm to the creature, or if it conflicts with the creature's normal activities and desires, the creature can make another Wisdom saving throw to try to end the effect. This save is made with advantage if you or your companions are fighting the creature. If the activity would result in certain death for the creature, the spell ends.\nWhen the spell ends, the creature knows it was charmed by you.\nAt Higher Levels: When you cast this spell using a spell slot of 4th level or higher, you can target one additional creature for each slot level above 3rd.\nSpell Lists: Bard, Cleric, Wizard",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Feign Death",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:feign-death",
+        "descrizione": "Source: Player's Handbook\n3rd-level necromancy (ritual)\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a pinch of graveyard dirt)\nDuration: 1 hour\nYou touch a willing creature and put it into a cataleptic state that is indistinguishable from death.\nFor the spell’s duration, or until you use an action to touch the target and dismiss the spell, the target appears dead to all outward inspection and to spells used to determine the target’s status. The target is blinded and incapacitated, and its speed drops to 0. The target has resistance to all damage except psychic damage. If the target is diseased or poisoned when you cast the spell, or becomes diseased or poisoned while under the spell’s effect, the disease and poison have no effect until the spell ends.\nSpell Lists. Bard, Cleric, Druid, Wizard",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Glyph of Warding",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Hour",
+        "url": "https://dnd5e.wikidot.com/spell:glyph-of-warding",
+        "descrizione": "Source: Player's Handbook\n3rd-level abjuration\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (incense and powdered diamond worth at least 200 gp, which the spell consumes)\nDuration: Until dispelled or triggered\nWhen you cast this spell, you inscribe a glyph that creates a magical effect triggered by other creatures, either upon a surface (such as a table or a section of floor or wall) or within an object that can be closed (such as a book, a scroll, or a treasure chest) to conceal the glyph. The glyph can cover an area no larger than 10 feet in diameter. If the surface or object is moved more than 10 feet from where you cast this spell, the glyph is broken, and the spell ends without being triggered.\nThe glyph is nearly invisible and requires a successful Intelligence (Investigation) check against your spell save DC to be found.\nYou decide what triggers the glyph when you cast the spell. For glyphs inscribed on a surface, the most typical triggers include touching or standing on the glyph, removing another object covering the glyph, approaching within a certain distance of the glyph, or manipulating the object on which the glyph is inscribed. For glyphs inscribed within an object, the most common triggers include opening that object, approaching within a certain distance of the object, or seeing or reading the glyph. Once a glyph is triggered, this spell ends.\nYou can further refine the trigger so the spell activates only under certain circumstances or according to physical characteristics (such as height or weight), creature kind (for example, the ward could be set to affect aberrations or drow), or alignment. You can also set conditions for creatures that don’t trigger the glyph, such as those who say a certain password.\nWhen you inscribe the glyph, choose explosive runes or a spell glyph.\nExplosive Runes. When triggered, the glyph erupts with magical energy in a 20-foot-radius sphere centered on the glyph. The sphere spreads around corners. Each creature in the area must make a Dexterity saving throw. A creature takes 5d8 acid, cold, fire, lightning, or thunder damage on a failed saving throw (your choice when you create the glyph), or half as much damage on a successful one.\nSpell Glyph. You can store a prepared spell of 3rd level or lower in the glyph by casting it as part of creating the glyph. The spell must target a single creature or an area. The spell being stored has no immediate effect when cast in this way. When the glyph is triggered, the stored spell is cast. If the spell has a target, it targets the creature that triggered the glyph. If the spell affects an area, the area is centered on that creature. If the spell summons hostile creatures or creates harmful objects or traps, they appear as close as possible to the intruder and attack it. If the spell requires concentration, it lasts until the end of its full duration.\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, the damage of an explosive runes glyph increases by 1d8 for each slot level above 3rd. If you create a spell glyph, you can store any spell of up to the same level as the slot you use for the glyph of warding.\nSpell Lists. Artificer, Bard, Cleric, Wizard",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Incite Greed",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 action",
+        "url": "https://dnd5e.wikidot.com/spell:incite-greed",
+        "descrizione": "Source: Acquisitions Inc.\n3rd-level enchantment\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a gem worth at least 50 gp)\nDuration: Concentration, up to 1 minute\nWhen you cast this spell, you present the gem used as the material component and choose any number of creatures within range that can see you. Each target must succeed on a Wisdom saving throw or be charmed by you until the spell ends, or until you or your companions do anything harmful to it. While charmed in this way, a creature can do nothing but use its movement to approach you in a safe manner. While an affected creature is within 5 feet of you, it cannot move, but simply stares greedily at the gem you present.\nAt the end of each of its turns, an affected target can make a Wisdom saving throw. If it succeeds, this effect ends for that target.\nSpell Lists. Cleric, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Life Transference",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:life-transference",
+        "descrizione": "Source: Xanathar's Guide to Everything\n3rd-level necromancy\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S\nDuration: Instantaneous\nYou sacrifice some of your health to mend another creature’s injuries. You take 4d8 necrotic damage, which can’t be reduced in any way, and one creature of your choice that you can see within range regains a number of hit points equal to twice the necrotic damage you take.\nAt Higher Levels: When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d8 for each slot level above 3rd.\nSpell Lists: Cleric, Wizard",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Magic Circle",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:magic-circle",
+        "descrizione": "Source: Player's Handbook\n3rd-level abjuration\nCasting Time: 1 minute\nRange: 10 feet\nComponents: V, S, M (holy water or powdered silver and iron worth at least 100 gp, which the spell consumes)\nDuration: 1 hour\nYou create a 10-foot-radius, 20-foot-tall cylinder of magical energy centered on a point on the ground that you can see within range. Glowing runes appear wherever the cylinder intersects with the floor or other surface.\nChoose one or more of the following types of creatures: celestials, elementals, fey, fiends, or undead. The circle affects a creature of the chosen type in the following ways:\n\nThe creature can’t willingly enter the cylinder by nonmagical means. If the creature tries to use teleportation or interplanar travel to do so, it must first succeed on a Charisma saving throw.\n\n\nThe creature has disadvantage on attack rolls against targets within the cylinder.\n\n\nTargets within the cylinder can’t be charmed, frightened, or possessed by the creature.\n\nWhen you cast this spell, you can elect to cause its magic to operate in the reverse direction, preventing a creature of the specified type from leaving the cylinder and protecting targets outside it.\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, the duration increases by 1 hour for each slot level above 3rd.\nSpell Lists. Cleric, Paladin, Warlock, Wizard",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Mass Healing Word",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:mass-healing-word",
+        "descrizione": "Source: Player's Handbook\n3rd-level evocation\nCasting Time: 1 bonus action\nRange: 60 feet\nComponents: V\nDuration: Instantaneous\nAs you call out words of restoration, up to six creatures of your choice that you can see within range regain hit points equal to 1d4 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, the healing increases by 1d4 for each slot level above 3rd.\nSpell Lists. Bard (Optional), Cleric",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Meld into Stone",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:meld-into-stone",
+        "descrizione": "Source: Player's Handbook\n3rd-level transmutation (ritual)\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: 8 hours\nYou step into a stone object or surface large enough to fully contain your body, melding yourself and all the equipment you carry with the stone for the duration. Using your movement, you step into the stone at a point you can touch. Nothing of your presence remains visible or otherwise detectable by nonmagical senses.\nWhile merged with the stone, you can’t see what occurs outside it, and any Wisdom (Perception) checks you make to hear sounds outside it are made with disadvantage. You remain aware of the passage of time and can cast spells on yourself while merged in the stone. You can use your movement to leave the stone where you entered it, which ends the spell. You otherwise can’t move.\nMinor physical damage to the stone doesn’t harm you, but its partial destruction or a change in its shape (to the extent that you no longer fit within it) expels you and deals 6d6 bludgeoning damage to you. The stone’s complete destruction (or transmutation into a different substance) expels you and deals 50 bludgeoning damage to you. If expelled, you fall prone in an unoccupied space closest to where you first entered.\nSpell Lists. Cleric, Druid, Ranger (Optional)",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)",
+            "Debuff e Malus",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Motivational Speech",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:motivational-speech",
+        "descrizione": "Source: Acquisitions Inc.\n3rd-level enchantment\nCasting Time: 1 minute\nRange: 60 feet\nComponents: V\nDuration: 1 hour\nChoose up to five creatures within range that can hear you. For the duration, each affected creature gains 5 temporary hit points and has advantage on Wisdom saving throws. If an affected creature is hit by an attack, it has advantage on the next attack roll it makes. Once an affected creature loses the temporary hit points granted by this spell, the spell ends for that creature.\nAt Higher Levels: When you cast this spell using a spell slot of 4th level or higher, the temporary hit points increase by 5 for each slot level above 3rd.\nSpell Lists: Bard, Cleric",
+        "categorie": [
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Protection from Energy",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:protection-from-energy",
+        "descrizione": "Source: Player's Handbook\n3rd-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Concentration, up to 1 hour\nFor the duration, the willing creature you touch has resistance to one damage type of your choice: acid, cold, fire, lightning, or thunder.\nSpell Lists. Artificer, Cleric, Druid, Ranger, Sorcerer, Wizard",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Remove Curse",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:remove-curse",
+        "descrizione": "Source: Player's Handbook\n3rd-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\nAt your touch, all curses affecting one creature or object end. If the object is a cursed magic item, its curse remains, but the spell breaks its owner’s attunement to the object so it can be removed or discarded.\nSpell Lists. Cleric, Paladin, Warlock, Wizard",
+        "categorie": [
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Revivify",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:revivify",
+        "descrizione": "Source: Player's Handbook\n3rd-level necromancy\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (diamonds worth 300 gp, which the spell consumes)\nDuration: Instantaneous\nYou touch a creature that has died within the last minute. That creature returns to life with 1 hit point. This spell can’t return to life a creature that has died of old age, nor can it restore any missing body parts.\nSpell Lists. Artificer, Cleric, Druid (Optional), Paladin, Ranger (Optional)",
+        "categorie": [
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Sending",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:sending",
+        "descrizione": "Source: Player's Handbook\n3rd-level evocation\nCasting Time: 1 action\nRange: Unlimited\nComponents: V, S, M (a short piece of fine copper wire)\nDuration: 1 round\nYou send a short message of twenty-five words or less to a creature with which you are familiar. The creature hears the message in its mind, recognizes you as the sender if it knows you, and can answer in a like manner immediately. The spell enables creatures with Intelligence scores of at least 1 to understand the meaning of your message.\nYou can send the message across any distance and even to other planes of existence, but if the target is on a different plane than you, there is a 5 percent chance that the message doesn't arrive.\nSpell Lists. Bard, Cleric, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Speak with Dead",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:speak-with-dead",
+        "descrizione": "Source: Player's Handbook\n3rd-level necromancy\nCasting Time: 1 action\nRange: 10 feet\nComponents: V, S, M (burning incense)\nDuration: 10 minutes\nYou grant the semblance of life and intelligence to a corpse of your choice within range, allowing it to answer the questions you pose. The corpse must still have a mouth and can’t be undead. The spell fails if the corpse was the target of this spell within the last 10 days.\nUntil the spell ends, you can ask the corpse up to five questions. The corpse knows only what it knew in life, including the languages it knew. Answers are usually brief, cryptic, or repetitive, and the corpse is under no compulsion to offer a truthful answer if you are hostile to it or it recognizes you as an enemy. This spell doesn’t return the creature’s soul to its body, only its animating spirit. Thus, the corpse can’t learn new information, doesn’t comprehend anything that has happened since it died, and can’t speculate about future events.\nSpell Lists. Bard, Cleric, Wizard (Optional)",
+        "categorie": [
+            "Sociale e Persuasione"
+        ]
+    },
+    {
+        "nome": "Spirit Guardians",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:spirit-guardians",
+        "descrizione": "Source: Player's Handbook\n3rd-level conjuration\nCasting Time: 1 action\nRange: Self (15-foot-radius)\nComponents: V, S, M (a holy symbol)\nDuration: Concentration, up to 10 minutes\nYou call forth spirits to protect you. They flit around you to a distance of 15 feet for the duration. If you are good or neutral, their spectral form appears angelic or fey (your choice). If you are evil, they appear fiendish.\nWhen you cast this spell, you can designate any number of creatures you can see to be unaffected by it. An affected creature’s speed is halved in the area, and when the creature enters the area for the first time on a turn or starts its turn there, it must make a Wisdom saving throw. On a failed save, the creature takes 3d8 radiant damage (if you are good or neutral) or 3d8 necrotic damage (if you are evil). On a successful save, the creature takes half as much damage.\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d8 for each slot level above 3rd.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Spirit Shroud",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:spirit-shroud",
+        "descrizione": "Source: Tasha's Cauldron of Everything\n3rd-level necromancy\nCasting Time: 1 bonus action\nRange: Self\nComponents: V, S\nDuration: Concentration, up to 1 minute\nYou call forth spirits of the dead, which flit around you for the spell’s duration. The spirits are intangible and invulnerable.\nUntil the spell ends, any attack you make deals 1d8 extra damage when you hit a creature within 10 feet of you. This damage is radiant, necrotic, or cold (your choice when you cast the spell). Any creature that takes this damage can’t regain hit points until the start of your next turn.\nIn addition, any creature of your choice that you can see that starts its turn within 10 feet of you has its speed reduced by 10 feet until the start of your next turn.\nAt Higher Levels. When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d8 for every two slot levels above 3rd.\nSpell Lists. Cleric (Optional), Paladin (Optional), Warlock (Optional), Wizard (Optional)",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Tongues",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:tongues",
+        "descrizione": "Source: Player's Handbook\n3rd-level divination\nCasting Time: 1 action\nRange: Touch\nComponents: V, M (a small clay model of a ziggurat)\nDuration: 1 hour\nThis spell grants the creature you touch the ability to understand any spoken language it hears. Moreover, when the target speaks, any creature that knows at least one language and can hear the target understands what it says.\nSpell Lists. Bard, Cleric, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Water Walk",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:water-walk",
+        "descrizione": "Source: Player's Handbook\n3rd-level transmutation (ritual)\nCasting Time: 1 action\nRange: 30 feet\nComponents: V, S, M (a piece of cork)\nDuration: 1 hour\nThis spell grants the ability to move across any liquid surface – such as water, acid, mud, snow, quicksand, or lava – as if it were harmless solid ground (creatures crossing molten lava can still take damage from the heat). Up to ten willing creatures you can see within range gain this ability for the duration.\nIf you target a creature submerged in a liquid, the spell carries the target to the surface of the liquid at a rate of 60 feet per round.\nSpell Lists. Artificer, Cleric, Druid, Ranger, Sorcerer",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Aura of Life",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:aura-of-life",
+        "descrizione": "Source: Player's Handbook\n4th-level abjuration\nCasting Time: 1 action\nRange: Self (30-foot radius)\nComponents: V\nDuration: Concentration, up to 10 minutes\nLife-preserving energy radiates from you in an aura with a 30-foot radius. Until the spell ends, the aura moves with you, centered on you. Each non-hostile creature in the aura (including you) has resistance to necrotic damage, and its hit point maximum can’t be reduced. In addition, a non-hostile, living creature regains 1 hit point when it starts its turn in the aura with 0 hit points.\nSpell Lists. Cleric (Optional), Paladin",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Aura of Purity",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:aura-of-purity",
+        "descrizione": "Source: Player's Handbook\n4th-level abjuration\nCasting Time: 1 action\nRange: Self (30-foot radius)\nComponents: V\nDuration: Concentration, up to 10 minutes\nPurifying energy radiates from you in an aura with a 30-foot radius. Until the spell ends, the aura moves with you, centered on you. Each non-hostile creature in the aura (including you) can’t become diseased, has resistance to poison damage, and has advantage on saving throws against effects that cause any of the following conditions: blinded, charmed, deafened, frightened, paralyzed, poisoned, and stunned.\nSpell Lists. Cleric (Optional), Paladin",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Banishment",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:banishment",
+        "descrizione": "Source: Player's Handbook\n4th-level abjuration\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (an item distasteful to the target)\nDuration: Concentration, up to 1 minute\nYou attempt to send one creature that you can see within range to another place of existence. The target must succeed on a Charisma saving throw or be banished.\nIf the target is native to the plane of existence you’re on, you banish the target to a harmless demiplane. While there, the target is incapacitated. The target remains there until the spell ends, at which point the target reappears in the space it left or in the nearest unoccupied space if that space is occupied.\nIf the target is native to a different plane of existence that the one you’re on, the target is banished with a faint popping noise, returning to its home plane. If the spell ends before 1 minute has passed, the target reappears in the space it left or in the nearest unoccupied space if that space is occupied. Otherwise, the target doesn’t return.\nAt Higher Levels. When you cast this spell using a spell slot of 5th level or higher, you can target one additional creature for each slot level above 4th.\nSpell Lists. Cleric, Paladin, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Control Water",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:control-water",
+        "descrizione": "Source: Player's Handbook\n4th-level transmutation\nCasting Time: 1 action\nRange: 300 feet\nComponents: V, S, M (a drop of water and a pinch of dust)\nDuration: Concentration, up to 10 minutes\nUntil the spell ends, you control any freestanding water inside an area you choose that is a cube up to 100 feet on a side. You can choose from any of the following effects when you cast this spell. As an action on your turn, you can repeat the same effect or choose a different one.\nFlood. You cause the water level of all standing water in the area to rise by as much as 20 feet. If the area includes a shore, the flooding water spills over onto dry land. If you choose an area in a large body of water, you instead create a 20-foot tall wave that travels from one side of the area to the other and then crashes down. Any Huge or smaller vehicles in the wave’s path are carried with it to the other side. Any Huge or smaller vehicles struck by the wave have a 25 percent chance of capsizing. The water level remains elevated until the spell ends or you choose a different effect. If this effect produced a wave, the wave repeats on the start of your next turn while the flood effect lasts.\nPart Water. You cause water in the area to move apart and create a trench. The trench extends across the spell’s area, and the separated water forms a wall to either side. The trench remains until the spell ends or you choose a different effect. The water then slowly fills in the trench over the course of the next round until the normal water level is restored.\nRedirect Flow. You cause flowing water in the area to move in a direction you choose, even if the water has to flow over obstacles, up walls, or in other unlikely directions. The water in the area moves as you direct it, but once it moves beyond the spell’s area, it resumes its flow based on the terrain conditions. The water continues to move in the direction you chose until the spell ends or you choose a different effect.\nWhirlpool. This effect requires a body of water at least 50 feet square and 25 feet deep. You cause a whirlpool to form in the center of the area. The whirlpool forms a vortex that is 5 feet wide at the base, up to 50 feet wide at the top, and 25 feet tall. Any creature or object in the water and within 25 feet of the vortex is pulled 10 feet toward it. A creature can swim away from the vortex by making a Strength (Athletics) check against your spell save DC.\nWhen a creature enters the vortex for the first time on a turn or starts its turn there, it must make a Strength saving throw. On a failed save, the creature takes 2d8 bludgeoning damage and is caught in the vortex until the spell ends. On a successful save, the creature takes half damage, and isn’t caught in the vortex. A creature caught in the vortex can use its action to try to swim away from the vortex as described above, but has disadvantage on the Strength (Athletics) check to do so.\nThe first time each turn that an object enters the vortex, the object takes 2d8 bludgeoning damage, this damage occurs each round it remains in the vortex.\nSpell Lists. Cleric, Druid, Wizard",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Death Ward",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:death-ward",
+        "descrizione": "Source: Player's Handbook\n4th-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: 8 hours\nYou touch a creature and grant it a measure of protection from death. The first time the target would drop to 0 hit points as a result of taking damage, the target instead drops to 1 hit point, and the spell ends. If the spell is still in effect when the target is subjected to an effect that would kill it instantaneously without dealing damage, that effect is instead negated against the target, and the spells ends.\nSpell Lists. Cleric, Paladin",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Divination",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action R",
+        "url": "https://dnd5e.wikidot.com/spell:divination",
+        "descrizione": "Source: Player's Handbook\n4th-level divination (ritual)\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (incense and a sacrificial offering appropriate to your religion, together worth at least 25 gp, which the spell consumes)\nDuration: Instantaneous\nYour magic and an offering put you in contact with a god or a god’s servants. You ask a single question concerning a specific goal, event, or activity to occur within 7 days. The DM offers a truthful reply. The reply might be a short phrase, a cryptic rhyme, or an omen.\nThe spell doesn’t take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.\nIf you cast this spell two or more times before finishing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret.\nSpell Lists. Cleric, Druid (Optional), Wizard (Optional)",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Freedom of Movement",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:freedom-of-movement",
+        "descrizione": "Source: Player's Handbook\n4th-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a leather strap, bound around the arm or a similar appendage)\nDuration: 1 hour\nYou touch a willing creature. For the duration, the target’s movement is unaffected by difficult terrain, and spells and other magical effects can neither reduce the target’s speed nor cause the target to be paralyzed or restrained.\nThe target can also spend 5 feet of movement to automatically escape from nonmagical restraints, such as manacles or a creature that has it grappled. Finally, being underwater imposes no penalties on the target’s movement or attacks.\nSpell Lists. Artificer, Bard, Cleric, Druid, Ranger",
+        "categorie": [
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Guardian of Faith",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:guardian-of-faith",
+        "descrizione": "Source: Player's Handbook\n4th-level conjuration\nCasting Time: 1 action\nRange: 30 feet\nComponents: V\nDuration: 8 hours\nA Large spectral guardian appears and hovers for the duration in an unoccupied space of your choice that you can see within range. The guardian occupies that space and is indistinct except for a gleaming sword and shield emblazoned with the symbol of your deity.\nAny creature hostile to you that moves to a space within 10 feet of the guardian for the first time on a turn must succeed on a Dexterity saving throw. The creature takes 20 radiant damage on a failed save, or half as much damage on a successful one. The guardian vanishes when it has dealt a total of 60 damage.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Locate Creature",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:locate-creature",
+        "descrizione": "Source: Player's Handbook\n4th-level divination\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (a bit of fur from a bloodhound)\nDuration: Concentration, up to 1 hour\nDescribe or name a creature that is familiar to you. You sense the direction to the creature’s location, as long as that creature is within 1,000 feet of you. If the creature is moving, you know the direction of its movement.\nThe spell can locate a specific creature known to you, or the nearest creature of a specific kind (such as a human or a unicorn), so long as you have seen such a creature up close – within 30 feet – at least once. If the creature you described or named is in a different form, such as being under the effects of a polymorph spell, this spell doesn’t locate the creature.\nThis spell can’t locate a creature if running water at least 10 feet wide blocks a direct path between you and the creature.\nSpell Lists. Bard, Cleric, Druid, Paladin, Ranger, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Stone Shape",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:stone-shape",
+        "descrizione": "Source: Player's Handbook\n4th-level transmutation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (soft clay, which must be worked into roughly the desired shape of the stone object)\nDuration: Instantaneous\nYou touch a stone object of Medium size or smaller or a section of stone no more than 5 feet in any dimension and form it into any shape that suits your purpose. So, for example, you could shape a large rock into a weapon, idol, or coffer, or make a small passage through a wall, as long as the wall is less than 5 feet thick. You could also shape a stone door or its frame to seal the door shut. The object you create can have up to two hinges and a latch, but finer mechanical detail isn’t possible.\nSpell Lists. Artificer, Cleric, Druid, Wizard",
+        "categorie": [
+            "Generico"
+        ]
+    },
+    {
+        "nome": "Commune",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Minute R",
+        "url": "https://dnd5e.wikidot.com/spell:commune",
+        "descrizione": "Source: Player's Handbook\n5th-level divination (ritual)\nCasting Time: 1 minute\nRange: Self\nComponents: V, S, M (incense and a vial of holy or unholy water)\nDuration: 1 minute\nYou contact your deity or a divine proxy and ask up to three questions that can be answered with a yes or no. You must ask your questions before the spell ends. You receive a correct answer for each question.\nDivine beings aren’t necessarily omniscient, so you might receive “unclear” as an answer if a question pertains to information that lies beyond the deity’s knowledge. In a case where a one-word answer could be misleading or contrary to the deity’s interests, the DM might offer a short phrase as an answer instead.\nIf you cast the spell two or more times before finishing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get no answer. The DM makes this roll in secret.\nSpell Lists. Cleric",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Contagion",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:contagion",
+        "descrizione": "Source: Player's Handbook\n5th-level necromancy\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: 7 days\nYour touch inflicts disease. Make a melee spell attack against a creature within your reach. On a hit, the target is poisoned.\nAt the end of each of the poisoned target’s turns, the target must make a Constitution saving throw. If the target succeeds on three of these saves, it is no longer poisoned, and the spell ends. If the target fails three of these saves, the target is no longer poisoned, but choose one of the diseases below. The target is subjected to the chosen disease for the spell’s duration.\nSince this spell induces a natural disease in its target, any effect that removes a disease or otherwise ameliorates a disease’s effects apply to it.\n\nBlinding Sickness. Pain grips the creature’s mind, and its eyes turn milky white. The creature has disadvantage on Wisdom checks and Wisdom saving throws and is blinded.\n\n\nFilth Fever. A raging fever sweeps through the creature’s body. The creature has disadvantage on Strength checks, Strength saving throws, and attack rolls that use Strength.\n\n\nFlesh Rot. The creature’s flesh decays. The creature has disadvantage on Charisma checks and vulnerability to all damage.\n\n\nMindfire. The creature’s mind becomes feverish. The creature has disadvantage on Intelligence checks and Intelligence saving throws, and the creature behaves as if under the effects of the confusion spell during combat.\n\n\nSeizure. The creature is overcome with shaking. The creature has disadvantage on Dexterity checks, Dexterity saving throws, and attack rolls that use Dexterity.\n\n\nSlimy Doom. The creature begins to bleed uncontrollably. The creature has disadvantage on Constitution checks and Constitution saving throws. In addition, whenever the creature takes damage, it is stunned until the end of its next turn.\n\nSpell Lists. Cleric, Druid",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Dawn",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:dawn",
+        "descrizione": "Source: Xanathar's Guide to Everything\n5th-level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (a sunburst pendant worth at least 100 gp)\nDuration: Concentration, up to 1 minute\nThe light of dawn shines down on a location you specify within range. Until the spell ends, a 30-foot-radius, 40-foot-high cylinder of bright light glimmers there. This light is sunlight. When the cylinder appears, each creature in it must make a Constitution saving throw, taking 4d10 radiant damage on a failed save, or half as much damage on a successful one. A creature must also make this saving throw whenever it ends its turn in the cylinder. If you’re within 60 feet of the cylinder, you can move it up to 60 feet as a bonus action on your turn.\nSpell Lists. Cleric, Wizard",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Dispel Evil and Good",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:dispel-evil-and-good",
+        "descrizione": "Source: Player's Handbook\n5th-level abjuration\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (holy water or powdered silver and iron)\nDuration: Concentration, up to 1 minute\nShimmering energy surrounds and protects you from fey, undead, and creatures originating from beyond the Material Plane. For the duration, celestials, elementals, fey, fiends, and undead have disadvantage on attack rolls against you. You can end the spell early by using either of the following special functions.\n\nBreak Enchantment. As your action, you touch a creature you can reach that is charmed, frightened, or possessed by a celestial, an elemental, a fey, a fiend, or an undead. The creature you touch is no longer charmed, frightened, or possessed by such creatures.\n\n\nDismissal. As your action, make a melee spell attack against a celestial, an elemental, a fey, a fiend, or an undead you can reach. On a hit, you attempt to drive the creature back to its home plane. The creature must succeed on a Charisma saving throw or be sent back to its home plane (if it isn’t there already). If they are already on their home plane, undead are sent to the Shadowfell, and fey are sent to the Feywild.\n\nSpell Lists. Cleric, Paladin",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Flame Strike",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:flame-strike",
+        "descrizione": "Source: Player's Handbook\n5th-level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (pinch of sulfur)\nDuration: Instantaneous\nA vertical column of divine fire roars down from the heavens in a location you specify. Each creature in a 10-foot radius, 40-foot-high cylinder centered on a point within range must make a Dexterity saving throw. A creature takes 4d6 fire damage and 4d6 radiant damage on a failed save, or half as much damage on a successful one.\nAt Higher Levels. When you cast this spell using a spell slot of 6th level or higher, the fire damage or the radiant damage (your choice) increases by 1d6 for each slot level above 5th.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Geas",
+        "livello_scuola": "Enchantment",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:geas",
+        "descrizione": "Source: Player's Handbook\n5th-level enchantment\nCasting Time: 1 minute\nRange: 60 feet\nComponents: V\nDuration: 30 days\nYou place a magical command on a creature that you can see within range, forcing it to carry out some service or refrain from some action or course of activity as you decide.\nIf the creature can understand you, it must succeed on a Wisdom saving throw or become charmed by you for the duration. While the creature is charmed by you, it takes 5d10 psychic damage each time it acts in a manner directly counter to your instructions, but no more than once each day. A creature that can’t understand you is unaffected by the spell.\nYou can issue any command you choose, short of an activity that would result in certain death. Should you issue a suicidal command, the spell ends. You can end the spell early by using an action to dismiss it. A Remove Curse, Greater Restoration, or Wish spell also ends it.\nAt Higher Levels. When you cast this spell using a spell slot of 7th or 8th level, the duration is 1 year. When you cast this spell using a spell slot of 9th level, the spell lasts until it is ended by one of the spells mentioned above.\nSpell Lists. Bard, Cleric, Druid, Paladin, Wizard",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Debuff e Malus",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Greater Restoration",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:greater-restoration",
+        "descrizione": "Source: Player's Handbook\n5th-level abjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (diamond dust worth at least 100 gp, which the spell consumes)\nDuration: Instantaneous\nYou imbue a creature you touch with positive energy to undo a debilitating effect. You can reduce the target’s exhaustion level by one, or end one of the following effects on the target:\n\nOne effect that charmed or petrified the target\n\n\nOne curse, including the target’s attunement to a cursed magic item\n\n\nAny reduction to one of the target’s ability scores\n\n\nOne effect reducing the target’s hit point maximum\n\nSpell Lists. Artificer, Bard, Cleric, Druid, Ranger (Optional)",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Hallow",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "24 Hours",
+        "url": "https://dnd5e.wikidot.com/spell:hallow",
+        "descrizione": "Source: Player's Handbook\n5th-level evocation\nCasting Time: 24 hours\nRange: Touch\nComponents: V, S, M (herbs, oils, and incense worth at least 1,000 gp, which the spell consumes)\nDuration: Until dispelled\nYou touch a point and infuse an area around it with holy (or unholy) power. The area can have a radius up to 60 feet, and the spell fails if the radius includes an area already under the effect a hallow spell. The affected area is subject to the following effects.\nFirst, celestials, elementals, fey, fiends, and undead can’t enter the area, nor can such creatures charm, frighten, or possess creatures within it. Any creature charmed, frightened, or possessed by such a creature is no longer charmed, frightened, or possessed upon entering the area. You can exclude one or more of those types of creatures from this effect.\nSecond, you can bind an extra effect to the area. Choose the effect from the following list, or choose an effect offered by the DM. Some of these effects apply to creatures in the area; you can designate whether the effect applies to all creatures, creatures that follow a specific deity or leader, or creatures of a specific sort, such as orcs or trolls. When a creature that would be affected enters the spell’s area for the first time on a turn or starts its turn there, it can make a Charisma saving throw. On a success, the creature ignores the extra effect until it leaves the area.\n\nCourage. Affected creatures can’t be frightened while in the area.\n\n\nDarkness. Darkness fills the area. Normal light, as well as magical light created by spells of a lower level than the slot you used to cast this spell, can’t illuminate the area.\n\n\nDaylight. Bright light fills the area. Magical darkness created by spells of a lower level than the slot you used to cast this spell can’t extinguish the light.\n\n\nEnergy Protection. Affected creatures in the area have resistance to one damage type of your choice, except for bludgeoning, piercing, or slashing.\n\n\nEnergy Vulnerability. Affected creatures in the area have vulnerability to one damage type of your choice, except for bludgeoning, piercing, or slashing.\n\n\nEverlasting Rest. Dead bodies interred in the area can’t be turned into undead.\n\n\nExtradimensional Interference. Affected creatures can’t move or travel using teleportation or by extradimensional or interplanar means.\n\n\nFear. Affected creatures are frightened while in the area.\n\n\nSilence. No sound can emanate from within the area, and no sound can reach into it.\n\n\nTongues. Affected creatures can communicate with any other creature in the area, even if they don’t share a common language.\n\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Holy Weapon",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:holy-weapon",
+        "descrizione": "Source: Xanathar's Guide to Everything\n5th-level evocation\nCasting Time: 1 bonus action\nRange: Touch\nComponents: V, S\nDuration: Concentration, up to 1 hour\nYou imbue a weapon you touch with holy power. Until the spell ends, the weapon emits bright light in a 30-foot radius and dim light for an additional 30 feet. In addition, weapon attacks made with it deal an extra 2d8 radiant damage on a hit. If the weapon isn’t already a magic weapon, it becomes one for the duration. As a bonus action on your turn, you can dismiss this spell and cause the weapon to emit a burst of radiance. Each creature of your choice that you can see within 30 feet of the weapon must make a Constitution saving throw. On a failed save, a creature takes 4d8 radiant damage, and it is blinded for 1 minute. On a successful save, a creature takes half as much damage and isn’t blinded. At the end of each of its turns, a blinded creature can make a Constitution saving throw, ending the effect on itself on a success.\nSpell Lists. Cleric, Paladin",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Insect Plague",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:insect-plague",
+        "descrizione": "Source: Player's Handbook\n5th-level conjuration\nCasting Time: 1 action\nRange: 300 feet\nComponents: V, S, M (a few grains of sugar, some kernels of grain, and a smear of fat)\nDuration: Concentration, up to 10 minutes\nSwarming, biting locusts fill a 20-foot-radius sphere centered on a point you choose within range. The sphere spreads around corners. The sphere remains for the duration, and its area is lightly obscured. The sphere’s area is difficult terrain.\nWhen the area appears, each creature in it must make a Constitution saving throw. A creature takes 4d10 piercing damage on a failed save, or half as much damage on a successful one. A creature must also make this saving throw when it enters the spell’s area for the first time on a turn or ends its turn there.\nAt Higher Levels. When you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d10 for each slot level above 5th.\nSpell Lists. Cleric, Druid, Sorcerer",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Legend Lore",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "10 Minutes",
+        "url": "https://dnd5e.wikidot.com/spell:legend-lore",
+        "descrizione": "Source: Player's Handbook\n5th-level divination\nCasting Time: 10 minutes\nRange: Self\nComponents: V, S, M (incense worth at least 250 gp, which the spell consumes, and four ivory strips worth at least 50 gp each)\nDuration: Instantaneous\nName or describe a person, place, or object. The spell brings to your mind a brief summary of the significant lore about the thing you named. The lore might consist of current tales, forgotten stories, or even secret lore that has never been widely known. If the thing you named isn’t of legendary importance, you gain no information. The more information you already have about the thing, the more precise and detailed the information you receive is.\nThe information you learn is accurate but might be couched in figurative language. For example, if you have a mysterious magic axe on hand, the spell might yield this information: Woe to the evildoer whose hand touches the axe, for even the haft slices the hand of the evil ones. Only a true Child of Stone, lover and beloved of Moradin, may awaken the true powers of the axe, and only with the sacred word Rudnogg on the lips.\nSpell Lists. Bard, Cleric, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Mass Cure Wounds",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:mass-cure-wounds",
+        "descrizione": "Source: Player's Handbook\n5th-level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nA wave of healing energy washes out from a point of your choice within range. Choose up to six creatures in a 30-foot-radius sphere centered on that point. Each target regains hit points equal to 3d8 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\nAt Higher Levels. When you cast this spell using a spell slot of 6th level or higher, the healing increases by 1d8 for each slot level above 5th.\nSpell Lists. Bard, Cleric, Druid",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Planar Binding",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Hour",
+        "url": "https://dnd5e.wikidot.com/spell:planar-binding",
+        "descrizione": "Source: Player's Handbook\n5th-level abjuration\nCasting Time: 1 hour\nRange: 60 feet\nComponents: V, S, M (a jewel worth at least 1,000 gp, which the spell consumes)\nDuration: 24 hours\nWith this spell, you attempt to bind a celestial, an elemental, a fey, or a fiend to your service. The creature must be within range for the entire casting of the spell. (Typically, the creature is first summoned into the center of an inverted Magic Circle in order to keep it trapped while this spell is cast.) At the completion of the casting, the target must make a Charisma saving throw. On a failed save, it is bound to serve you for the duration. If the creature was summoned or created by another spell, that spell’s duration is extended to match the duration of this spell.\nA bound creature must follow your instructions to the best of its ability. You might command the creature to accompany you on an adventure, to guard a location, or to deliver a message. The creature obeys the letter of your instructions, but if the creature is hostile to you, it strives to twist your words to achieve its own objectives. If the creature carries out your instructions completely before the spell ends, it travels to you to report this fact if you are on the same plane of existence. If you are on a different plane of existence, it returns to the place where you bound it and remains there until the spell ends.\nAt Higher Levels. When you cast this spell using a spell slot of a higher level, the duration increases to 10 days with a 6th-level slot, 30 days with a 7th-level slot, 180 days with an 8th-level slot, or 1 year and 1 day with a 9th-level spell slot.\nSpell Lists. Bard, Cleric, Druid, Warlock (Optional), Wizard",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Raise Dead",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Hour",
+        "url": "https://dnd5e.wikidot.com/spell:raise-dead",
+        "descrizione": "Source: Player's Handbook\n5th-level necromancy\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a diamond worth at least 500 gp, which the spell consumes)\nDuration: Instantaneous\nYou return a dead creature you touch to life, provided that it has been dead no longer than 10 days. If the creature’s soul is both willing and at liberty to rejoin the body, the creature returns to life with 1 hit point.\nThis spell also neutralizes any poison and cures nonmagical diseases that affected the creature at the time it died. This spell doesn’t, however, remove magical diseases, curses, or similar effects; if these aren’t first removed prior to casting the spell, they take effect when the creature returns to life. The spell can’t return an undead creature to life.\nThis spell closes all mortal wounds, but it doesn’t restore missing body parts. If the creature is lacking body parts or organs integral for its survival – its head, for instance – the spell automatically fails.\nComing back from the dead is an ordeal. The target takes a -4 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears.\nSpell Lists. Bard, Cleric, Paladin",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Scrying",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "10 Minutes",
+        "url": "https://dnd5e.wikidot.com/spell:scrying",
+        "descrizione": "Source: Player's Handbook\n5th-level divination\nCasting Time: 10 minutes\nRange: Self\nComponents: V, S, M (a focus worth at least 1,000 gp, such as a crystal ball, a silver mirror, or a font filled with holy water)\nDuration: Concentration, up to 10 minutes\nYou can see and hear a particular creature you choose that is on the same plane of existence as you. The target must make a Wisdom saving throw, which is modified by how well you know the target and the sort of physical connection you have to it. If a target knows you’re casting this spell, it can fail the saving throw voluntarily if it wants to be observed.\n\n\nKnowledge\nSave Modifier\n\n\nSecondhand (you have heard of the target)\n+5\n\n\nFirsthand (you have met the target)\n+0\n\n\nFamiliar (you know the target well)\n-5\n\n\n\n\nConnection\nSave Modifier\n\n\nLikeness or picture\n-2\n\n\nPossession or garment\n-4\n\n\nBody part, lock of hair, bit of nail, or the like \n-10\n\n\nOn a successful save, the target isn’t affected, and you can’t use this spell against it again for 24 hours.\nOn a failed save, the spell creates an invisible sensor within 10 feet of the target. You can see and hear through the sensor as if you were there. The sensor moves with the target, remaining within 10 feet of it for the duration. A creature that can see invisible objects sees the sensor as a luminous orb about the size of your fist.\nInstead of targeting a creature, you can choose a location you have seen before as the target of this spell. When you do, the sensor appears at that location and doesn’t move.\nSpell Lists. Bard, Cleric, Druid, Warlock, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Summon Celestial",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:summon-celestial",
+        "descrizione": "Source: Tasha's Cauldron of Everything\n5th-level conjuration\nCasting Time: 1 action\nRange: 90 feet\nComponents: V, S, M (a golden reliquary worth at least 500 gp)\nDuration: Concentration, up to 1 hour\nYou call forth a celestial spirit. It manifests in an angelic form in an unoccupied space that you can see within range. This corporeal form uses the Celestial Spirit stat block. When you cast the spell, choose Avenger or Defender. Your choice determines the creature’s attack in its stat block. The creature disappears when it drops to 0 hit points or when the spell ends.\nThe creature is an ally to you and your companions. In combat, the creature shares your initiative count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don’t issue any, it takes the Dodge action and uses its move to avoid danger.\nAt Higher Levels. When you cast this spell using a spell slot of 6th level or higher, use the higher level whenever the spell’s level appears in the stat block.\nSpell Lists. Cleric (Optional), Paladin (Optional)\n\n\nCelestial Spirit\n\n\nLarge celestial\n\n\nArmor Class: 11 + the level of the spell (natural armor) + 2 (Defender only)\n\n\nHit Points: 40 + 10 for each spell level above 5th\n\n\nSpeed: 30 ft., fly 40 ft.\n\n\nSTR\nDEX\nCON\nINT\nWIS\nCHA\n\n\n16 (+3)\n14 (+2)\n16 (+3)\n10 (+0)\n14 (+2)\n16 (+3)\n\n\nDamage Resistances: radiant\n\n\nCondition Immunities: charmed, frightened\n\n\nSenses: darkvision 60 ft., passive Perception 12\n\n\nLanguages: Celestial, understands the languages you speak\n\n\nChallenge: —\n\n\nProficiency Bonus: equals your bonus\n\n\nActions\n\n\nMultiattack. The celestial makes a number of attacks equal to half this spell’s level (rounded down).\n\n\nRadiant Bow (Avenger Only). Ranged Weapon Attack: your spell attack modifier to hit, reach 150/600 ft., one target. Hit: 2d6 + 2 + the spell’s level radiant damage.\n\n\nRadiant Mace (Defender Only). Melee Weapon Attack: your spell attack modifier to hit, reach 5 ft., one target. Hit: 1d10 + 3 + the spell’s level radiant damage, and the celestial can choose itself or another creature it can see within 10 feet of the target. The chosen creature gains 1d10 temporary hit points.\n\n\nHealing Touch (1/Day). The celestial touches another creature. The target magically regains hit points equal to 2d8 + the spell’s level.",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Blade Barrier",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:blade-barrier",
+        "descrizione": "Source: Player's Handbook\n6th-level evocation\nCasting Time: 1 action\nRange: 90 feet\nComponents: V, S\nDuration: Concentration, up to 10 minutes\nYou create a vertical wall of whirling, razor-sharp blades made of magical energy. The wall appears within range and lasts for the duration. You can make a straight wall up to 100 feet long, 20 feet high, and 5 feet thick, or a ringed wall up to 60 feet in diameter, 20 feet high, and 5 feet thick. The wall provides three-quarters cover to creatures behind it, and its space is difficult terrain.\nWhen a creature enters the wall’s area for the first time on a turn or starts its turn there, the creature must make a Dexterity saving throw. On a failed save, the creature takes 6d10 slashing damage. On a successful save, the creature takes half as much damage.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno"
+        ]
+    },
+    {
+        "nome": "Create Undead",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:create-undead",
+        "descrizione": "Source: Player's Handbook\n6th-level necromancy\nCasting Time: 1 minute\nRange: 10 feet\nComponents: V, S, M (one clay pot filled with grave dirt, one clay pot filled with brackish water, and one 150 gp black onyx stone for each corpse)\nDuration: Instantaneous\nYou can cast this spell only at night. Choose up to three corpses of Medium or Small humanoids within range. Each corpse becomes a ghoul under your control. The DM has game statistics for these creatures.\nAs a bonus action on each of your turns, you can mentally command any creature you animated with this spell if the creature is within 120 feet of you (if you control multiple creatures, you can command any or all of them at the same time, issuing the same command to each one). You decide what action the creature will take and where it will move during its next turn, or you can issue a general command, such as to guard a particular chamber or corridor. If you issue no commands, the creature only defends itself against hostile creatures. Once given an order, the creature continues to follow it until its task is complete.\nThe creature is under your control for 24 hours, after which it stops obeying any command you have given it. To maintain control of the creature for another 24 hours, you must cast this spell on the creature before the current 24-hour period ends. This use of the spell reasserts your control over up to three creatures you have animated with this spell, rather than animating new ones.\nAt Higher Levels. When you cast this spell using a 7th-level spell slot, you can animate or reassert control over four ghouls. When you cast this spell using an 8th-level spell slot, you can animate or reassert control over five ghouls or two ghasts or wights. When you cast this spell using a 9th-level spell slot, you can animate or reassert control over six ghouls, three ghasts or wights, or two mummies.\nSpell Lists. Cleric, Warlock, Wizard",
+        "categorie": [
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Find the Path",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:find-the-path",
+        "descrizione": "Source: Player's Handbook\n6th-level divination\nCasting Time: 1 minute\nRange: Self\nComponents: V, S, M (a set of divinatory tools – such as bones, ivory sticks, cards, teeth, or carved runes – worth 100 gp, and an object from the location you wish to find)\nDuration: Concentration, up to 1 day\nThis spell allows you to find the shortest, most direct physical route to a specific fixed location that you are familiar with on the same plane of existence. If you name a destination on another plane of existence, a destination that moves (such as a mobile fortress), or a destination that isn’t specific (such as \"a green dragon’s lair”), the spell fails.\nFor the duration, as long as you are on the same plane of existence as the destination, you know how far it is and in what direction it lies. While you are traveling there, whenever you are presented with a choice of paths along the way, you automatically determine which path is the shortest and most direct route (but not necessarily the safest route) to the destination.\nSpell Lists. Bard, Cleric, Druid",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Forbiddance",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "10 Minutes R",
+        "url": "https://dnd5e.wikidot.com/spell:forbiddance",
+        "descrizione": "Source: Player's Handbook\n6th-level abjuration (ritual)\nCasting Time: 10 minutes\nRange: Touch\nComponents: V, S, M (a sprinkling of holy water, rare incense, and powdered ruby worth at least 1,000 gp)\nDuration: 1 day\nYou create a ward against magical travel that protects up to 40,000 square feet of floor space to a height of 30 feet above the floor. For the duration, creatures can’t teleport into the area or use portals, such as those created by the gate spell, to enter the area. The spell proofs the area against planar travel, and therefore prevents creatures from accessing the area by way of the Astral Plane, Ethereal Plane, Feywild, Shadowfell, or the plane shift spell.\nIn addition, the spell damages types of creatures that you choose when you cast it. Choose one or more of the following: celestials, elementals, fey, fiends, and undead. When a chosen creature enters the spell’s area for the first time on a turn or starts its turn there, the creature takes 5d10 radiant or necrotic damage (your choice when you cast this spell).\nWhen you cast this spell, you can designate a password. A creature that speaks the password as it enters the area takes no damage from the spell.\nThis spell’s area can’t overlap with the area of another forbiddance spell. If you cast forbiddance every day for 30 days in the same location, the spell lasts until it is dispelled, and the material components are consumed on the last casting.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Harm",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:harm",
+        "descrizione": "Source: Player's Handbook\n6th-level necromancy\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantanous\nYou unleash a virulent disease on a creature that you can see within range. The target must make a Constitution saving throw. On a failed save, it takes 14d6 necrotic damage, or half as much damage on a successful save. The damage can’t reduce the target’s hit points below 1. If the target fails the saving throw, its hit point maximum is reduced for 1 hour by an amount equal to the necrotic damage it took. Any effect that removes a disease allows a creature’s hit point maximum to return to normal before that time passes.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Heal",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:heal",
+        "descrizione": "Source: Player's Handbook\n6th-level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nChoose a creature that you can see within range. A surge of positive energy washes through the creature, causing it to regain 70 hit points. The spell also ends blindness, deafness, and any diseases affecting the target. This spell has no effect on constructs or undead.\nAt Higher Levels. When you cast this spell using a spell slot of 7th level or higher, the amount of healing increases by 10 for each slot level above 6th.\nSpell Lists. Cleric, Druid",
+        "categorie": [
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Heroes' Feast",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "10 Minutes",
+        "url": "https://dnd5e.wikidot.com/spell:heroes-feast",
+        "descrizione": "Source: Player's Handbook\n6th-level conjuration\nCasting Time: 10 minutes\nRange: 30 feet\nComponents: V, S, M (a gem-encrusted bowl worth at least 1,000 gp, which the spell consumes)\nDuration: Instantaneous\nYou bring forth a great feast, including magnificent food and drink. The feast takes 1 hour to consume and disappears at the end of that time, and the beneficial effects don’t set in until this hour is over. Up to twelve creatures can partake of the feast.\nA creature that partakes of the feast gains several benefits. The creature is cured of all diseases and poison, becomes immune to poison and being frightened, and makes all Wisdom saving throws with advantage. Its hit point maximum also increases by 2d10, and it gains the same number of hit points. These benefits last for 24 hours.\nSpell Lists. Bard (Optional), Cleric, Druid",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Otherworldly Form (UA)",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:otherworldly-form",
+        "descrizione": "Source: Unearthed Arcana 70 - Spells and Magic Tattoos\n6th-level transmutation\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (an object engraved with a symbol of the Outer Planes, worth at least 500 gp)\nDuration: Concentration, up to 1 minute\nUttering an incantation, you draw on the magic of the Lower Planes or Upper Planes (your choice) to transform yourself. You gain the following benefits until the spell ends:\n\nYou are immune to fire and poison damage (Lower Planes) or radiant and necrotic damage (Upper Planes).\n\n\nYou are immune to the poisoned condition (Lower Planes) or the charmed condition (Upper Planes).\n\n\nSpectral wings appear on your back, giving you a flying speed of 40 feet.\n\n\nYou have a +2 bonus to AC.\n\n\nAll your weapon attacks are magical, and when you make a weapon attack, you can use your spellcasting ability modifier, instead of Strength or Dexterity, for the attack and damage rolls.\n\n\nYou can attack twice, instead of once, when you take the Attack action on your turn. You ignore this benefit if you already have a feature, like Extra Attack, that gives you extra attacks\n\nSpell Lists. Cleric, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)"
+        ]
+    },
+    {
+        "nome": "Planar Ally",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:planar-ally",
+        "descrizione": "Source: Player's Handbook\n6th-level conjuration\nCasting Time: 10 minutes\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nYou beseech an otherworldly entity for aid. The being must be known to you: a god, a primordial, a demon prince, or some other being of cosmic power. That entity sends a celestial, an elemental, or a fiend loyal to it to aid you, making the creature appear in an unoccupied space within range. If you know a specific creature’s name, you can speak that name when you cast this spell to request that creature, though you might get a different creature anyway (DM’s choice).\nWhen the creature appears, it is under no compulsion to behave in any particular way. You can ask the creature to perform a service in exchange for payment, but it isn’t obliged to do so. The requested task could range from simple (fly us across the chasm, or help us fight a battle) to complex (spy on our enemies, or protect us during our foray into the dungeon). You must be able to communicate with the creature to bargain for its services.\nPayment can take a variety of forms. A celestial might require a sizable donation of gold or magic items to an allied temple, while a fiend might demand a living sacrifice or a gift of treasure. Some creatures might exchange their service for a quest undertaken by you.\nAs a rule of thumb, a task that can be measured in minutes requires a payment worth 100 gp per minute. A task measured in hours requires 1,000 gp per hour. And a task measured in days (up to 10 days) requires 10,000 gp per day. The DM can adjust these payments based on the circumstances under which you cast the spell. If the task is aligned with the creature’s ethos, the payment might be halved or even waived. Nonhazardous tasks typically require only half the suggested payment, while especially dangerous tasks might require a greater gift. Creatures rarely accept tasks that seem suicidal.\nAfter the creature completes the task, or when the agreed-upon duration of service expires, the creature returns to its home plane after reporting back to you, if appropriate to the task and if possible. If you are unable to agree on a price for the creature’s service, the creature immediately returns to its home plane.\nA creature enlisted to join your group counts as a member of it, receiving a full share of experience points awarded.\nSpell Lists. Cleric",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Sunbeam",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:sunbeam",
+        "descrizione": "Source: Player's Handbook\n6th-level evocation\nCasting Time: 1 action\nRange: Self (60-foot line)\nComponents: V, S, M (a magnifying glass)\nDuration: Concentration, up to 1 minute\nA beam of brilliant light flashes out from your hand in a 5-foot-wide, 60-foot-line. Each creature in the line must make a Constitution saving throw. On a failed save, a creature takes 6d8 radiant damage and is blinded until your next turn. On a successful save, it takes half as much damage and isn’t blinded by this spell. Undead and oozes have disadvantage on this saving throw.\nYou can create a new line of radiance as your action on any turn until the spell ends.\nFor the duration, a mote of brilliant radiance shines in your hand. It sheds bright light in a 30-foot radius and dim light for an additional 30 feet. The light is sunlight.\nSpell Lists. Cleric (Optional), Druid, Sorcerer, Wizard",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "True Seeing",
+        "livello_scuola": "Divination",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:true-seeing",
+        "descrizione": "Source: Player's Handbook\n6th-level divination\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (an ointment for the eyes that costs 25 gp; is made from mushroom powder, saffron, and fat; and is consumed by the spell)\nDuration: 1 hour\nThis spell gives the willing creature you touch the ability to see things as they actually are. For the duration, the creature has truesight, notices secret doors hidden by magic, and can see into the Ethereal Plane, all out to a range of 120 feet.\nSpell Lists. Bard, Cleric, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Word of Recall",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:word-of-recall",
+        "descrizione": "Source: Player's Handbook\n6th-level conjuration\nCasting Time: 1 action\nRange: 5 feet\nComponents: V\nDuration: Instantaneous\nYou and up to five willing creatures within 5 feet of you instantly teleport to a previously designated sanctuary. You and any creatures that teleport with you appear in the nearest unoccupied space to the spot you designated when you prepared your sanctuary (see below). If you cast this spell without first preparing a sanctuary, the spell has no effect.\nYou must designate a sanctuary by casting this spell within a location, such as a temple, dedicated to or strongly linked to your deity. If you attempt to cast the spell in this manner in an area that isn’t dedicated to your deity, the spell has no effect.\nSpell Lists. Cleric",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Conjure Celestial",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:conjure-celestial",
+        "descrizione": "Source: Player's Handbook\n7th-level conjuration\nCasting Time: 1 minute\nRange: 90 feet\nComponents: V, S\nDuration: Concentration, up to 1 hour\nYou summon a celestial of challenge rating 4 or lower, which appears in an unoccupied space that you can see within range. The celestial disappears when it drops to 0 hit points or when the spell ends.\nThe celestial is friendly to you and your companions for the duration. Roll initiative for the celestial, which has its own turns. It obeys any verbal commands that you issue to it (no action required by you), as long as they don’t violate its alignment. If you don’t issue any commands to the celestial, it defends itself from hostile creatures but otherwise takes no actions. The DM has the celestial’s statistics.\nAt Higher Levels. When you cast this spell using a 9th-level spell slot, you summon a celestial of challenge rating 5 or lower.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Divine Word",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Bonus Action",
+        "url": "https://dnd5e.wikidot.com/spell:divine-word",
+        "descrizione": "Source: Player's Handbook\n7th-level evocation\nCasting Time: 1 bonus action\nRange: 30 feet\nComponents: V\nDuration: Instantaneous\nYou utter a divine word, imbued with the power that shaped the world at the dawn of creation. Choose any number of creatures you can see within range. Each creature that can hear you must make a Charisma saving throw. On a failed save, a creature suffers an effect based on its current hit points:\n\n50 hit points or fewer: deafened for 1 minute\n\n\n40 hit points or fewer: deafened and blinded for 10 minutes\n\n\n30 hit points or fewer: blinded, deafened, and stunned for 1 hour\n\n\n20 hit points or fewer: killed instantly\n\nRegardless of its current hit points, a celestial, an elemental, a fey, or a fiend that fails its save is forced back to its plane of origin (if it isn’t there already) and can’t return to your current plane for 24 hours by any means short of a wish spell.\nSpell Lists. Cleric",
+        "categorie": [
+            "Cura e Sopravvivenza",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Etherealness",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:etherealness",
+        "descrizione": "Source: Player's Handbook\n7th-level transmutation\nCasting Time: 1 action\nRange: Self\nComponents: V, S\nDuration: Up to 8 hours\nYou step into the border regions of the Ethereal Plane, in the area where it overlaps with your current plane. You remain in the Border Ethereal for the duration or until you use your action to dismiss the spell. During this time, you can move in any direction. If you move up or down, every foot of movement costs an extra foot. You can see and hear the plane you originated from, but everything there looks gray, and you can’t see anything more than 60 feet away.\nWhile on the Ethereal Plane, you can only affect and be affected by other creatures on that plane. Creatures that aren’t on the Ethereal Plane can’t perceive you and can’t interact with you, unless a special ability or magic has given them the ability to do so.\nYou ignore all objects and effects that aren’t on the Ethereal Plane, allowing you to move through objects you perceive on the plane you originated from. When the spell ends, you immediately return to the plane you originated from in the spot you currently occupy. If you occupy the same spot as a solid object or creature when this happens, you are immediately shunted to the nearest unoccupied space that you can occupy and take force damage equal to twice the number of feet you are moved.\nThis spell has no effect if you cast it while you are on the Ethereal Plane or a plane that doesn’t border it, such as one of the Outer Planes.\nAt Higher Levels. When you cast this spell using a spell slot of 8th level or higher, you can target up to three willing creatures (including you) for each slot level above 7th. The creatures must be within 10 feet of you when you cast the spell.\nSpell Lists. Bard, Cleric, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Fire Storm",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:fire-storm",
+        "descrizione": "Source: Player's Handbook\n7th-level evocation\nCasting Time: 1 action\nRange: 150 feet\nComponents: V, S\nDuration: Instantaneous\nA storm made up of sheets of roaring flame appears in a location you choose within range. The area of the storm consists of up to ten 10-foot cubes, which you can arrange as you wish. Each cube must have at least one face adjacent to the face of another cube. Each creature in the area must make Dexterity saving throw. It takes 7d10 fire damage on a failed save, or half as much damage on a successful one.\nThe fire damages objects in the area and ignites flammable objects that aren’t being worn or carried. If you choose, plant life in the area is unaffected by this spell.\nSpell Lists. Cleric, Druid, Sorcerer",
+        "categorie": [
+            "Danno",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Plane Shift",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:plane-shift",
+        "descrizione": "Source: Player's Handbook\n7th-level conjuration\nCasting Time: 1 action\nRange: Touch\nComponents: V, S, M (a forked, metal rod worth at least 250 gp, attuned to a particular plane of existence)\nDuration: Instantaneous\nYou and up to eight willing creatures who link hands in a circle are transported to a different plane of existence. You can specify a target destination in general terms, such as the City of Brass on the Elemental Plane of Fire or the palace of Dispater on the second level of the Nine Hells, and you appear in or near that destination. If you are trying to reach the City of Brass, for example, you might arrive in its Street of Steel, before its Gate of Ashes, or looking at the city from across the Sea of Fire, at the DM’s discretion.\nAlternatively, if you know the sigil sequence of a teleportation circle on another plane of existence, this spell can take you to that circle. If the teleportation circle is too small to hold all the creatures you transported, they appear in the closest unoccupied spaces next to the circle.\nYou can use this spell to banish an unwilling creature to another plane. Choose a creature within your reach and make a melee spell attack against it. On a hit, the creature must make a Charisma saving throw. If the creature fails the save, it is transported to a random location on the plane of existence you specify. A creature so transported must find its own way back to your current plane of existence.\nSpell Lists. Cleric, Druid, Sorcerer, Warlock, Wizard",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Regenerate",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:regenerate",
+        "descrizione": "Source: Player's Handbook\n7th-level transmutation\nCasting Time: 1 minute\nRange: Touch\nComponents: V, S, M (a prayer wheel and holy water)\nDuration: 1 hour\nYou touch a creature and stimulate its natural healing ability. The target regains 4d8 + 15 hit points. For the duration of the spell, the target regains 1 hit point at the start of each of its turns (10 hit points each minute).\nThe target’s severed body members (fingers, legs, tails, and so on), if any, are restored after 2 minutes. If you have the severed part and hold it to the stump, the spell instantaneously causes the limb to knit to the stump.\nSpell Lists. Bard, Cleric, Druid",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Resurrection",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Hour",
+        "url": "https://dnd5e.wikidot.com/spell:resurrection",
+        "descrizione": "Source: Player's Handbook\n7th-level necromancy\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a diamond worth at least 1,000 gp, which the spell consumes)\nDuration: Instantaneous\nYou touch a dead creature that has been dead for no more than a century, that didn’t die of old age, and that isn’t undead. If its soul is free and willing, the target returns to life with all its hit points.\nThis spell neutralizes any poisons and cures normal diseases afflicting the creature when it died. It doesn’t, however, remove magical diseases, curses, and the like; if such affects aren’t removed prior to casting the spell, they afflict the target on its return to life.\nThis spell closes all mortal wounds and restores any missing body parts.\nComing back from the dead is an ordeal. The target takes a -4 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears.\nCasting this spell to restore life to a creature that has been dead for one year or longer taxes you greatly. Until you finish a long rest, you can’t cast spells again, and you have disadvantage on all attack rolls, ability checks, and saving throws.\nSpell Lists. Bard, Cleric",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Symbol",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Minute",
+        "url": "https://dnd5e.wikidot.com/spell:symbol",
+        "descrizione": "Source: Player's Handbook\n7th-level abjuration\nCasting Time: 1 minute\nRange: Touch\nComponents: V, S, M (mercury, phosphorus, and powdered diamond and opal with a total value of at least 1,000 gp, which the spell consumes)\nDuration: Until dispelled or triggered\nWhen you cast this spell, you inscribe a harmful glyph either on a surface (such as a section of floor, a wall, or a table) or within an object that can be closed to conceal the glyph (such as a book, a scroll, or a treasure chest). If you choose a surface, the glyph can cover an area of the surface no larger than 10 feet in diameter. If you choose an object, that object must remain in its place; if the object is moved more than 10 feet from where you cast this spell, the glyph is broken, and the spell ends without being triggered.\nThe glyph is nearly invisible, requiring an Intelligence (Investigation) check against your spell save DC to find it.\nYou decide what triggers the glyph when you cast the spell. For glyphs inscribed on a surface, the most typical triggers include touching or stepping on the glyph, removing another object covering it, approaching within a certain distance of it, or manipulating the object that holds it. For glyphs inscribed within an object, the most common triggers are opening the object, approaching within a certain distance of it, or seeing or reading the glyph.\nYou can further refine the trigger so the spell is activated only under certain circumstances or according to a creature's physical characteristics (such as height or weight), or physical kind (for example, the ward could be set to affect hags or shapechangers). You can also specify creatures that don't trigger the glyph, such as those who say a certain password.\nWhen you inscribe the glyph, choose one of the options below for its effect. Once triggered, the glyph glows, filling a 60-foot-radius sphere with dim light for 10 minutes, after which time the spell ends. Each creature in the sphere when the glyph activates is targeted by its effect, as is a creature that enters the sphere for the first time on a turn or ends its turn there.\n\nDeath. Each target must make a Constitution saving throw, taking 10d10 necrotic damage on a failed save, or half as much damage on a successful save.\n\n\nDiscord. Each target must make a Constitution saving throw. On a failed save, a target bickers and argues with other creatures for 1 minute. During this time, it is incapable of meaningful communication and has disadvantage on attack rolls and ability checks.\n\n\nFear. Each target must make a Wisdom saving throw and becomes frightened for 1 minute on a failed save. While frightened, the target drops whatever it is holding and must move at least 20 feet away from the glyph on each of its turns, if able.\n\n\nHopelessness. Each target must make a Charisma saving throw. On a failed save, the target is overwhelmed with despair for 1 minute. During this time, it can't attack or target any creature with harmful abilities, spells, or other magical effects.\n\n\nInsanity. Each target must make an Intelligence saving throw. On a failed save, the target is driven insane for 1 minute. An insane creature can't take actions, can't understand what other creatures say, can't read, and speaks only in gibberish. The DM controls its movement, which is erratic.\n\n\nPain. Each target must make a Constitution saving throw and becomes incapacitated with excruciating pain for 1 minute on a failed save.\n\n\nSleep. Each target must make a Wisdom saving throw and falls unconscious for 10 minutes on a failed save. A creature awakens if it takes damage or if someone uses an action to shake or slap it awake.\n\n\nStunning. Each target must make a Wisdom saving throw and becomes stunned for 1 minute on a failed save.\n\nSpell Lists. Bard, Cleric, Druid (Optional), Wizard",
+        "categorie": [
+            "Danno",
+            "Sociale e Persuasione",
+            "Buff (Potenziamento)",
+            "Debuff e Malus",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Temple of the Gods",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 hour",
+        "url": "https://dnd5e.wikidot.com/spell:temple-of-the-gods",
+        "descrizione": "Source: Xanathar's Guide to Everything\n7th-level conjuration\nCasting Time: 1 hour\nRange: 120 feet\nComponents: V, S, M (a holy symbol worth at least 5 gp)\nDuration: 24 hours\nYou cause a temple to shimmer into existence on ground you can see within range. The temple must fit within an unoccupied cube of space, up to 120 feet on each side. The temple remains until the spell ends. It is dedicated to whatever god, pantheon, or philosophy is represented by the holy symbol used in the casting.\nYou make all decisions about the temple’s appearance. The interior is enclosed by a floor, walls, and a roof, with one door granting access to the interior and as many windows as you wish. Only you and any creatures you designate when you cast the spell can open or close the door.\nThe temple’s interior is an open space with an idol or altar at one end. You decide whether the temple is illuminated and whether that illumination is bright light or dim light. The smell of burning incense fills the air within, and the temperature is mild.\nThe temple opposes types of creatures you choose when you cast this spell. Choose one or more of the following: celestials, elementals, fey, fiends, or undead. If a creature of the chosen type attempts to enter the temple, that creature must make a Charisma saving throw. On a failed save, it can’t enter the temple for 24 hours. Even if the creature can enter the temple, the magic there hinders it; whenever it makes an attack roll, an ability check, or a saving throw inside the temple, it must roll a d4 and subtract the number rolled from the d20 roll.\nIn addition, the sensors created by divination spells can’t appear inside the temple, and creatures within can’t be targeted by divination spells.\nFinally, whenever any creature in the temple regains hit points from a spell of 1st level or higher, the creature regains additional hit points equal to your Wisdom modifier (minimum 1 hit point).\nThe temple is made from opaque magical force that extends into the Ethereal Plane, thus blocking ethereal travel into the temple’s interior. Nothing can physically pass through the temple’s exterior. It can’t be dispelled by dispel magic, and antimagic field has no effect on it. A disintegrate spell destroys the temple instantly.\nCasting this spell on the same spot every day for a year makes this effect permanent.\nSpell Lists. Cleric",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Antimagic Field",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:antimagic-field",
+        "descrizione": "Source: Player's Handbook\n8th-level abjuration\nCasting Time: 1 action\nRange: Self (10-foot-radius sphere)\nComponents: V, S, M (a pinch of powdered iron or iron filings)\nDuration: Concentration, up to 1 hour\nA 10-foot-radius invisible sphere of antimagic surrounds you. This area is divorced from the magical energy that suffuses the multiverse. Within the sphere, spells can't be cast, summoned creatures disappear, and even magic items become mundane. Until the spell ends, the sphere moves with you, centered on you.\nSpells and other magical effects, except those created by an artifact or a deity, are suppressed in the sphere and can't protrude into it. A slot expended to cast a suppressed spell is consumed. While an effect is suppressed, it doesn't function, but the time it spends suppressed counts against its duration.\n\nTargeted Effects. Spells and other magical effects, such as magic missile and charm person, that target a creature or an object in the sphere have no effect on that target.\n\n\nAreas of Magic. The area of another spell or magical effect, such as fireball, can't extend into the sphere. If the sphere overlaps an area of magic, the part of the area that is covered by the sphere is suppressed. For example, the flames created by a wall of fire are suppressed within the sphere, creating a gap in the wall if the overlap is large enough.\n\n\nSpells. Any active spell or other magical effect on a creature or an object in the sphere is suppressed while the creature or object is in it.\n\n\nMagic Items. The properties and powers of magic items are suppressed in the sphere. For example, a +1 longsword in the sphere functions as a nonmagical longsword. A magic weapon's properties and powers are suppressed if it is used against a target in the sphere or wielded by an attacker in the sphere. If a magic weapon or piece of magic ammunition fully leaves the sphere (for example, if you fire a magic arrow or throw a magic spear at a target outside the sphere) the magic of the item ceases to be suppressed as soon as it exits.\n\n\nMagical Travel. Teleportation and planar travel fail to work in the sphere, whether the sphere is the destination or the departure point for such magical travel. A portal to another location, world, or plane of existence, as well as an opening to an extradimensional space such as that created by the rope trick spells, temporarily closes while in the sphere.\n\n\nCreatures and Objects. A creature or object summoned or created by magic temporarily winks out of existence in the sphere. Such a creature instantly reappears once the space the creature occupied is no longer within the sphere.\n\n\nDispel Magic. Spells and magical effects such as dispel magic have no effect on the sphere. Likewise, the spheres created by different antimagic field spells don't nullify each other.\n\nSpell Lists. Cleric, Wizard",
+        "categorie": [
+            "Sociale e Persuasione",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Control Weather",
+        "livello_scuola": "Transmutation",
+        "tempo_di_lancio": "10 Minutes",
+        "url": "https://dnd5e.wikidot.com/spell:control-weather",
+        "descrizione": "Source: Player's Handbook\n8th-level transmutation\nCasting Time: 10 minutes\nRange: Self (5-mile radius)\nComponents: V, S, M (burning incense and bits of earth and wood mixed in water)\nDuration: Concentration, Up to 8 hours\nYou take control of the weather within 5 miles of you for the duration. You must be outdoors to cast this spell. Moving to a place where you don’t have a clear path to the sky ends the spell early.\nWhen you cast the spell, you change the current weather conditions, which are determined by the DM based on the climate and season. You can change precipitation, temperature, and wind. It takes 1d4 x 10 minutes for the new conditions to take effect. Once they do so, you can change the conditions again. When the spell ends, the weather gradually returns to normal.\nWhen you change the weather conditions, find a current condition on the following tables and change its stage by one, up or down. When changing the wind, you can change its direction.\n\n\nPrecipitation\n\n\nStage 1\nClear\n\n\nStage 2\nLight clouds\n\n\nStage 3\nOvercast or ground fog\n\n\nStage 4\nRain, hail or snow\n\n\nStage 5\nTorrential rain, driving hail or blizzard\n\n\n\n\nTemperature\n\n\nStage 1\nUnbearable heat\n\n\nStage 2\nHot\n\n\nStage 3\nWarm\n\n\nStage 4\nCool\n\n\nStage 5\nCold\n\n\nStage 6\nArctic cold\n\n\n\n\nWind\n\n\nStage 1\nCalm\n\n\nStage 2\nModerate wind\n\n\nStage 3\nStrong wind\n\n\nStage 4\nGale\n\n\nStage 5\nStorm\n\n\nSpell Lists. Cleric, Druid, Wizard",
+        "categorie": [
+            "Danno"
+        ]
+    },
+    {
+        "nome": "Earthquake",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:earthquake",
+        "descrizione": "Source: Player's Handbook\n8th-level evocation\nCasting Time: 1 action\nRange: 500 feet\nComponents: V, S, M (a pinch of dirt, a piece of rock, and a lump of clay)\nDuration: Concentration, up to 1 minute\nYou create a seismic disturbance at a point on the ground that you can see within range. For the duration, an intense tremor rips through the ground in a 100-foot-radius circle centered on that point and shakes creatures and structures in contact with the ground in that area.\nThe ground in the area becomes difficult terrain. Each creature on the ground that is concentrating must make a Constitution saving throw. On a failed save, the creature’s concentration is broken.\nWhen you cast this spell and at the end of each turn you spend concentrating on it, each creature on the ground in the area must make a Dexterity saving throw. On a failed save, the creature is knocked prone.\nThis spell can have additional effects depending on the terrain in the area, as determined by the DM.\n\nFissures. Fissures open throughout the spell’s area at the start of your next turn after you cast the spell. A total of 1d6 such fissures open in locations chosen by the DM. Each is 1d10 x 10 feet deep, 10 feet wide, and extends from one edge of the spell’s area to the opposite side. A creature standing on a spot where a fissure opens must succeed on a Dexterity saving throw or fall in. A creature that successfully saves moves with the fissure’s edge as it opens.\n\nA fissure that opens beneath a structure causes it to automatically collapse (see below).\n\n\nStructures. The tremor deals 50 bludgeoning damage to any structure in contact with the ground in the area when you cast the spell and at the start of each of your turns until the spell ends. If a structure drops to 0 hit points, it collapses and potentially damages nearby creatures. A creature within half the distance of a structure’s height must make a Dexterity saving throw. On a failed save, the creature takes 5d6 bludgeoning damage, is knocked prone, and is buried in the rubble, requiring a DC 20 Strength (Athletics) check as an action to escape. The DM can adjust the DC higher or lower, depending on the nature of the rubble. On a successful save, the creature takes half as much damage and doesn’t fall prone or become buried.\n\nSpell Lists. Cleric, Druid, Sorcerer",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Holy Aura",
+        "livello_scuola": "Abjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:holy-aura",
+        "descrizione": "Source: Player's Handbook\n8th-level abjuration\nCasting Time: 1 action\nRange: Self\nComponents: V, S, M (a tiny reliquary worth at least 1,000 gp containing a sacred relic, such as a scrap of cloth from a saint’s robe or a piece of parchment from a religious text)\nDuration: Concentration, up to 1 minute\nDivine light washes out from you and coalesces in a soft radiance in a 30-foot radius around you. Creatures of your choice in that radius when you cast this spell shed dim light in a 5-foot radius and have advantage on all saving throws, and other creatures have disadvantage on attack rolls against them until the spell ends. In addition, when a fiend or an undead hits an affected creature with a melee attack, the aura flashes with brilliant light. The attacker must succeed on a Constitution saving throw or be blinded until the spell ends.\nSpell Lists. Cleric",
+        "categorie": [
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Sunburst",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:sunburst",
+        "descrizione": "Source: Player's Handbook\n8th-level evocation\nCasting Time: 1 action\nRange: 150 feet\nComponents: V, S, M (fire and a piece of sunstone)\nDuration: Instantaneous\nBrilliant sunlight flashes in a 60-foot radius centered on a point you choose within range. Each creature in that light must make a Constitution saving throw. On a failed save, a creature takes 12d6 radiant damage and is blinded for 1 minute. On a successful save, it takes half as much damage and isn’t blinded by this spell. Undead and oozes have disadvantage on this saving throw.\nA creature blinded by this spell makes another Constitution saving throw at the end of each of its turns. On a successful save, it is no longer blinded.\nThis spell dispels any darkness in its area that was created by a spell.\nSpell Lists. Cleric (Optional), Druid, Sorcerer, Wizard",
+        "categorie": [
+            "Danno",
+            "Buff (Potenziamento)",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "Astral Projection",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Hour",
+        "url": "https://dnd5e.wikidot.com/spell:astral-projection",
+        "descrizione": "Source: Player's Handbook\n9th-level necromancy\nCasting Time: 1 hour\nRange: 10 feet\nComponents: V, S, M (for each creature you affect with this spell, you must provide one jacinth worth at least 1,000 gp and one ornately carved bar of silver worth at least 100 gp, all of which the spell consumes)\nDuration: Special\nYou and up to eight willing creatures within range project your astral bodies into the Astral Plane (the spell fails and the casting is wasted if you are already on that plane). The material body you leave behind is unconscious and in a state of suspended animation; it doesn’t need food or air and doesn’t age.\nYour astral body resembles your mortal form in almost every way, replicating your game statistics and possessions. The principal difference is the addition of a silvery cord that extends from between your shoulder blades and trails behind you, fading to invisibility after 1 foot. This cord is your tether to your material body. As long as the tether remains intact, you can find your way home. If the cord is cut—something that can happen only when an effect specifically states that it does—your soul and body are separated, killing you instantly.\nYour astral form can freely travel through the Astral Plane and can pass through portals there leading to any other plane. If you enter a new plane or return to the plane you were on when casting this spell, your body and possessions are transported along the silver cord, allowing you to re-enter your body as you enter the new plane. Your astral form is a separate incarnation. Any damage or other effects that apply to it have no effect on your physical body, nor do they persist when you return to it. The spell ends for you and your companions when you use your action to dismiss it. When the spell ends, the affected creature returns to its physical body, and it awakens.\nThe spell might also end early for you or one of your companions. A successful dispel magic spell used against an astral or physical body ends the spell for that creature. If a creature’s original body or its astral form drops to 0 hit points, the spell ends for that creature. If the spell ends and the silver cord is intact, the cord pulls the creature’s astral form back to its body, ending its state of suspended animation. If you are returned to your body prematurely, your companions remain in their astral forms and must find their own way back to their bodies, usually by dropping to 0 hit points.\nSpell Lists. Cleric, Warlock, Wizard",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza"
+        ]
+    },
+    {
+        "nome": "Gate",
+        "livello_scuola": "Conjuration",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:gate",
+        "descrizione": "Source: Player's Handbook\n9th-level conjuration\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S, M (a diamond worth at least 5,000 gp)\nDuration: Concentration, up to 1 minute\nYou conjure a portal linking an unoccupied space you can see within range to a precise location on a different plane of existence. The portal is a circular opening, which you can make 5 to 20 feet in diameter. You can orient the portal in any direction you choose. The portal lasts for the duration.\nThe portal has a front and a back on each plane where it appears. Travel through the portal is possible only by moving through its front. Anything that does so is instantly transported to the other plane, appearing in the unoccupied space nearest to the portal.\nDeities and other planar rulers can prevent portals created by this spell from opening in their presence or anywhere within their domains.\nWhen you cast this spell, you can speak the name of a specific creature (a pseudonym, title, or nickname doesn’t work). If that creature is on a plane other than the one you are on, the portal opens in the named creature’s immediate vicinity and draws the creature through it to the nearest unoccupied space on your side of the portal. You gain no special power over the creature, and it is free to act as the DM deems appropriate. It might leave, attack you, or help you.\nSpell Lists. Cleric, Sorcerer, Warlock (Optional), Wizard",
+        "categorie": [
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Mass Heal",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:mass-heal",
+        "descrizione": "Source: Player's Handbook\n9th-level evocation\nCasting Time: 1 action\nRange: 60 feet\nComponents: V, S\nDuration: Instantaneous\nA flood of healing energy flows from you into injured creatures around you. You restore up to 700 hit points, divided as you choose among any number of creatures that you can see within range. Creatures healed by this spell are also cured of all diseases and any effect making them blinded or deafened. This spell has no effect on undead or constructs.\nSpell Lists. Cleric",
+        "categorie": [
+            "Cura e Sopravvivenza",
+            "Utilità e Esplorazione"
+        ]
+    },
+    {
+        "nome": "Power Word: Heal",
+        "livello_scuola": "Evocation",
+        "tempo_di_lancio": "1 Action",
+        "url": "https://dnd5e.wikidot.com/spell:power-word-heal",
+        "descrizione": "Source: Player's Handbook\n9th-level evocation\nCasting Time: 1 action\nRange: Touch\nComponents: V, S\nDuration: Instantaneous\nA wave of healing energy washes over a creature you touch. The target regains all its hit points. If the creature is charmed, frightened, paralyzed, or stunned, the condition ends. If the creature is prone, it can use its reaction to stand up. This spell has no effect on undead or constructs.\nSpell Lists. Bard, Cleric (Optional)",
+        "categorie": [
+            "Cura e Sopravvivenza",
+            "Sociale e Persuasione",
+            "Debuff e Malus"
+        ]
+    },
+    {
+        "nome": "True Resurrection",
+        "livello_scuola": "Necromancy",
+        "tempo_di_lancio": "1 Hour",
+        "url": "https://dnd5e.wikidot.com/spell:true-resurrection",
+        "descrizione": "Source: Player's Handbook\n9th-level necromancy\nCasting Time: 1 hour\nRange: Touch\nComponents: V, S, M (a sprinkle of holy water and diamonds worth at least 25,000 gp, which the spell consumes)\nDuration: Instantaneous\nYou touch a creature that has been dead for no longer than 200 years and that died for any reason except old age. If the creature’s soul is free and willing, the creature is restored to life with all its hit points.\nThis spell closes all wounds, neutralizes any poison, cures all diseases, and lifts any curses affecting the creature when it died. The spell replaces damaged or missing organs or limbs. If the creature was undead, it is restored to its non-undead form.\nThe spell can even provide a new body if the original no longer exists, in which case you must speak the creature’s name. The creature then appears in an unoccupied space you choose within 10 feet of you.\nSpell Lists. Cleric, Druid",
+        "categorie": [
+            "Danno",
+            "Cura e Sopravvivenza",
+            "Debuff e Malus"
+        ]
+    }
+]
