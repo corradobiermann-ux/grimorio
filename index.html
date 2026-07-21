@@ -6,15 +6,16 @@
   <title>Grimorio del Chierico - D&D 5e</title>
   <style>
     :root {
-      --bg-color: #1a1816;
-      --card-bg: #282420;
+      --bg-color: #121110;
+      /* Schede e pannelli semitrasparenti per far intravedere lo sfondo */
+      --card-bg: rgba(35, 30, 26, 0.88);
+      --card-header-bg: rgba(20, 18, 16, 0.6);
       --accent: #d4a359;
       --accent-hover: #e5b76e;
-      --text: #e8e3d9;
-      --text-muted: #a0988e;
-      --border: #423b32;
-      --tag-bg: #3d342a;
-      --danger: #d9534f;
+      --text: #ece7de;
+      --text-muted: #b3a99c;
+      --border: #52473b;
+      --tag-bg: rgba(61, 52, 42, 0.8);
       --conc-color: #e67e22;
       --ritual-color: #3498db;
       --gold-color: #f1c40f;
@@ -24,33 +25,53 @@
 
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-color);
       color: var(--text);
       padding: 20px;
       max-width: 1200px;
       margin: 0 auto;
+      
+      /* === IMMAGINE DI SFONDO GENERALE === */
+      /* Sostituisci 'sfondo.jpg' con il nome del tuo file o con un link URL di un'immagine web */
+      background-image: 
+        linear-gradient(rgba(18, 17, 16, 0.85), rgba(18, 17, 16, 0.85)), 
+        url('sfondo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-color: var(--bg-color); /* Fallback se l'immagine non carica */
     }
 
+    /* BANNER TESTATA */
     header {
       text-align: center;
-      margin-bottom: 20px;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 15px;
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 25px 15px;
+      background: linear-gradient(rgba(20, 18, 16, 0.7), rgba(20, 18, 16, 0.9)), url('header.jpg');
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     }
 
     h1 {
       color: var(--accent);
-      font-size: 2rem;
-      letter-spacing: 1px;
+      font-size: 2.2rem;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     /* TRACKER SLOT INCANTESIMO */
     .slot-tracker-panel {
       background: var(--card-bg);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 15px;
       margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
 
     .slot-tracker-header {
@@ -117,11 +138,13 @@
       background: var(--accent);
       cursor: pointer;
       transition: transform 0.1s;
+      box-shadow: 0 0 5px var(--accent);
     }
 
     .slot-dot.used {
       background: transparent;
       border-color: var(--border);
+      box-shadow: none;
     }
 
     .slot-dot:hover {
@@ -151,6 +174,7 @@
       width: 100%;
       padding: 12px 15px;
       background: var(--card-bg);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
@@ -170,6 +194,7 @@
 
     .btn-tag {
       background: var(--tag-bg);
+      backdrop-filter: blur(4px);
       color: var(--text);
       border: 1px solid var(--border);
       padding: 8px 14px;
@@ -186,7 +211,7 @@
     }
 
     .btn-prepared-toggle {
-      background: #2a2419;
+      background: rgba(42, 36, 25, 0.9);
       color: var(--accent);
       border: 1px solid var(--accent);
     }
@@ -206,17 +231,20 @@
 
     .card {
       background: var(--card-bg);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     .card.is-prepared {
       border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(212, 163, 89, 0.3);
     }
 
     .card:hover {
@@ -234,6 +262,7 @@
     .card-title {
       font-size: 1.2rem;
       color: var(--accent);
+      font-weight: bold;
     }
 
     .btn-prepare {
@@ -280,19 +309,19 @@
     }
 
     .badge-conc {
-      background: rgba(230, 126, 34, 0.15);
+      background: rgba(230, 126, 34, 0.2);
       color: var(--conc-color);
       border: 1px solid var(--conc-color);
     }
 
     .badge-ritual {
-      background: rgba(52, 152, 219, 0.15);
+      background: rgba(52, 152, 219, 0.2);
       color: var(--ritual-color);
       border: 1px solid var(--ritual-color);
     }
 
     .badge-costly {
-      background: rgba(241, 196, 15, 0.15);
+      background: rgba(241, 196, 15, 0.2);
       color: var(--gold-color);
       border: 1px solid var(--gold-color);
     }
@@ -384,8 +413,7 @@
     let selectedCategory = "Tutti";
     let showOnlyPrepared = false;
 
-    // Configurazione Slot Incantesimo Personalizzata
-    // 1° Liv: 4 | 2° Liv: 3 | 3° Liv: 3 | 4° Liv: 3 | 5° Liv: 2
+    // Configurazione Slot Incantesimo Personalizzata (1°:4, 2°:3, 3°:3, 4°:3, 5°:2)
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
 
     let usedSlots = JSON.parse(localStorage.getItem('cleric_used_slots') || '{}');
@@ -488,7 +516,7 @@
         renderSpells();
       } catch (error) {
         document.getElementById('spellsGrid').innerHTML = 
-          `<p style="color: red;">Errore nel caricamento del file 'incantesimi_chierico.json'. Assicurati che il server Python sia attivo!</p>`;
+          `<p style="color: red;">Errore nel caricamento del file 'incantesimi_chierico.json'. Assicurati che il file sia presente nella cartella!</p>`;
       }
     }
 
