@@ -259,7 +259,6 @@
       color: #fff;
     }
 
-    /* Titles */
     .section-title {
       font-size: 1.2rem;
       font-weight: 700;
@@ -271,7 +270,6 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
-    /* Banner Avviso Ira */
     .rage-banner {
       display: none;
       background: rgba(180, 0, 0, 0.25);
@@ -288,7 +286,6 @@
       display: block;
     }
 
-    /* Slots Grid */
     .slots-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -333,7 +330,6 @@
       border-color: #555;
     }
 
-    /* Controls & Filters */
     .controls-panel {
       display: flex;
       flex-direction: column;
@@ -395,7 +391,6 @@
       color: #000;
     }
 
-    /* Spells Grid */
     .spells-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -556,7 +551,6 @@
       color: var(--text-muted);
     }
 
-    /* Toast Notification */
     .toast {
       position: fixed;
       bottom: 25px;
@@ -574,7 +568,6 @@
       font-weight: bold;
     }
 
-    /* MODAL OVERLAYS */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -760,36 +753,82 @@
       <div class="combat-column">
         <div class="column-header">⚔️ Azioni</div>
         
-        <div class="action-card">
+        <!-- 1) ATTACCO CON COMETA SIDERALE -->
+        <div class="action-card" style="border-color: var(--accent-yellow);">
           <div class="action-card-header">
-            <span>Attacco con Arma</span>
-            <span class="action-badge">Azione</span>
+            <span style="color:var(--accent-yellow);">☄️ Cometa Siderale</span>
+            <span class="action-badge" style="background:#553c13; color:#fff;">Artefatto</span>
           </div>
-          <div class="action-card-desc">Esegui un attacco con la tua arma da mischia o a distanza. Se sei in Ira, aggiungi il Bonus Danni da Ira (+2) agli attacchi basati su Forza!</div>
+          <div class="action-card-desc">
+            <strong>Danno Base:</strong> 2d6 Contundenti | Pesante, Due Mani, Portata 2q (3m)<br>
+            <em>Mazzafrusto a due mani con la testa di un Dragolich dalle corna acuminate.</em>
+            <hr style="border:0; border-top:1px solid var(--border-subtle); margin:6px 0;">
+            <div style="font-size:0.82rem; line-height:1.35; color:#dcd3c5;">
+              <strong>⚡ Infusione Planare (Azione Gratuita - 1 min):</strong>
+              <ul style="padding-left:16px; margin:3px 0;">
+                <li><strong>Necrotica:</strong> Emetti oscurità di 4q + <strong>2d6 danni Necrotici</strong>.</li>
+                <li><strong>Radiante:</strong> Emetti luce intensa 4q (+4q fioca) + <strong>2d6 danni Radianti</strong>.</li>
+              </ul>
+              <strong>🌌 Eco di Null (1/Giorno):</strong> Lancia l'incantesimo <em>Guardian of Faith</em> (aspetto di Dragolich Nero).<br>
+              <strong>🐉 Morsa del Drago (BC/Riposo Lungo):</strong> Su colpo, TS FOR 18 o la creatura è <u>Afferrata</u>. Quando afferrata, puoi usare un'Azione per infliggere <strong>3d6 danni Necrotici o Radianti</strong>.
+            </div>
+          </div>
         </div>
 
+        <!-- 2) ATTACCO RECKLESS -->
         <div class="action-card">
           <div class="action-card-header">
-            <span>Incanalare Divinità</span>
-            <span class="action-badge">Azione Chierico</span>
+            <span>💥 Attacco Sprezzante (Reckless)</span>
+            <span class="action-badge">Barbaro</span>
           </div>
-          <div class="action-card-desc">Usa la tua energia divina (es. Scacciare Non Morti o effetto del Dominio). Usabile anche durante l'Ira in quanto capacità di classe!</div>
+          <div class="action-card-desc">
+            Guadagni <strong>Vantaggio</strong> a tutti i tiri per colpirne con armi da mischia basati su Forza in questo turno, ma i tiri per colpire contro di te hanno Vantaggio fino al tuo prossimo turno.
+            <div style="margin-top: 8px;">
+              <button class="btn-action" id="recklessBtn" onclick="toggleReckless()" style="width: 100%; justify-content: center;">
+                ⚡ Attiva Attacco Sprezzante
+              </button>
+            </div>
+          </div>
         </div>
 
+        <!-- 3) CHANNEL DIVINITY CON MENÙ A TENDINA -->
         <div class="action-card">
           <div class="action-card-header">
-            <span>Lanciare un Incantesimo</span>
-            <span class="action-badge">Magia</span>
+            <span>✨ Incanalare Divinità (Channel Divinity)</span>
+            <span class="action-badge">Chierico</span>
           </div>
-          <div class="action-card-desc">Lancia un incantesimo con tempo di lancio di 1 Azione dalla tua lista di incantesimi preparati. <em>(Non usabile in Ira)</em>.</div>
+          <div class="action-card-desc">
+            <select id="channelDivinitySelect" onchange="updateChannelDivinityUI()" style="width: 100%; padding: 6px 10px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
+              <option value="">-- Seleziona Abilità --</option>
+              <option value="turn_undead">💀 Turn Undead</option>
+              <option value="preserve_life">💚 Preserve Life</option>
+              <option value="destroy_undead">💥 Destroy Undead</option>
+            </select>
+            <div id="channelDivinityDesc" style="margin-top: 8px; font-size: 0.83rem; color: #d1d5db; display: none; border-top: 1px dashed var(--border-subtle); padding-top: 6px; line-height: 1.35;"></div>
+          </div>
         </div>
 
+        <!-- 4) ATTACCO CON MAGIA CON MENÙ A TENDINA -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>✨ Attacco con Magia (1 Azione)</span>
+            <span class="action-badge">Incantesimi</span>
+          </div>
+          <div class="action-card-desc">
+            <select id="actionSpellsSelect" onchange="updateActionSpellUI()" style="width: 100%; padding: 6px 10px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
+              <option value="">-- Seleziona Incantesimo Preparato (1 Azione) --</option>
+            </select>
+            <div id="actionSpellDesc" style="margin-top: 8px; font-size: 0.83rem; color: #d1d5db; display: none; border-top: 1px dashed var(--border-subtle); padding-top: 6px; line-height: 1.35;"></div>
+          </div>
+        </div>
+
+        <!-- AZIONI STANDARD -->
         <div class="action-card">
           <div class="action-card-header">
             <span>Schivata (Dodge)</span>
             <span class="action-badge">Difesa</span>
           </div>
-          <div class="action-card-desc">Fino all'inizio del tuo prossimo turno, i tiri per colpirne contro di te hanno svantaggio. TS su Destrezza con Vantaggio.</div>
+          <div class="action-card-desc">Fino all'inizio del tuo prossimo turno, i tiri per colpire contro di te hanno svantaggio. TS su Destrezza con Vantaggio.</div>
         </div>
 
         <div class="action-card">
@@ -944,7 +983,8 @@
     let selectedCategory = "Tutti";
     let showOnlyPrepared = false;
     let isRaging = false;
-    let currentRageType = null; // 'standard' o 'graup'
+    let currentRageType = null;
+    let isReckless = false;
     let currentView = 'spellbook';
 
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
@@ -1004,9 +1044,99 @@
             setupCategories();
             renderSpells();
             updatePrepCounterUI();
+            updateActionSpellsDropdown();
           }
         }
       });
+    }
+
+    // GESTIONE ATTACCO RECKLESS
+    function toggleReckless() {
+      isReckless = !isReckless;
+      const btn = document.getElementById('recklessBtn');
+      if (isReckless) {
+        btn.style.background = 'var(--accent-yellow)';
+        btn.style.color = '#000';
+        btn.innerHTML = '⚡ ATTACCO SPREZZANTE ATTIVO';
+        showToast('💥 Attacco Sprezzante ATTIVATO! Vantaggio ai tuoi attacchi con Forza, ma i nemici hanno Vantaggio contro di te.');
+      } else {
+        btn.style.background = 'transparent';
+        btn.style.color = 'var(--accent-yellow)';
+        btn.innerHTML = '⚡ Attiva Attacco Sprezzante';
+        showToast('🛡️ Attacco Sprezzante disattivato.');
+      }
+    }
+
+    // GESTIONE CHANNEL DIVINITY
+    const channelDivinityTexts = {
+      turn_undead: `<strong>Turn Undead:</strong> As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.<br><br>A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.`,
+      preserve_life: `<strong>Preserve Life:</strong> As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can't use this feature on an undead or a construct.`,
+      destroy_undead: `<strong>Destroy Undead:</strong> When an undead fails its saving throw against your Turn Undead feature, the creature is instantly destroyed if its challenge rating is at or below a certain threshold, as shown in the Cleric table above.`
+    };
+
+    function updateChannelDivinityUI() {
+      const select = document.getElementById('channelDivinitySelect');
+      const descDiv = document.getElementById('channelDivinityDesc');
+      const val = select.value;
+
+      if (val && channelDivinityTexts[val]) {
+        descDiv.innerHTML = channelDivinityTexts[val];
+        descDiv.style.display = 'block';
+      } else {
+        descDiv.innerHTML = '';
+        descDiv.style.display = 'none';
+      }
+    }
+
+    // GESTIONE MENÙ ATTACCO CON MAGIA (1 AZIONE)
+    function updateActionSpellsDropdown() {
+      const select = document.getElementById('actionSpellsSelect');
+      if (!select) return;
+
+      const currentSelection = select.value;
+      select.innerHTML = '<option value="">-- Seleziona Incantesimo Preparato (1 Azione) --</option>';
+
+      const actionSpells = spellsData.filter(spell => {
+        const level = extractLevel(spell);
+        const isPrep = preparedSpells.includes(spell.nome) || isAlwaysPrepared(spell) || level === 0;
+        if (!isPrep) return false;
+
+        const time = (spell.tempo_di_lancio || '').toLowerCase();
+        // Controlla che sia un'azione e non azione bonus/reazione
+        const isOneAction = (time.includes("1 azione") || time.includes("1 action") || time.includes("azione")) && 
+                          !time.includes("bonus") && 
+                          !time.includes("reazione") && 
+                          !time.includes("reaction");
+        return isOneAction;
+      });
+
+      actionSpells.forEach(spell => {
+        const opt = document.createElement('option');
+        opt.value = spell.nome;
+        const levelStr = extractLevel(spell) === 0 ? "Trucchetto" : `${extractLevel(spell)}° Liv.`;
+        opt.textContent = `${spell.nome} (${levelStr})`;
+        select.appendChild(opt);
+      });
+
+      if (currentSelection) {
+        select.value = currentSelection;
+        updateActionSpellUI();
+      }
+    }
+
+    function updateActionSpellUI() {
+      const select = document.getElementById('actionSpellsSelect');
+      const descDiv = document.getElementById('actionSpellDesc');
+      const val = select.value;
+
+      const spell = spellsData.find(s => s.nome === val);
+      if (spell) {
+        descDiv.innerHTML = `<strong>${spell.nome}</strong> (${spell.livello_scuola || ''})<br><em>Tempo: ${spell.tempo_di_lancio || ''}</em><br><div style="margin-top:4px; max-height:150px; overflow-y:auto; white-space:pre-line;">${spell.descrizione || ''}</div>`;
+        descDiv.style.display = 'block';
+      } else {
+        descDiv.innerHTML = '';
+        descDiv.style.display = 'none';
+      }
     }
 
     // GESTIONE IRA & FRENESIA
@@ -1081,6 +1211,7 @@
         spellbook.style.display = 'none';
         combat.classList.add('active');
         btn.innerHTML = "📜 Grimorio / Incantesimi";
+        updateActionSpellsDropdown();
         showToast("⚔️ Passato a Modalità Combattimento");
       } else {
         currentView = 'spellbook';
@@ -1113,6 +1244,7 @@
       setupCategories();
       renderSpells();
       updatePrepCounterUI();
+      updateActionSpellsDropdown();
     }
 
     function syncToCloud() {
@@ -1231,6 +1363,7 @@
         setupCategories();
         renderSpells();
         updatePrepCounterUI();
+        updateActionSpellsDropdown();
         showToast("🧹 Lista incantesimi preparati svuotata!");
       }
     }
@@ -1308,6 +1441,7 @@
       setupCategories();
       renderSpells();
       updatePrepCounterUI();
+      updateActionSpellsDropdown();
     }
 
     function setupCategories() {
@@ -1461,7 +1595,6 @@
       const categories = catInput ? catInput.split(',').map(c => c.trim()) : ["Generico"];
 
       if (originalName) {
-        // Modifica esistente
         const spell = spellsData.find(s => s.nome === originalName);
         if (spell) {
           spell.nome = name;
@@ -1471,13 +1604,11 @@
           spell.descrizione = desc;
           spell.alwaysPrepared = isAlways;
 
-          // Se cambia nome, aggiorna lista preparati
           if (originalName !== name) {
             preparedSpells = preparedSpells.map(n => n === originalName ? name : n);
           }
         }
       } else {
-        // Nuovo incantesimo
         spellsData.push({
           nome: name,
           livello_scuola: level || "1° Livello",
@@ -1492,6 +1623,7 @@
       setupCategories();
       renderSpells();
       updatePrepCounterUI();
+      updateActionSpellsDropdown();
       closeModal();
       showToast(`💾 '${name}' salvato con successo!`);
     }
@@ -1509,9 +1641,9 @@
       setupCategories();
       renderSpells();
       updatePrepCounterUI();
+      updateActionSpellsDropdown();
     }
 
-    // Inizializzazione
     loadSpells();
   </script>
 </body>
