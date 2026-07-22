@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grimorio del Chierico - Snorri</title>
+  <title>Grimorio del Chierico</title>
   
   <!-- Firebase SDK (Compatibilità v8) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -52,6 +52,7 @@
       border: 1px solid var(--card-border);
       background: var(--card-bg);
       box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      min-height: 60px;
     }
 
     .header-banner-img {
@@ -59,19 +60,6 @@
       max-height: 180px;
       object-fit: cover;
       display: block;
-    }
-
-    .header-title-container {
-      padding: 15px 20px;
-      background: rgba(15, 13, 10, 0.8);
-      backdrop-filter: blur(4px);
-    }
-
-    h1 {
-      color: var(--accent-yellow);
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: 0.5px;
     }
 
     /* BARRA FISSATA (STICKY) */
@@ -403,28 +391,35 @@
     .card-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
+      gap: 6px;
       padding-top: 8px;
       border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
     }
 
-    .btn-card-edit, .btn-card-delete {
+    .btn-card-action {
       background: transparent;
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
-      padding: 4px 10px;
+      padding: 4px 8px;
       border-radius: 4px;
       font-size: 0.75rem;
       cursor: pointer;
       transition: all 0.2s;
     }
 
-    .btn-card-edit:hover {
+    .btn-card-action:hover {
       border-color: var(--accent-yellow);
       color: var(--accent-yellow);
     }
 
-    .btn-card-delete:hover {
+    .btn-card-action.active-lock {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+      background: rgba(241, 196, 15, 0.15);
+    }
+
+    .btn-card-action.btn-delete:hover {
       border-color: var(--danger-red);
       color: #e74c3c;
     }
@@ -540,6 +535,20 @@
       min-height: 90px;
     }
 
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-yellow);
+      cursor: pointer;
+    }
+
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -553,9 +562,6 @@
 
   <header>
     <img src="header.jpg" alt="Header Banner" class="header-banner-img" onerror="this.style.display='none'">
-    <div class="header-title-container">
-      <h1>Grimorio del Chierico — Snorri</h1>
-    </div>
   </header>
 
   <!-- BARRA STATISTICHE FISSATA IN ALTO (STICKY) -->
@@ -658,6 +664,11 @@
         <textarea id="modalSpellDesc" placeholder="Inserisci la descrizione dettagliata..."></textarea>
       </div>
 
+      <div class="form-group checkbox-row">
+        <input type="checkbox" id="modalSpellAlwaysPrepared">
+        <label for="modalSpellAlwaysPrepared">📌 Imposta come Sempre Preparato</label>
+      </div>
+
       <div class="modal-actions">
         <button class="btn-action btn-danger" onclick="closeModal()">Annulla</button>
         <button class="btn-action" onclick="saveSpellFromModal()">💾 Salva Incantesimo</button>
@@ -693,25 +704,12 @@
 
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
 
-    const alwaysPreparedKeywords = [
-      "druidcraft", "artifizio druidico", "guida", "guidance",
-      "toll of dead", "toll the dead", "suono di morte", "rintocco dei morti", "tocco della morte",
-      "salvare i morenti", "spare the dying", "resistenza", "resistance",
-      "riparare", "mending", "fiamma sacra", "sacred flame",
-      "amicizia animali", "animal friendship", "amicizia con gli animali",
-      "assorbire elementi", "absorb elements", "cerimonia", "ceremony",
-      "comando", "command", "infliggi ferite", "inflict wounds",
-      "parola guaritrice", "healing word", "vita falsata", "false life",
-      "calmare emozioni", "calm emotions", "percezione delle bestie", "beast sense",
-      "preghiera di guarigione", "prayer of healing", "presagio", "augury"
-    ];
-
     let usedSlots = JSON.parse(localStorage.getItem('cleric_used_slots') || '{}');
     let preparedSpells = JSON.parse(localStorage.getItem('cleric_prepared_spells') || '[]');
     let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
     let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
 
-    // Carica eventuali incantesimi personalizzati salvati in locale
+    // Carica eventuali incantesimi salvati in locale
     const localCustomSpells = localStorage.getItem('cleric_custom_spells');
     if (localCustomSpells) {
       spellsData = JSON.parse(localCustomSpells);
@@ -796,9 +794,32 @@
     document.getElementById('spellAttackBonusInput').value = savedAtk !== null ? savedAtk : defaultStats.atk;
 
     function isAlwaysPrepared(spell) {
-      if (!spell || !spell.nome) return false;
-      const name = spell.nome.toLowerCase().trim();
-      return alwaysPreparedKeywords.some(kw => name.includes(kw));
+      return !!(spell && spell.alwaysPrepared);
+    }
+
+    function toggleAlwaysPreparedConfirm(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+      if (!spell) return;
+
+      const currentStatus = isAlwaysPrepared(spell);
+      const message = currentStatus
+        ? `Vuoi sbloccare '${spell.nome}' dalla lista degli incantesimi Sempre Preparati?`
+        : `Vuoi bloccare '${spell.nome}' come incantesimo Sempre Preparato?`;
+
+      if (confirm(message)) {
+        spell.alwaysPrepared = !currentStatus;
+        
+        // Se diventa sempre preparato, rimuovilo dai preparati "normali" per non occupare doppio spazio
+        if (spell.alwaysPrepared) {
+          preparedSpells = preparedSpells.filter(name => name !== spell.nome);
+        }
+
+        syncToCloud();
+        setupCategories();
+        renderSpells();
+        updatePrepCounterUI();
+        showToast(spell.alwaysPrepared ? `📌 '${spell.nome}' impostato come Sempre Preparato!` : `🔓 '${spell.nome}' sbloccato.`);
+      }
     }
 
     function getMaxPrepared() {
@@ -915,7 +936,7 @@
           return;
         }
         if (isAlwaysPrepared(spell)) {
-          showToast("✨ Questo incantesimo è Sempre Preparato!");
+          showToast("✨ Questo incantesimo è impostato come Sempre Preparato!");
           return;
         }
       }
@@ -1091,8 +1112,11 @@
           </div>
           <div class="card-desc">${s.descrizione || 'Nessuna descrizione disponibile.'}</div>
           <div class="card-actions">
-            <button class="btn-card-edit" onclick="openEditModal('${safeName}')">✏️ Modifica</button>
-            <button class="btn-card-delete" onclick="deleteSpell('${safeName}')">🗑️ Elimina</button>
+            <button class="btn-card-action ${isAlways ? 'active-lock' : ''}" onclick="toggleAlwaysPreparedConfirm('${safeName}')">
+              ${isAlways ? '🔓 Sblocca Sempre Prep.' : '📌 Blocca Sempre Prep.'}
+            </button>
+            <button class="btn-card-action" onclick="openEditModal('${safeName}')">✏️ Modifica</button>
+            <button class="btn-card-action btn-delete" onclick="deleteSpell('${safeName}')">🗑️ Elimina</button>
           </div>
         `;
         grid.appendChild(card);
@@ -1111,6 +1135,7 @@
       document.getElementById('modalSpellCategories').value = "Danno, Cura";
       document.getElementById('modalSpellImg').value = "";
       document.getElementById('modalSpellDesc').value = "";
+      document.getElementById('modalSpellAlwaysPrepared').checked = false;
       
       document.getElementById('spellModal').classList.add('active');
     }
@@ -1127,6 +1152,7 @@
       document.getElementById('modalSpellCategories').value = (spell.categorie || []).join(', ');
       document.getElementById('modalSpellImg').value = spell.immagine || spell.img || spell.image || "";
       document.getElementById('modalSpellDesc').value = spell.descrizione || "";
+      document.getElementById('modalSpellAlwaysPrepared').checked = !!spell.alwaysPrepared;
 
       document.getElementById('spellModal').classList.add('active');
     }
@@ -1143,6 +1169,7 @@
       const categoriesRaw = document.getElementById('modalSpellCategories').value;
       const img = document.getElementById('modalSpellImg').value.trim();
       const desc = document.getElementById('modalSpellDesc').value.trim();
+      const alwaysPrepared = document.getElementById('modalSpellAlwaysPrepared').checked;
 
       if (!name) {
         alert("Inserisci un nome per l'incantesimo!");
@@ -1160,7 +1187,8 @@
         tempo_di_lancio: time,
         categorie: categories,
         descrizione: desc,
-        immagine: img
+        immagine: img,
+        alwaysPrepared: alwaysPrepared
       };
 
       if (originalName) {
