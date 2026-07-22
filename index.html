@@ -31,7 +31,6 @@
 
     body {
       background-color: var(--bg);
-      /* IMMAGINE DI SFONDO DELLA PAGINA (Sostituisci 'sfondo.jpg' col tuo file o URL) */
       background-image: linear-gradient(rgba(15, 13, 10, 0.85), rgba(15, 13, 10, 0.85)), url('sfondo.jpg');
       background-size: cover;
       background-position: center;
@@ -55,7 +54,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.6);
     }
 
-    /* IMMAGINE BANNER NELL'HEADER */
     .header-banner-img {
       width: 100%;
       max-height: 180px;
@@ -402,6 +400,35 @@
       padding-top: 10px;
     }
 
+    .card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .btn-card-edit, .btn-card-delete {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-card-edit:hover {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    .btn-card-delete:hover {
+      border-color: var(--danger-red);
+      color: #e74c3c;
+    }
+
     .btn-prepare {
       background: transparent;
       border: 1px solid var(--accent-yellow);
@@ -443,12 +470,88 @@
       font-size: 0.95rem;
       font-weight: bold;
     }
+
+    /* MODAL FINESTRA MODIFICA / CREAZIONE */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 3000;
+      padding: 15px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 550px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .modal-header {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: var(--accent-yellow);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .form-group input, .form-group textarea {
+      background: #0a0907;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <!-- Immagine dell'Header (Sostituisci 'header.jpg' o nascondila se non presente) -->
     <img src="header.jpg" alt="Header Banner" class="header-banner-img" onerror="this.style.display='none'">
     <div class="header-title-container">
       <h1>Grimorio del Chierico — Snorri</h1>
@@ -506,6 +609,7 @@
         <option value="4">4° Livello</option>
         <option value="5">5° Livello</option>
       </select>
+      <button class="btn-action" onclick="openAddModal()">➕ Nuovo</button>
     </div>
 
     <div class="categories-container" id="categoriesContainer"></div>
@@ -516,6 +620,50 @@
 
   <!-- Toast Notifiche -->
   <div id="toastMessage" class="toast"></div>
+
+  <!-- MODAL FINESTRA DI CREAZIONE / MODIFICA INCANTESIMO -->
+  <div class="modal-overlay" id="spellModal">
+    <div class="modal-card">
+      <div class="modal-header" id="modalTitle">Aggiungi / Modifica Incantesimo</div>
+      
+      <input type="hidden" id="modalOriginalName">
+
+      <div class="form-group">
+        <label>Nome Incantesimo</label>
+        <input type="text" id="modalSpellName" placeholder="Es. Parola Guaritrice">
+      </div>
+
+      <div class="form-group">
+        <label>Livello e Scuola</label>
+        <input type="text" id="modalSpellLevel" placeholder="Es. 1° livello Evocazione (oppure Trucchetto)">
+      </div>
+
+      <div class="form-group">
+        <label>Tempo di Lancio</label>
+        <input type="text" id="modalSpellTime" placeholder="Es. 1 azione bonus">
+      </div>
+
+      <div class="form-group">
+        <label>Categorie / Filtri (Separate da virgola)</label>
+        <input type="text" id="modalSpellCategories" placeholder="Es. Cura, Danno, Generico, Utilità, Buff">
+      </div>
+
+      <div class="form-group">
+        <label>URL Immagine (Opzionale)</label>
+        <input type="text" id="modalSpellImg" placeholder="Es. immagini/curar_ferite.jpg oppure URL web">
+      </div>
+
+      <div class="form-group">
+        <label>Descrizione</label>
+        <textarea id="modalSpellDesc" placeholder="Inserisci la descrizione dettagliata..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-action btn-danger" onclick="closeModal()">Annulla</button>
+        <button class="btn-action" onclick="saveSpellFromModal()">💾 Salva Incantesimo</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ==========================================
@@ -563,6 +711,12 @@
     let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
     let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
 
+    // Carica eventuali incantesimi personalizzati salvati in locale
+    const localCustomSpells = localStorage.getItem('cleric_custom_spells');
+    if (localCustomSpells) {
+      spellsData = JSON.parse(localCustomSpells);
+    }
+
     if (dbRef) {
       dbRef.on('value', (snapshot) => {
         const data = snapshot.val();
@@ -579,6 +733,11 @@
           }
           if (data.spellSaveDc !== undefined) document.getElementById('spellSaveDcInput').value = data.spellSaveDc;
           if (data.spellAttackBonus !== undefined) document.getElementById('spellAttackBonusInput').value = data.spellAttackBonus;
+
+          if (data.spells && Array.isArray(data.spells)) {
+            spellsData = data.spells;
+            localStorage.setItem('cleric_custom_spells', JSON.stringify(spellsData));
+          }
 
           localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
           localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
@@ -602,6 +761,7 @@
       localStorage.setItem('wis_mod', wisMod);
       localStorage.setItem('spell_save_dc', document.getElementById('spellSaveDcInput').value);
       localStorage.setItem('spell_attack_bonus', document.getElementById('spellAttackBonusInput').value);
+      localStorage.setItem('cleric_custom_spells', JSON.stringify(spellsData));
 
       if (dbRef) {
         dbRef.set({
@@ -610,7 +770,8 @@
           clericLevel: clericLevel,
           wisMod: wisMod,
           spellSaveDc: document.getElementById('spellSaveDcInput').value,
-          spellAttackBonus: document.getElementById('spellAttackBonusInput').value
+          spellAttackBonus: document.getElementById('spellAttackBonusInput').value,
+          spells: spellsData
         });
       }
     }
@@ -799,22 +960,28 @@
     }
 
     async function loadSpells() {
-      try {
-        const response = await fetch('incantesimi_chierico.json');
-        spellsData = await response.json();
-        renderSlotTracker();
-        setupCategories();
-        renderSpells();
-        updatePrepCounterUI();
-      } catch (error) {
-        document.getElementById('spellsGrid').innerHTML = `<p style="color: red;">Errore nel caricamento del file 'incantesimi_chierico.json'.</p>`;
+      if (spellsData.length === 0) {
+        try {
+          const response = await fetch('incantesimi_chierico.json');
+          spellsData = await response.json();
+        } catch (error) {
+          console.warn("Impossibile caricare incantesimi_chierico.json");
+        }
       }
+      renderSlotTracker();
+      setupCategories();
+      renderSpells();
+      updatePrepCounterUI();
     }
 
     function setupCategories() {
       const categoriesSet = new Set(["Tutti"]);
       spellsData.forEach(s => {
-        if (s.categorie) s.categorie.forEach(cat => categoriesSet.add(cat));
+        if (s.categorie) {
+          s.categorie.forEach(cat => {
+            if (cat && cat.trim()) categoriesSet.add(cat.trim());
+          });
+        }
       });
 
       const container = document.getElementById('categoriesContainer');
@@ -909,6 +1076,8 @@
             </button>`;
         }
 
+        const safeName = s.nome.replace(/'/g, "\\'");
+
         card.innerHTML = `
           <div>
             ${imgHTML}
@@ -916,14 +1085,118 @@
               <div class="card-title">${s.nome}</div>
               ${prepareButtonHTML}
             </div>
-            <div class="card-meta">${s.livello_scuola} • ${s.tempo_di_lancio}</div>
+            <div class="card-meta">${s.livello_scuola || ''} • ${s.tempo_di_lancio || ''}</div>
             ${tacticalHTML ? `<div class="tactical-badges">${tacticalHTML}</div>` : ''}
             <div class="card-tags">${tagsHTML}</div>
           </div>
           <div class="card-desc">${s.descrizione || 'Nessuna descrizione disponibile.'}</div>
+          <div class="card-actions">
+            <button class="btn-card-edit" onclick="openEditModal('${safeName}')">✏️ Modifica</button>
+            <button class="btn-card-delete" onclick="deleteSpell('${safeName}')">🗑️ Elimina</button>
+          </div>
         `;
         grid.appendChild(card);
       });
+    }
+
+    // ==========================================
+    // GESTIONE FINESTRA MODAL (CREA / MODIFICA)
+    // ==========================================
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = "➕ Aggiungi Nuovo Incantesimo";
+      document.getElementById('modalOriginalName').value = "";
+      document.getElementById('modalSpellName').value = "";
+      document.getElementById('modalSpellLevel').value = "";
+      document.getElementById('modalSpellTime').value = "";
+      document.getElementById('modalSpellCategories').value = "Danno, Cura";
+      document.getElementById('modalSpellImg').value = "";
+      document.getElementById('modalSpellDesc').value = "";
+      
+      document.getElementById('spellModal').classList.add('active');
+    }
+
+    function openEditModal(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+      if (!spell) return;
+
+      document.getElementById('modalTitle').textContent = `✏️ Modifica: ${spell.nome}`;
+      document.getElementById('modalOriginalName').value = spell.nome;
+      document.getElementById('modalSpellName').value = spell.nome || "";
+      document.getElementById('modalSpellLevel').value = spell.livello_scuola || "";
+      document.getElementById('modalSpellTime').value = spell.tempo_di_lancio || "";
+      document.getElementById('modalSpellCategories').value = (spell.categorie || []).join(', ');
+      document.getElementById('modalSpellImg').value = spell.immagine || spell.img || spell.image || "";
+      document.getElementById('modalSpellDesc').value = spell.descrizione || "";
+
+      document.getElementById('spellModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('spellModal').classList.remove('active');
+    }
+
+    function saveSpellFromModal() {
+      const originalName = document.getElementById('modalOriginalName').value;
+      const name = document.getElementById('modalSpellName').value.trim();
+      const level = document.getElementById('modalSpellLevel').value.trim();
+      const time = document.getElementById('modalSpellTime').value.trim();
+      const categoriesRaw = document.getElementById('modalSpellCategories').value;
+      const img = document.getElementById('modalSpellImg').value.trim();
+      const desc = document.getElementById('modalSpellDesc').value.trim();
+
+      if (!name) {
+        alert("Inserisci un nome per l'incantesimo!");
+        return;
+      }
+
+      const categories = categoriesRaw
+        .split(',')
+        .map(c => c.trim())
+        .filter(c => c.length > 0);
+
+      const spellObj = {
+        nome: name,
+        livello_scuola: level,
+        tempo_di_lancio: time,
+        categorie: categories,
+        descrizione: desc,
+        immagine: img
+      };
+
+      if (originalName) {
+        // Modifica esistente
+        const index = spellsData.findIndex(s => s.nome === originalName);
+        if (index !== -1) {
+          spellsData[index] = spellObj;
+          if (originalName !== name) {
+            preparedSpells = preparedSpells.map(p => p === originalName ? name : p);
+          }
+        }
+        showToast(`✏️ '${name}' aggiornato con successo!`);
+      } else {
+        // Nuovo incantesimo
+        spellsData.push(spellObj);
+        showToast(`✨ '${name}' aggiunto al grimorio!`);
+      }
+
+      syncToCloud();
+      closeModal();
+      setupCategories();
+      renderSpells();
+      updatePrepCounterUI();
+    }
+
+    function deleteSpell(spellName) {
+      if (confirm(`Sei sicuro di voler eliminare '${spellName}' dal grimorio?`)) {
+        spellsData = spellsData.filter(s => s.nome !== spellName);
+        preparedSpells = preparedSpells.filter(p => p !== spellName);
+        
+        syncToCloud();
+        setupCategories();
+        renderSpells();
+        updatePrepCounterUI();
+        showToast(`🗑️ '${spellName}' eliminato.`);
+      }
     }
 
     document.getElementById('searchInput').addEventListener('input', renderSpells);
