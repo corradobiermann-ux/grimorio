@@ -11,6 +11,7 @@
 
   <style>
     :root {
+      /* VARIABILI BASE (Colori standard) */
       --bg: #0f0d0a;
       --card-bg: rgba(24, 21, 18, 0.92);
       --panel-bg: rgba(24, 21, 18, 0.95);
@@ -23,6 +24,35 @@
       --action-color: #e67e22;
       --bonus-color: #2980b9;
       --reaction-color: #8e44ad;
+      --btn-rage-color: #c0392b;
+    }
+
+    /* 🔥 MODALITÀ IRA (Sovrascrive i colori) 🔥 */
+    body.rage-mode {
+      --bg: #1a0505;
+      --card-bg: rgba(35, 10, 10, 0.92);
+      --panel-bg: rgba(40, 10, 10, 0.95);
+      --card-border: #ff3333;
+      --border-subtle: #661a1a;
+      --accent-yellow: #ff4d4d; /* Il "giallo" diventa rosso acceso */
+      --text-main: #ffd6d6;
+      --btn-rage-color: #ff3333;
+    }
+
+    body.rage-mode .header-banner-img {
+      filter: sepia(1) hue-rotate(-50deg) saturate(4) brightness(0.7);
+    }
+
+    body.rage-mode .slot-dot {
+      background: var(--accent-yellow);
+      border-color: var(--accent-yellow);
+      box-shadow: 0 0 8px rgba(255, 77, 77, 0.8);
+    }
+
+    body.rage-mode .slot-dot.used {
+      background: transparent;
+      border-color: #555;
+      box-shadow: none;
     }
 
     * {
@@ -30,6 +60,7 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease; /* Transizione fluida */
     }
 
     body {
@@ -62,6 +93,7 @@
       max-height: 180px;
       object-fit: cover;
       display: block;
+      transition: filter 0.5s ease;
     }
 
     /* BARRA FISSATA (STICKY) */
@@ -162,7 +194,7 @@
     }
 
     .btn-action.btn-mode-toggle:hover {
-      background: #d4ac0d;
+      filter: brightness(1.2);
     }
 
     .btn-danger {
@@ -173,6 +205,19 @@
     .btn-danger:hover {
       background: var(--danger-red);
       color: #fff;
+    }
+
+    .btn-rage {
+      border-color: var(--btn-rage-color);
+      color: var(--btn-rage-color);
+      box-shadow: 0 0 5px rgba(192, 57, 43, 0.4);
+    }
+    
+    .btn-rage:hover, body.rage-mode .btn-rage {
+      background: var(--btn-rage-color);
+      color: #fff;
+      box-shadow: 0 0 15px var(--btn-rage-color);
+      border-color: var(--btn-rage-color);
     }
 
     /* VISTA GRIMORIO */
@@ -223,7 +268,6 @@
       border: 2px solid var(--accent-yellow);
       background: var(--accent-yellow);
       cursor: pointer;
-      transition: all 0.15s ease;
     }
 
     .slot-dot.used {
@@ -545,6 +589,13 @@
       z-index: 2000;
       font-size: 0.95rem;
       font-weight: bold;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+    }
+
+    body.rage-mode .toast {
+      background: #330d0d;
+      border-color: #ff3333;
+      color: #ffcccc;
     }
 
     .modal-overlay {
@@ -662,8 +713,9 @@
         📖 Incantesimi Preparati: <strong id="prepCounterText">0 / 0</strong>
       </div>
       <div class="actions-container">
-        <!-- PULSANTE PER CAMBIARE VISTA -->
+        <!-- PULSANTI -->
         <button class="btn-action btn-mode-toggle" id="modeToggleBtn" onclick="toggleViewMode()">⚔️ Vista Combattimento</button>
+        <button class="btn-action btn-rage" id="rageBtn" onclick="toggleRage()">😡 Entra in Ira</button>
         <button class="btn-action" onclick="longRest()">☀️ Riposo Lungo</button>
         <button class="btn-action btn-danger" onclick="resetPreparedSpells()">🧹 Svuota Preparati</button>
       </div>
@@ -792,6 +844,7 @@
     let selectedCategory = "Tutti";
     let showOnlyPrepared = false;
     let currentView = 'grimoire'; // 'grimoire' oppure 'combat'
+    let isRaging = false; // Stato dell'Ira
 
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1 };
 
@@ -846,6 +899,25 @@
     document.getElementById('spellAttackBonusInput').value = savedAtk !== null ? savedAtk : defaultStats.atk;
 
     // ==========================================
+    // IRA BARBARICA
+    // ==========================================
+    function toggleRage() {
+      isRaging = !isRaging;
+      const body = document.body;
+      const btn = document.getElementById('rageBtn');
+      
+      if (isRaging) {
+        body.classList.add('rage-mode');
+        btn.innerHTML = '🛑 Termina Ira';
+        showToast("🩸 SEI IN IRA! Vantaggio alle prove di Forza e danni extra. (Ricorda: non puoi lanciare o concentrarti su incantesimi!)");
+      } else {
+        body.classList.remove('rage-mode');
+        btn.innerHTML = '😡 Entra in Ira';
+        showToast("L'ira si placa, ritorni padrone di te stesso.");
+      }
+    }
+
+    // ==========================================
     // CAMBIO VISTA (GRIMORIO <-> COMBATTIMENTO)
     // ==========================================
     function toggleViewMode() {
@@ -857,13 +929,13 @@
         currentView = 'combat';
         grimoireView.style.display = 'none';
         combatView.style.display = 'block';
-        toggleBtn.textContent = '📖 Vista Grimorio';
+        toggleBtn.innerHTML = '📖 Vista Grimorio';
         renderCombatView();
       } else {
         currentView = 'grimoire';
         combatView.style.display = 'none';
         grimoireView.style.display = 'block';
-        toggleBtn.textContent = '⚔️ Vista Combattimento';
+        toggleBtn.innerHTML = '⚔️ Vista Combattimento';
         renderSpells();
       }
     }
@@ -941,7 +1013,7 @@
       const toast = document.getElementById('toastMessage');
       toast.textContent = message;
       toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+      setTimeout(() => { toast.style.display = 'none'; }, 4000);
     }
 
     function resetPreparedSpells() {
@@ -969,9 +1041,10 @@
 
     function longRest() {
       usedSlots = {};
+      if (isRaging) toggleRage(); // Togliamo l'ira se è attiva durante il riposo!
       syncToCloud();
       renderSlotTracker();
-      showToast("☀️ Riposo Lungo: slot incantesimo ripristinati!");
+      showToast("☀️ Riposo Lungo: slot incantesimo ripristinati e fatica rimossa!");
     }
 
     function renderSlotTracker() {
