@@ -34,7 +34,7 @@
       --panel-bg: rgba(40, 10, 10, 0.95);
       --card-border: #ff3333;
       --border-subtle: #661a1a;
-      --accent-yellow: #ff4d4d; /* Il "giallo" diventa rosso acceso */
+      --accent-yellow: #ff4d4d;
       --text-main: #ffd6d6;
       --btn-rage-color: #ff3333;
     }
@@ -60,7 +60,7 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease; /* Transizione fluida */
+      transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
     }
 
     body {
@@ -839,12 +839,11 @@
     // ==========================================
     // STATO APPLICAZIONE & LOCAL STORAGE
     // ==========================================
-    let dbRef = null; 
     let spellsData = [];
     let selectedCategory = "Tutti";
     let showOnlyPrepared = false;
-    let currentView = 'grimoire'; // 'grimoire' oppure 'combat'
-    let isRaging = false; // Stato dell'Ira
+    let currentView = 'grimoire'; 
+    let isRaging = false; 
 
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1 };
 
@@ -885,491 +884,453 @@
 
     function autoCalcStats() {
       const prof = getProficiencyBonus(charLevel);
-      return { dc: 8 + prof + abilityMod, atk: prof + abilityMod };
-    }
-
-    document.getElementById('charLevelInput').value = charLevel;
-    document.getElementById('abilityModInput').value = abilityMod;
-
-    let savedDc = localStorage.getItem('dnd_spell_save_dc');
-    let savedAtk = localStorage.getItem('dnd_spell_attack_bonus');
-    const defaultStats = autoCalcStats();
-
-    document.getElementById('spellSaveDcInput').value = savedDc !== null ? savedDc : defaultStats.dc;
-    document.getElementById('spellAttackBonusInput').value = savedAtk !== null ? savedAtk : defaultStats.atk;
-
-    // ==========================================
-    // IRA BARBARICA
-    // ==========================================
-    function toggleRage() {
-      isRaging = !isRaging;
-      const body = document.body;
-      const btn = document.getElementById('rageBtn');
+      const dc = 8 + prof + abilityMod;
+      const atk = prof + abilityMod;
       
-      if (isRaging) {
-        body.classList.add('rage-mode');
-        btn.innerHTML = '🛑 Termina Ira';
-        showToast("🩸 SEI IN IRA! Vantaggio alle prove di Forza e danni extra. (Ricorda: non puoi lanciare o concentrarti su incantesimi!)");
-      } else {
-        body.classList.remove('rage-mode');
-        btn.innerHTML = '😡 Entra in Ira';
-        showToast("L'ira si placa, ritorni padrone di te stesso.");
-      }
-    }
-
-    // ==========================================
-    // CAMBIO VISTA (GRIMORIO <-> COMBATTIMENTO)
-    // ==========================================
-    function toggleViewMode() {
-      const grimoireView = document.getElementById('grimoireView');
-      const combatView = document.getElementById('combatView');
-      const toggleBtn = document.getElementById('modeToggleBtn');
-
-      if (currentView === 'grimoire') {
-        currentView = 'combat';
-        grimoireView.style.display = 'none';
-        combatView.style.display = 'block';
-        toggleBtn.innerHTML = '📖 Vista Grimorio';
-        renderCombatView();
-      } else {
-        currentView = 'grimoire';
-        combatView.style.display = 'none';
-        grimoireView.style.display = 'block';
-        toggleBtn.innerHTML = '⚔️ Vista Combattimento';
-        renderSpells();
-      }
-    }
-
-    // ==========================================
-    // VISTA GRIMORIO LOGICA
-    // ==========================================
-    function isAlwaysPrepared(spell) {
-      return !!(spell && spell.alwaysPrepared);
-    }
-
-    function toggleAlwaysPreparedConfirm(spellName) {
-      const spell = spellsData.find(s => s.nome === spellName);
-      if (!spell) return;
-
-      const currentStatus = isAlwaysPrepared(spell);
-      const message = currentStatus
-        ? `Vuoi sbloccare '${spell.nome}' dagli incantesimi Sempre Preparati?`
-        : `Vuoi bloccare '${spell.nome}' come Sempre Preparato?`;
-
-      if (confirm(message)) {
-        spell.alwaysPrepared = !currentStatus;
-        if (spell.alwaysPrepared) {
-          preparedSpells = preparedSpells.filter(name => name !== spell.nome);
-        }
-        syncToCloud();
-        setupCategories();
-        renderSpells();
-        updatePrepCounterUI();
-        showToast(spell.alwaysPrepared ? `📌 '${spell.nome}' impostato come Sempre Preparato!` : `🔓 '${spell.nome}' sbloccato.`);
-      }
-    }
-
-    function getMaxPrepared() {
-      const lvl = parseInt(document.getElementById('charLevelInput').value || '1');
-      const mod = parseInt(document.getElementById('abilityModInput').value || '0');
-      return Math.max(1, lvl + mod);
-    }
-
-    function getNormalPreparedCount() {
-      return preparedSpells.filter(spellName => {
-        const spell = spellsData.find(s => s.nome === spellName);
-        if (!spell) return true;
-        const level = extractLevel(spell);
-        return level > 0 && !isAlwaysPrepared(spell);
-      }).length;
-    }
-
-    function updateStatsConfig() {
-      charLevel = parseInt(document.getElementById('charLevelInput').value || '1');
-      abilityMod = parseInt(document.getElementById('abilityModInput').value || '0');
-
-      const calc = autoCalcStats();
-      document.getElementById('spellSaveDcInput').value = calc.dc;
-      document.getElementById('spellAttackBonusInput').value = calc.atk;
-
-      syncToCloud();
-      updatePrepCounterUI();
+      const dcInput = document.getElementById('spellSaveDcInput');
+      const atkInput = document.getElementById('spellAttackBonusInput');
+      
+      if (!localStorage.getItem('dnd_spell_save_dc')) dcInput.value = dc;
+      if (!localStorage.getItem('dnd_spell_attack_bonus')) atkInput.value = (atk > 0 ? '+' : '') + atk;
     }
 
     function saveCustomStats() { syncToCloud(); }
 
-    function updatePrepCounterUI() {
-      const current = getNormalPreparedCount();
-      const max = getMaxPrepared();
-      const counterText = document.getElementById('prepCounterText');
-      
-      if (counterText) {
-        counterText.textContent = `${current} / ${max}`;
-        counterText.style.color = (current >= max) ? '#e74c3c' : 'var(--accent-yellow)';
-      }
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById('toastMessage');
-      toast.textContent = message;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 4000);
-    }
-
-    function resetPreparedSpells() {
-      if (preparedSpells.length === 0) {
-        showToast("ℹ️ Nessun incantesimo da svuotare!");
-        return;
-      }
-
-      if (confirm("Vuoi davvero azzerare la lista degli incantesimi preparati?")) {
-        preparedSpells = [];
-        syncToCloud();
-        setupCategories();
-        renderSpells();
-        updatePrepCounterUI();
-        showToast("🧹 Lista incantesimi preparati svuotata!");
-      }
-    }
-
-    function toggleSlot(level, index) {
-      if (!usedSlots[level]) usedSlots[level] = 0;
-      usedSlots[level] = (index < usedSlots[level]) ? index : index + 1;
+    function updateStatsConfig() {
+      const lvl = parseInt(document.getElementById('charLevelInput').value) || 1;
+      const mod = parseInt(document.getElementById('abilityModInput').value) || 0;
+      charLevel = lvl;
+      abilityMod = mod;
+      autoCalcStats();
       syncToCloud();
-      renderSlotTracker();
-    }
-
-    function longRest() {
-      usedSlots = {};
-      if (isRaging) toggleRage(); // Togliamo l'ira se è attiva durante il riposo!
-      syncToCloud();
-      renderSlotTracker();
-      showToast("☀️ Riposo Lungo: slot incantesimo ripristinati e fatica rimossa!");
-    }
-
-    function renderSlotTracker() {
-      const container = document.getElementById('slotsGrid');
-      container.innerHTML = '';
-
-      Object.keys(maxSlotsConfig).forEach(lvl => {
-        const max = maxSlotsConfig[lvl];
-        const used = usedSlots[lvl] || 0;
-
-        const box = document.createElement('div');
-        box.className = 'slot-level-box';
-
-        let dotsHTML = '';
-        for (let i = 0; i < max; i++) {
-          const isUsed = i < used;
-          dotsHTML += `<div class="slot-dot ${isUsed ? 'used' : ''}" onclick="toggleSlot(${lvl}, ${i})"></div>`;
-        }
-
-        box.innerHTML = `
-          <div class="slot-level-title">${lvl}° Liv. (${max - used}/${max})</div>
-          <div class="slot-dots">${dotsHTML}</div>
-        `;
-        container.appendChild(box);
-      });
-    }
-
-    function togglePrepared(spellName) {
-      const spell = spellsData.find(s => s.nome === spellName);
-
-      if (spell) {
-        const level = extractLevel(spell);
-        if (level === 0) {
-          showToast("✨ I trucchetti (Livello 0) non richiedono preparazione!");
-          return;
-        }
-        if (isAlwaysPrepared(spell)) {
-          showToast("✨ Questo incantesimo è impostato come Sempre Preparato!");
-          return;
-        }
-      }
-
-      if (preparedSpells.includes(spellName)) {
-        preparedSpells = preparedSpells.filter(name => name !== spellName);
-      } else {
-        const currentCount = getNormalPreparedCount();
-        const max = getMaxPrepared();
-        if (currentCount >= max) {
-          showToast("⚠️ Numero massimo incantesimi raggiunto!");
-          return;
-        }
-        preparedSpells.push(spellName);
-      }
-      
-      syncToCloud();
-      setupCategories();
-      renderSpells();
       updatePrepCounterUI();
     }
 
-    function analyzeTacticalFeatures(spell) {
-      const text = ((spell.descrizione || '') + ' ' + (spell.tempo_di_lancio || '') + ' ' + (spell.livello_scuola || '')).toLowerCase();
-      const isConc = text.includes('concentration') || text.includes('concentrazione');
-      const isRitual = text.includes('ritual') || text.includes('rituale');
-      const costMatch = (spell.descrizione || '').match(/\b(?:worth|costing|valore di|costo di)?\s*(?:at least)?\s*(\d[\d,.]*)\s*(?:gp|mo|monete)\b/i);
-      const isCostly = !!costMatch || (text.includes('gp') && (text.includes('worth') || text.includes('consumes') || text.includes('costo')));
-      const costText = costMatch ? `${costMatch[1]} mo` : "Materiale Costoso";
-
-      return { isConc, isRitual, isCostly, costText };
+    function initHeaderStats() {
+      document.getElementById('charLevelInput').value = charLevel;
+      document.getElementById('abilityModInput').value = abilityMod;
+      
+      const storedDC = localStorage.getItem('dnd_spell_save_dc');
+      const storedAtk = localStorage.getItem('dnd_spell_attack_bonus');
+      
+      if (storedDC && storedAtk) {
+        document.getElementById('spellSaveDcInput').value = storedDC;
+        document.getElementById('spellAttackBonusInput').value = storedAtk;
+      } else {
+        autoCalcStats();
+      }
     }
 
-    function extractLevel(spell) {
-      const text = ((spell.livello_scuola || '') + ' ' + (spell.descrizione || '')).substring(0, 300).toLowerCase();
-      if (text.includes("cantrip") || text.includes("trucchetto") || text.includes("livello 0") || text.includes("0° livello")) return 0;
-      const matchEn = text.match(/\b([1-9])(?:st|nd|rd|th)?[-\s]*level\b/);
-      if (matchEn) return parseInt(matchEn[1]);
-      const matchIt = text.match(/\b([0-9])°?\s*livello\b/) || text.match(/\blivello\s*([0-9])\b/);
-      if (matchIt) return parseInt(matchIt[1]);
-      return -1;
-    }
-
+    // ==========================================
+    // CARICAMENTO DATI
+    // ==========================================
     async function loadSpells() {
       if (spellsData.length === 0) {
         try {
-          const response = await fetch('incantesimi.json');
+          // MODIFICA QUI: cerca il file corretto del chierico
+          const response = await fetch('incantesimi_chierico.json');
+          if (!response.ok) throw new Error("File JSON non trovato (Errore " + response.status + ")");
           spellsData = await response.json();
+          syncToCloud();
         } catch (error) {
-          console.warn("Nessun file incantesimi.json predefinito trovato.");
+          console.error("Errore di caricamento JSON:", error);
+          alert("⚠️ IMPOSSIBILE CARICARE 'incantesimi_chierico.json'. \n\nSe hai aperto il file con 'doppio clic' (file://), il browser blocca la lettura dei JSON esterni per sicurezza. Usa un server locale (come Live Server) oppure usa Firefox.");
         }
       }
       renderSlotTracker();
       setupCategories();
       renderSpells();
       updatePrepCounterUI();
+      renderCombatView();
+    }
+
+    // ==========================================
+    // UI & RENDER GRIMORIO
+    // ==========================================
+    function renderSlotTracker() {
+      const grid = document.getElementById('slotsGrid');
+      grid.innerHTML = '';
+      for (let lvl = 1; lvl <= 9; lvl++) {
+        const max = maxSlotsConfig[lvl] || 0;
+        if (max === 0) continue;
+        const used = usedSlots[lvl] || 0;
+        
+        let dotsHtml = '';
+        for (let i = 0; i < max; i++) {
+          const isUsed = i < used;
+          dotsHtml += `<div class="slot-dot ${isUsed ? 'used' : ''}" onclick="toggleSlot(${lvl})"></div>`;
+        }
+        grid.innerHTML += `
+          <div class="slot-level-box">
+            <div class="slot-level-title">Livello ${lvl}</div>
+            <div class="slot-dots">${dotsHtml}</div>
+          </div>
+        `;
+      }
+    }
+
+    function toggleSlot(lvl) {
+      if (!usedSlots[lvl]) usedSlots[lvl] = 0;
+      if (usedSlots[lvl] < maxSlotsConfig[lvl]) {
+        usedSlots[lvl]++;
+      } else {
+        usedSlots[lvl] = 0;
+      }
+      syncToCloud();
+      renderSlotTracker();
     }
 
     function setupCategories() {
-      const categoriesSet = new Set(["Tutti"]);
-      spellsData.forEach(s => {
-        if (s.categorie) {
-          s.categorie.forEach(cat => {
-            if (cat && cat.trim()) categoriesSet.add(cat.trim());
-          });
-        }
-      });
-
       const container = document.getElementById('categoriesContainer');
-      container.innerHTML = '';
-
-      const totalPreparedShow = spellsData.filter(s => {
-        const lvl = extractLevel(s);
-        return preparedSpells.includes(s.nome) || isAlwaysPrepared(s) || lvl === 0;
-      }).length;
-
-      const btnPrepared = document.createElement('button');
-      btnPrepared.className = `btn-tag btn-prepared-toggle ${showOnlyPrepared ? 'active' : ''}`;
-      btnPrepared.textContent = `⭐ Solo Preparati / Disponibili (${totalPreparedShow})`;
-      btnPrepared.onclick = () => {
-        showOnlyPrepared = !showOnlyPrepared;
-        setupCategories();
-        renderSpells();
-      };
-      container.appendChild(btnPrepared);
-
-      const sep = document.createElement('span');
-      sep.style.borderRight = '1px solid var(--border-subtle)';
-      sep.style.margin = '0 5px';
-      container.appendChild(sep);
-
-      categoriesSet.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = `btn-tag ${(!showOnlyPrepared && cat === selectedCategory) ? 'active' : ''}`;
-        btn.textContent = cat;
-        btn.onclick = () => {
-          showOnlyPrepared = false;
-          selectedCategory = cat;
-          setupCategories();
-          renderSpells();
-        };
-        container.appendChild(btn);
+      const allTags = new Set(["Tutti"]);
+      
+      spellsData.forEach(s => {
+        if(s.categorie) s.categorie.forEach(c => allTags.add(c.trim()));
       });
+
+      let html = `<button class="btn-tag active" onclick="setCategory('Tutti', this)">Tutti</button>`;
+      
+      html += `<button id="btnPrepared" class="btn-tag btn-prepared-toggle" onclick="togglePreparedFilter(this)">📖 Solo Preparati</button>`;
+
+      const sortedTags = Array.from(allTags).filter(t => t !== "Tutti").sort();
+      sortedTags.forEach(tag => {
+        html += `<button class="btn-tag" onclick="setCategory('${tag}', this)">${tag}</button>`;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function setCategory(cat, btn) {
+      selectedCategory = cat;
+      const buttons = document.querySelectorAll('#categoriesContainer .btn-tag:not(.btn-prepared-toggle)');
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSpells();
+    }
+
+    function togglePreparedFilter(btn) {
+      showOnlyPrepared = !showOnlyPrepared;
+      if (showOnlyPrepared) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+      renderSpells();
+    }
+
+    function extractSpellLevel(levelStr) {
+      const match = levelStr.match(/(\d+)/);
+      if (match) return parseInt(match[1]);
+      if (levelStr.toLowerCase().includes("trucchett")) return 0;
+      return -1; 
+    }
+
+    function isCantrip(levelStr) {
+      return levelStr.toLowerCase().includes("trucchett") || levelStr.toLowerCase().includes("cantrip");
+    }
+
+    function parseTagsFromText(desc) {
+      let badges = '';
+      if(desc.toLowerCase().includes("concentrazione")) badges += `<span class="badge-tactical badge-conc">🧠 Concentrazione</span>`;
+      if(desc.toLowerCase().includes("rituale")) badges += `<span class="badge-tactical badge-ritual">🕯️ Rituale</span>`;
+      
+      let costMatch = desc.match(/componenti.*(costa|monete|mo).*$/im);
+      if(costMatch) badges += `<span class="badge-tactical badge-costly">💎 Componente Costosa</span>`;
+      return badges;
+    }
+
+    function highlightText(text, search) {
+      if(!search) return text;
+      const regex = new RegExp(`(${search})`, 'gi');
+      return text.replace(regex, '<span style="background:var(--accent-yellow); color:#000;">$1</span>');
     }
 
     function renderSpells() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const selectedLevel = document.getElementById('levelSelect').value;
       const grid = document.getElementById('spellsGrid');
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const levelFilter = document.getElementById('levelSelect').value;
       grid.innerHTML = '';
 
-      const filtered = spellsData.filter(spell => {
-        const isAlways = isAlwaysPrepared(spell);
-        const level = extractLevel(spell);
-        const isPrepared = preparedSpells.includes(spell.nome) || isAlways || level === 0;
-
-        if (showOnlyPrepared && !isPrepared) return false;
-
-        const matchesCategory = selectedCategory === "Tutti" || (spell.categorie && spell.categorie.includes(selectedCategory));
-        const matchesSearch = spell.nome.toLowerCase().includes(query) || (spell.descrizione && spell.descrizione.toLowerCase().includes(query));
-        const matchesLevel = (selectedLevel === "ALL") || (level === parseInt(selectedLevel));
-
-        return matchesCategory && matchesSearch && matchesLevel;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Nessun incantesimo trovato.</p>';
-        return;
-      }
-
-      filtered.forEach(s => {
-        const card = document.createElement('div');
-        const isAlways = isAlwaysPrepared(s);
-        const level = extractLevel(s);
-        const isPrepared = preparedSpells.includes(s.nome) || isAlways || level === 0;
-
-        card.className = 'card';
+      let filtered = spellsData.filter(spell => {
+        const matchSearch = spell.nome.toLowerCase().includes(search) || spell.descrizione.toLowerCase().includes(search);
         
-        const imgUrl = s.immagine || s.img || s.image || s.foto || '';
-        const imgHTML = imgUrl ? `<img src="${imgUrl}" alt="${s.nome}" class="card-img" onerror="this.style.display='none'">` : '';
-
-        const tagsHTML = (s.categorie || []).map(c => `<span class="tag-badge">${c}</span>`).join('');
-        const { isConc, isRitual, isCostly, costText } = analyzeTacticalFeatures(s);
-        let tacticalHTML = '';
-        if (isConc) tacticalHTML += `<span class="badge-tactical badge-conc">🎯 Concentrazione</span>`;
-        if (isRitual) tacticalHTML += `<span class="badge-tactical badge-ritual">📜 Rituale</span>`;
-        if (isCostly) tacticalHTML += `<span class="badge-tactical badge-costly">💎 ${costText}</span>`;
-
-        let prepareButtonHTML = '';
-        if (level === 0) {
-          prepareButtonHTML = `<span class="btn-cantrip-badge">✨ Trucchetto</span>`;
-        } else if (isAlways) {
-          prepareButtonHTML = `<span class="btn-always-prepared">✨ Sempre Prep.</span>`;
-        } else {
-          prepareButtonHTML = `
-            <button class="btn-prepare ${isPrepared ? 'prepared' : ''}" onclick="togglePrepared('${s.nome.replace(/'/g, "\\'")}')">
-              ${isPrepared ? '★ Preparato' : '☆ Prepara'}
-            </button>`;
+        let matchCat = selectedCategory === "Tutti" || (spell.categorie && spell.categorie.includes(selectedCategory));
+        
+        let matchLevel = true;
+        if (levelFilter !== "ALL") {
+          const sLevel = extractSpellLevel(spell.livello);
+          matchLevel = (sLevel === parseInt(levelFilter));
         }
 
-        const safeName = s.nome.replace(/'/g, "\\'");
+        let matchPrepared = true;
+        if (showOnlyPrepared) {
+          const alwaysPrep = spell.sempre_preparato === true || spell.sempre_preparato === "true" || isCantrip(spell.livello);
+          matchPrepared = alwaysPrep || preparedSpells.includes(spell.nome);
+        }
 
-        card.innerHTML = `
-          <div>
-            ${imgHTML}
-            <div class="card-header">
-              <div class="card-title">${s.nome}</div>
-              ${prepareButtonHTML}
+        return matchSearch && matchCat && matchLevel && matchPrepared;
+      });
+
+      // Ordinamento: Livello crescente -> Alfabetico
+      filtered.sort((a, b) => {
+        let lA = extractSpellLevel(a.livello);
+        let lB = extractSpellLevel(b.livello);
+        if(lA !== lB) return lA - lB;
+        return a.nome.localeCompare(b.nome);
+      });
+
+      filtered.forEach(spell => {
+        const isPrep = preparedSpells.includes(spell.nome);
+        const cantrip = isCantrip(spell.livello);
+        const alwaysPrep = spell.sempre_preparato === true || spell.sempre_preparato === "true";
+        
+        let prepBtnHtml = '';
+        if (cantrip) {
+          prepBtnHtml = `<span class="btn-cantrip-badge">Trucchetto</span>`;
+        } else if (alwaysPrep) {
+          prepBtnHtml = `<span class="btn-always-prepared">📌 Sempre Prep.</span>`;
+        } else {
+          prepBtnHtml = `<button class="btn-prepare ${isPrep ? 'prepared' : ''}" onclick="togglePrepare('${spell.nome}')">
+                          ${isPrep ? '📖 Preparato' : 'Libro'}
+                        </button>`;
+        }
+
+        let tagsHtml = '';
+        if(spell.categorie) {
+          tagsHtml = spell.categorie.map(c => `<span class="tag-badge">${c}</span>`).join('');
+        }
+
+        const dispName = highlightText(spell.nome, search);
+        const dispDesc = highlightText(spell.descrizione, search);
+
+        grid.innerHTML += `
+          <div class="card">
+            ${spell.immagine ? `<img src="${spell.immagine}" class="card-img" alt="${spell.nome}" onerror="this.style.display='none'">` : ''}
+            <div>
+              <div class="card-header">
+                <div class="card-title">${dispName}</div>
+                ${prepBtnHtml}
+              </div>
+              <div class="card-meta">
+                ${spell.livello}<br>
+                ⏳ ${spell.tempo_di_lancio}
+              </div>
+              <div class="tactical-badges">
+                ${parseTagsFromText(spell.descrizione)}
+              </div>
+              <div class="card-tags">
+                ${tagsHtml}
+              </div>
             </div>
-            <div class="card-meta">${s.livello_scuola || ''} • ${s.tempo_di_lancio || ''}</div>
-            ${tacticalHTML ? `<div class="tactical-badges">${tacticalHTML}</div>` : ''}
-            <div class="card-tags">${tagsHTML}</div>
-          </div>
-          <div class="card-desc">${s.descrizione || 'Nessuna descrizione.'}</div>
-          <div class="card-actions">
-            <button class="btn-card-action ${isAlways ? 'active-lock' : ''}" onclick="toggleAlwaysPreparedConfirm('${safeName}')">
-              ${isAlways ? '🔓 Sblocca Sempre Prep.' : '📌 Blocca Sempre Prep.'}
-            </button>
-            <button class="btn-card-action" onclick="openEditModal('${safeName}')">✏️ Modifica</button>
-            <button class="btn-card-action btn-delete" onclick="deleteSpell('${safeName}')">🗑️ Elimina</button>
+            
+            <div class="card-desc">${dispDesc}</div>
+            
+            <div class="card-actions">
+              <button class="btn-card-action" onclick="openEditModal('${spell.nome}')">✏️ Modifica</button>
+              <button class="btn-card-action btn-delete" onclick="deleteSpell('${spell.nome}')">🗑️ Cancella</button>
+            </div>
           </div>
         `;
-        grid.appendChild(card);
       });
     }
 
+    function togglePrepare(spellName) {
+      const idx = preparedSpells.indexOf(spellName);
+      if (idx > -1) {
+        preparedSpells.splice(idx, 1);
+      } else {
+        preparedSpells.push(spellName);
+      }
+      syncToCloud();
+      renderSpells();
+      updatePrepCounterUI();
+      renderCombatView();
+    }
+
+    function getPreparedCapacity() {
+      return charLevel + abilityMod;
+    }
+
+    function updatePrepCounterUI() {
+      const max = getPreparedCapacity();
+      const current = preparedSpells.length;
+      const el = document.getElementById('prepCounterText');
+      el.innerHTML = `${current} / ${max}`;
+      
+      if (current > max) {
+        el.style.color = var(--danger-red);
+      } else {
+        el.style.color = var(--accent-yellow);
+      }
+    }
+
+    function resetPreparedSpells() {
+      if(confirm("Vuoi svuotare tutta la lista degli incantesimi preparati?")) {
+        preparedSpells = [];
+        syncToCloud();
+        renderSpells();
+        updatePrepCounterUI();
+        renderCombatView();
+        showToast("Lista preparati svuotata!");
+      }
+    }
+
+    function longRest() {
+      if(confirm("Eseguire Riposo Lungo? (Ripristina tutti gli slot e le azioni base)")) {
+        usedSlots = {};
+        syncToCloud();
+        renderSlotTracker();
+        showToast("☀️ Riposo Lungo completato. Slot ripristinati!");
+      }
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderSpells);
+    document.getElementById('levelSelect').addEventListener('change', renderSpells);
+
     // ==========================================
-    // VISTA COMBATTIMENTO LOGICA
+    // VISTA COMBATTIMENTO & IRA
     // ==========================================
+    function toggleViewMode() {
+      const btn = document.getElementById('modeToggleBtn');
+      const grim = document.getElementById('grimoireView');
+      const comb = document.getElementById('combatView');
+
+      if (currentView === 'grimoire') {
+        currentView = 'combat';
+        grim.style.display = 'none';
+        comb.style.display = 'block';
+        btn.innerHTML = '📖 Vista Grimorio';
+        renderCombatView();
+      } else {
+        currentView = 'grimoire';
+        grim.style.display = 'block';
+        comb.style.display = 'none';
+        btn.innerHTML = '⚔️ Vista Combattimento';
+      }
+    }
+
+    function toggleRage() {
+      isRaging = !isRaging;
+      if (isRaging) {
+        document.body.classList.add('rage-mode');
+        document.getElementById('rageBtn').innerHTML = '🧘 Esci dall\'Ira';
+        showToast("🔥 SEI ENTRATO IN IRA! Danni Fisici dimezzati, + Danni Rissa!");
+      } else {
+        document.body.classList.remove('rage-mode');
+        document.getElementById('rageBtn').innerHTML = '😡 Entra in Ira';
+        showToast("🧘 Ira terminata.");
+      }
+    }
+
     function renderCombatView() {
-      const actionsList = document.getElementById('actionsList');
-      const bonusList = document.getElementById('bonusList');
-      const reactionsList = document.getElementById('reactionsList');
+      const aList = document.getElementById('actionsList');
+      const bList = document.getElementById('bonusList');
+      const rList = document.getElementById('reactionsList');
+      
+      aList.innerHTML = '';
+      bList.innerHTML = '';
+      rList.innerHTML = '';
 
-      actionsList.innerHTML = '';
-      bonusList.innerHTML = '';
-      reactionsList.innerHTML = '';
+      let availableActions = [...defaultCombatActions, ...customCombatActions];
 
-      // 1. Render Azioni Base e Custom
-      const allCustom = [...defaultCombatActions, ...customCombatActions];
-      allCustom.forEach(act => {
-        const card = createActionCard(act.title, act.desc, 'custom', act.id);
-        if (act.type === 'action') actionsList.appendChild(card);
-        if (act.type === 'bonus') bonusList.appendChild(card);
-        if (act.type === 'reaction') reactionsList.appendChild(card);
-      });
-
-      // 2. Render Incantesimi Disponibili/Preparati
       spellsData.forEach(spell => {
-        const isPrepared = preparedSpells.includes(spell.nome) || spell.alwaysPrepared || extractLevel(spell) === 0;
+        const alwaysPrep = spell.sempre_preparato === true || spell.sempre_preparato === "true";
+        const isPrep = alwaysPrep || isCantrip(spell.livello) || preparedSpells.includes(spell.nome);
         
-        if (isPrepared) {
-          const time = (spell.tempo_di_lancio || '').toLowerCase();
-          const card = createActionCard(spell.nome, `${spell.livello_scuola || ''}\n${spell.descrizione || ''}`, 'spell');
+        if (isPrep) {
+          const timeL = spell.tempo_di_lancio ? spell.tempo_di_lancio.toLowerCase() : "";
+          let targetList = null;
 
-          if (time.includes('bonus')) {
-            bonusList.appendChild(card);
-          } else if (time.includes('reazione') || time.includes('reaction')) {
-            reactionsList.appendChild(card);
-          } else {
-            // Default per azioni normali (es. "1 azione")
-            actionsList.appendChild(card);
+          if (timeL.includes("azione bonus")) targetList = bList;
+          else if (timeL.includes("reazione")) targetList = rList;
+          else if (timeL.includes("1 azione") || timeL.includes("azione")) targetList = aList;
+
+          if (targetList) {
+            targetList.innerHTML += buildActionCardHtml(spell, 'spell');
           }
         }
       });
+
+      availableActions.forEach(act => {
+        const html = buildActionCardHtml(act, act.category);
+        if (act.type === 'action') aList.innerHTML += html;
+        if (act.type === 'bonus') bList.innerHTML += html;
+        if (act.type === 'reaction') rList.innerHTML += html;
+      });
     }
 
-    function createActionCard(title, desc, type, id = null) {
-      const card = document.createElement('div');
-      card.className = 'action-card';
-      const badgeClass = type === 'spell' ? 'badge-spell' : 'badge-custom';
-      const badgeText = type === 'spell' ? 'Incantesimo' : 'Abilità';
-
-      let deleteBtnHTML = '';
-      if (type === 'custom' && typeof id === 'number') {
-        deleteBtnHTML = `<button style="background:transparent; border:none; color:var(--danger-red); cursor:pointer; font-size:0.8rem;" onclick="deleteCustomAction(${id})">🗑️</button>`;
+    function buildActionCardHtml(item, sourceType) {
+      const isSpell = sourceType === 'spell';
+      const title = isSpell ? item.nome : item.title;
+      let desc = isSpell ? item.descrizione : item.desc;
+      const lvl = isSpell ? `(${item.livello})` : '';
+      const badgeClass = isSpell ? 'badge-spell' : 'badge-custom';
+      const badgeText = isSpell ? 'Incantesimo' : 'Speciale';
+      
+      let costWarning = '';
+      if (isSpell && isRaging) {
+        costWarning = `<div style="color:var(--accent-yellow); font-size:0.8rem; font-weight:bold; margin-top:5px; background:rgba(200,0,0,0.3); padding:4px; border-radius:4px;">❌ NON PUOI LANCIARE INCANTESIMI MENTRE SEI IN IRA!</div>`;
       }
 
-      card.innerHTML = `
-        <div class="action-title">
-          <span>${title}</span>
-          <div style="display:flex; gap:6px; align-items:center;">
-            <span class="action-type-badge ${badgeClass}">${badgeText}</span>
-            ${deleteBtnHTML}
+      let deleteBtn = (!isSpell && item.category !== 'custom') 
+        ? `<button class="btn-card-action btn-delete" onclick="deleteCustomAction('${item.id}')" style="margin-left:auto; padding:2px 6px;">🗑️</button>` 
+        : '';
+
+      return `
+        <div class="action-card">
+          <div class="action-title">
+            <span>${title} <span style="font-size:0.8rem; font-weight:normal; color:var(--text-muted)">${lvl}</span></span>
+            <span style="display:flex; align-items:center; gap:5px;">
+              <span class="action-type-badge ${badgeClass}">${badgeText}</span>
+              ${deleteBtn}
+            </span>
           </div>
+          <div class="action-desc">${desc.substring(0, 150)}${desc.length > 150 ? '...' : ''}</div>
+          ${costWarning}
         </div>
-        <div class="action-desc">${desc}</div>
       `;
-      return card;
     }
 
     function addCustomAction(type) {
-      const title = prompt("Nome dell'azione/abilità:");
-      if (!title) return;
-      const desc = prompt("Breve descrizione:");
+      const title = prompt("Nome dell'azione:");
+      if(!title) return;
+      const desc = prompt("Descrizione dell'azione:");
       
       const newAction = {
-        id: Date.now(),
+        id: 'ca_' + Date.now(),
         type: type,
         title: title,
         desc: desc || '',
-        category: 'custom'
+        category: 'user_created'
       };
 
       customCombatActions.push(newAction);
       syncToCloud();
       renderCombatView();
+      showToast("Azione creata con successo!");
     }
 
     function deleteCustomAction(id) {
-      customCombatActions = customCombatActions.filter(a => a.id !== id);
-      syncToCloud();
-      renderCombatView();
+      if(confirm("Eliminare questa azione?")) {
+        customCombatActions = customCombatActions.filter(a => a.id !== id);
+        syncToCloud();
+        renderCombatView();
+      }
     }
 
+
     // ==========================================
-    // MODAL INCANTESIMI
+    // GESTIONE MODAL (AGGIUNGI/MODIFICA INCANTESIMI)
     // ==========================================
     function openAddModal() {
-      document.getElementById('modalTitle').textContent = "➕ Aggiungi Nuovo Incantesimo";
-      document.getElementById('modalOriginalName').value = "";
-      document.getElementById('modalSpellName').value = "";
-      document.getElementById('modalSpellLevel').value = "";
-      document.getElementById('modalSpellTime').value = "";
-      document.getElementById('modalSpellCategories').value = "Danno, Utilità";
-      document.getElementById('modalSpellImg').value = "";
-      document.getElementById('modalSpellDesc').value = "";
+      document.getElementById('modalTitle').innerText = '➕ Aggiungi Nuovo Incantesimo';
+      document.getElementById('modalOriginalName').value = '';
+      document.getElementById('modalSpellName').value = '';
+      document.getElementById('modalSpellLevel').value = '';
+      document.getElementById('modalSpellTime').value = '1 azione';
+      document.getElementById('modalSpellCategories').value = '';
+      document.getElementById('modalSpellImg').value = '';
+      document.getElementById('modalSpellDesc').value = '';
       document.getElementById('modalSpellAlwaysPrepared').checked = false;
       
       document.getElementById('spellModal').classList.add('active');
@@ -1377,18 +1338,18 @@
 
     function openEditModal(spellName) {
       const spell = spellsData.find(s => s.nome === spellName);
-      if (!spell) return;
+      if(!spell) return;
 
-      document.getElementById('modalTitle').textContent = `✏️ Modifica: ${spell.nome}`;
+      document.getElementById('modalTitle').innerText = '✏️ Modifica Incantesimo';
       document.getElementById('modalOriginalName').value = spell.nome;
-      document.getElementById('modalSpellName').value = spell.nome || "";
-      document.getElementById('modalSpellLevel').value = spell.livello_scuola || "";
-      document.getElementById('modalSpellTime').value = spell.tempo_di_lancio || "";
-      document.getElementById('modalSpellCategories').value = (spell.categorie || []).join(', ');
-      document.getElementById('modalSpellImg').value = spell.immagine || spell.img || spell.image || "";
-      document.getElementById('modalSpellDesc').value = spell.descrizione || "";
-      document.getElementById('modalSpellAlwaysPrepared').checked = !!spell.alwaysPrepared;
-
+      document.getElementById('modalSpellName').value = spell.nome;
+      document.getElementById('modalSpellLevel').value = spell.livello || '';
+      document.getElementById('modalSpellTime').value = spell.tempo_di_lancio || '';
+      document.getElementById('modalSpellCategories').value = spell.categorie ? spell.categorie.join(', ') : '';
+      document.getElementById('modalSpellImg').value = spell.immagine || '';
+      document.getElementById('modalSpellDesc').value = spell.descrizione || '';
+      document.getElementById('modalSpellAlwaysPrepared').checked = spell.sempre_preparato === true || spell.sempre_preparato === "true";
+      
       document.getElementById('spellModal').classList.add('active');
     }
 
@@ -1398,72 +1359,73 @@
 
     function saveSpellFromModal() {
       const originalName = document.getElementById('modalOriginalName').value;
-      const name = document.getElementById('modalSpellName').value.trim();
-      const level = document.getElementById('modalSpellLevel').value.trim();
-      const time = document.getElementById('modalSpellTime').value.trim();
-      const categoriesRaw = document.getElementById('modalSpellCategories').value;
-      const img = document.getElementById('modalSpellImg').value.trim();
-      const desc = document.getElementById('modalSpellDesc').value.trim();
-      const alwaysPrepared = document.getElementById('modalSpellAlwaysPrepared').checked;
+      const newSpell = {
+        nome: document.getElementById('modalSpellName').value.trim(),
+        livello: document.getElementById('modalSpellLevel').value.trim(),
+        tempo_di_lancio: document.getElementById('modalSpellTime').value.trim(),
+        categorie: document.getElementById('modalSpellCategories').value.split(',').map(s => s.trim()).filter(s => s),
+        immagine: document.getElementById('modalSpellImg').value.trim(),
+        descrizione: document.getElementById('modalSpellDesc').value.trim(),
+        sempre_preparato: document.getElementById('modalSpellAlwaysPrepared').checked
+      };
 
-      if (!name) {
-        alert("Inserisci un nome per l'incantesimo!");
+      if (!newSpell.nome || !newSpell.livello) {
+        alert("Nome e Livello sono obbligatori!");
         return;
       }
 
-      const categories = categoriesRaw
-        .split(',')
-        .map(c => c.trim())
-        .filter(c => c.length > 0);
-
-      const spellObj = {
-        nome: name,
-        livello_scuola: level,
-        tempo_di_lancio: time,
-        categorie: categories,
-        descrizione: desc,
-        immagine: img,
-        alwaysPrepared: alwaysPrepared
-      };
-
       if (originalName) {
-        const index = spellsData.findIndex(s => s.nome === originalName);
-        if (index !== -1) {
-          spellsData[index] = spellObj;
-          if (originalName !== name) {
-            preparedSpells = preparedSpells.map(p => p === originalName ? name : p);
-          }
+        const idx = spellsData.findIndex(s => s.nome === originalName);
+        if(idx > -1) spellsData[idx] = newSpell;
+        
+        const prepIdx = preparedSpells.indexOf(originalName);
+        if (prepIdx > -1) {
+          preparedSpells[prepIdx] = newSpell.nome;
         }
-        showToast(`✏️ '${name}' aggiornato!`);
       } else {
-        spellsData.push(spellObj);
-        showToast(`✨ '${name}' aggiunto al grimorio!`);
+        const exists = spellsData.find(s => s.nome.toLowerCase() === newSpell.nome.toLowerCase());
+        if (exists) {
+          alert("Esiste già un incantesimo con questo nome!");
+          return;
+        }
+        spellsData.push(newSpell);
       }
 
       syncToCloud();
-      closeModal();
       setupCategories();
       renderSpells();
-      updatePrepCounterUI();
+      renderCombatView();
+      closeModal();
+      showToast("✅ Incantesimo salvato correttamente!");
     }
 
     function deleteSpell(spellName) {
-      if (confirm(`Sei sicuro di voler eliminare '${spellName}'?`)) {
+      if(confirm(`Sei sicuro di voler eliminare l'incantesimo "${spellName}"?`)) {
         spellsData = spellsData.filter(s => s.nome !== spellName);
-        preparedSpells = preparedSpells.filter(p => p !== spellName);
-        
+        preparedSpells = preparedSpells.filter(n => n !== spellName);
         syncToCloud();
         setupCategories();
         renderSpells();
+        renderCombatView();
         updatePrepCounterUI();
-        showToast(`🗑️ '${spellName}' eliminato.`);
+        showToast("🗑️ Incantesimo eliminato.");
       }
     }
 
-    document.getElementById('searchInput').addEventListener('input', renderSpells);
-    document.getElementById('levelSelect').addEventListener('change', renderSpells);
+    function showToast(msg) {
+      const toast = document.getElementById('toastMessage');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
 
-    loadSpells();
+    // ==========================================
+    // START
+    // ==========================================
+    window.onload = () => {
+      initHeaderStats();
+      loadSpells();
+    };
   </script>
 </body>
 </html>
