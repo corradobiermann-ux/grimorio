@@ -16,6 +16,10 @@
     }
   </script>
 
+  <!-- LIBRERIE FIREBASE PER LA SINCRONIZZAZIONE IN CLOUD -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
   <style>
     :root {
       --bg-color: #121110;
@@ -157,7 +161,7 @@
       transform: scale(1.2);
     }
 
-    /* PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY / BLOCCATO IN ALTO) */
+    /* PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY) */
     .prep-stats-panel {
       position: sticky;
       top: 10px;
@@ -568,39 +572,99 @@
   <div id="toastMessage" class="toast-warning"></div>
 
   <script>
+    // ==========================================
+    // CONFIGURAZIONE FIREBASE
+    // ==========================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDkHnUTM1U8eXhT40X9IkbGrcEA8aPo6_w",
+      authDomain: "grimorio-chierico.firebaseapp.com",
+      databaseURL: "https://grimorio-chierico-default-rtdb.firebaseio.com",
+      projectId: "grimorio-chierico",
+      storageBucket: "grimorio-chierico.firebasestorage.app",
+      messagingSenderId: "554552051710",
+      appId: "1:554552051710:web:af916b4822aab2c99722af"
+    };
+
+    // Inizializza Firebase
+    let dbRef = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      dbRef = firebase.database().ref("personaggi/snorri_chierico");
+    } catch (e) {
+      console.warn("Firebase non collegato. L'app userà la memoria locale.");
+    }
+
     let spellsData = [];
     let selectedCategory = "Tutti";
     let showOnlyPrepared = false;
 
-    // Configurazione Slot Incantesimo Personalizzata (1°:4, 2°:3, 3°:3, 4°:3, 5°:2)
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
 
-    // Elenco Parole Chiave Incantesimi SEMPRE PREPARATI (Italiano e Inglese)
     const alwaysPreparedKeywords = [
-      "druidcraft", "artifizio druidico",
-      "guida", "guidance",
+      "druidcraft", "artifizio druidico", "guida", "guidance",
       "toll of dead", "toll the dead", "suono di morte", "rintocco dei morti", "tocco della morte",
-      "salvare i morenti", "spare the dying",
-      "resistenza", "resistance",
-      "riparare", "mending",
-      "fiamma sacra", "sacred flame",
+      "salvare i morenti", "spare the dying", "resistenza", "resistance",
+      "riparare", "mending", "fiamma sacra", "sacred flame",
       "amicizia animali", "animal friendship", "amicizia con gli animali",
-      "assorbire elementi", "absorb elements",
-      "cerimonia", "ceremony",
-      "comando", "command",
-      "infliggi ferite", "inflict wounds",
-      "parola guaritrice", "healing word",
-      "vita falsata", "false life",
-      "calmare emozioni", "calm emotions",
-      "percezione delle bestie", "beast sense",
-      "preghiera di guarigione", "prayer of healing",
-      "presagio", "augury"
+      "assorbire elementi", "absorb elements", "cerimonia", "ceremony",
+      "comando", "command", "infliggi ferite", "inflict wounds",
+      "parola guaritrice", "healing word", "vita falsata", "false life",
+      "calmare emozioni", "calm emotions", "percezione delle bestie", "beast sense",
+      "preghiera di guarigione", "prayer of healing", "presagio", "augury"
     ];
 
     let usedSlots = JSON.parse(localStorage.getItem('cleric_used_slots') || '{}');
     let preparedSpells = JSON.parse(localStorage.getItem('cleric_prepared_spells') || '[]');
     let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
     let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
+
+    // ASCOLTA LE MODIFICHE DAL CLOUD IN TEMPO REALE
+    if (dbRef) {
+      dbRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          if (data.usedSlots !== undefined) usedSlots = data.usedSlots;
+          if (data.preparedSpells !== undefined) preparedSpells = data.preparedSpells;
+          if (data.clericLevel !== undefined) {
+            clericLevel = data.clericLevel;
+            document.getElementById('clericLevelInput').value = clericLevel;
+          }
+          if (data.wisMod !== undefined) {
+            wisMod = data.wisMod;
+            document.getElementById('wisModInput').value = wisMod;
+          }
+          if (data.spellSaveDc !== undefined) document.getElementById('spellSaveDcInput').value = data.spellSaveDc;
+          if (data.spellAttackBonus !== undefined) document.getElementById('spellAttackBonusInput').value = data.spellAttackBonus;
+
+          renderSlotTracker();
+          setupCategories();
+          renderSpells();
+          updatePrepCounterUI();
+        }
+      });
+    }
+
+    function syncToCloud() {
+      // Salva in locale
+      localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
+      localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
+      localStorage.setItem('cleric_level', clericLevel);
+      localStorage.setItem('wis_mod', wisMod);
+      localStorage.setItem('spell_save_dc', document.getElementById('spellSaveDcInput').value);
+      localStorage.setItem('spell_attack_bonus', document.getElementById('spellAttackBonusInput').value);
+
+      // Invia al Cloud Firebase
+      if (dbRef) {
+        dbRef.set({
+          usedSlots: usedSlots,
+          preparedSpells: preparedSpells,
+          clericLevel: clericLevel,
+          wisMod: wisMod,
+          spellSaveDc: document.getElementById('spellSaveDcInput').value,
+          spellAttackBonus: document.getElementById('spellAttackBonusInput').value
+        });
+      }
+    }
 
     function getProficiencyBonus(lvl) {
       return Math.ceil(lvl / 4) + 1;
@@ -613,7 +677,6 @@
       return { dc, atk };
     }
 
-    // Impostazione valori iniziali
     document.getElementById('clericLevelInput').value = clericLevel;
     document.getElementById('wisModInput').value = wisMod;
 
@@ -623,14 +686,6 @@
 
     document.getElementById('spellSaveDcInput').value = savedDc !== null ? savedDc : defaultStats.dc;
     document.getElementById('spellAttackBonusInput').value = savedAtk !== null ? savedAtk : defaultStats.atk;
-
-    function savePreparedSpells() {
-      localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
-    }
-
-    function saveUsedSlots() {
-      localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
-    }
 
     function isAlwaysPrepared(spell) {
       if (!spell || !spell.nome) return false;
@@ -656,24 +711,17 @@
     function updateStatsConfig() {
       clericLevel = parseInt(document.getElementById('clericLevelInput').value || '7');
       wisMod = parseInt(document.getElementById('wisModInput').value || '3');
-      localStorage.setItem('cleric_level', clericLevel);
-      localStorage.setItem('wis_mod', wisMod);
 
-      // Ricalcola CD e Bonus Attacco automaticamente se cambiano livello o Saggezza
       const calc = autoCalcStats();
       document.getElementById('spellSaveDcInput').value = calc.dc;
       document.getElementById('spellAttackBonusInput').value = calc.atk;
-      localStorage.setItem('spell_save_dc', calc.dc);
-      localStorage.setItem('spell_attack_bonus', calc.atk);
 
+      syncToCloud();
       updatePrepCounterUI();
     }
 
     function saveCustomStats() {
-      const dc = document.getElementById('spellSaveDcInput').value;
-      const atk = document.getElementById('spellAttackBonusInput').value;
-      localStorage.setItem('spell_save_dc', dc);
-      localStorage.setItem('spell_attack_bonus', atk);
+      syncToCloud();
     }
 
     function updatePrepCounterUI() {
@@ -683,11 +731,7 @@
       
       if (counterText) {
         counterText.textContent = `${current} / ${max}`;
-        if (current >= max) {
-          counterText.style.color = '#e74c3c';
-        } else {
-          counterText.style.color = 'var(--accent)';
-        }
+        counterText.style.color = (current >= max) ? '#e74c3c' : 'var(--accent)';
       }
     }
 
@@ -695,9 +739,7 @@
       const toast = document.getElementById('toastMessage');
       toast.textContent = message;
       toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 3000);
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
 
     function resetPreparedSpells() {
@@ -706,9 +748,9 @@
         return;
       }
 
-      if (confirm("Vuoi davvero azzerare la lista degli incantesimi preparati? (Gli incantesimi Sempre Preparati rimarranno attivi)")) {
+      if (confirm("Vuoi davvero azzerare la lista degli incantesimi preparati?")) {
         preparedSpells = [];
-        savePreparedSpells();
+        syncToCloud();
         setupCategories();
         renderSpells();
         updatePrepCounterUI();
@@ -718,19 +760,14 @@
 
     function toggleSlot(level, index) {
       if (!usedSlots[level]) usedSlots[level] = 0;
-      
-      if (index < usedSlots[level]) {
-        usedSlots[level] = index;
-      } else {
-        usedSlots[level] = index + 1;
-      }
-      saveUsedSlots();
+      usedSlots[level] = (index < usedSlots[level]) ? index : index + 1;
+      syncToCloud();
       renderSlotTracker();
     }
 
     function longRest() {
       usedSlots = {};
-      saveUsedSlots();
+      syncToCloud();
       renderSlotTracker();
       showToast("☀️ Riposo Lungo: slot incantesimo ripristinati!");
     }
@@ -749,7 +786,7 @@
         let dotsHTML = '';
         for (let i = 0; i < max; i++) {
           const isUsed = i < used;
-          dotsHTML += `<div class="slot-dot ${isUsed ? 'used' : ''}" title="${isUsed ? 'Slot Usato' : 'Slot Disponibile'}" onclick="toggleSlot(${lvl}, ${i})"></div>`;
+          dotsHTML += `<div class="slot-dot ${isUsed ? 'used' : ''}" onclick="toggleSlot(${lvl}, ${i})"></div>`;
         }
 
         box.innerHTML = `
@@ -765,12 +802,10 @@
 
       if (spell) {
         const level = extractLevel(spell);
-
         if (level === 0) {
           showToast("✨ I trucchetti (Livello 0) non richiedono preparazione!");
           return;
         }
-
         if (isAlwaysPrepared(spell)) {
           showToast("✨ Questo incantesimo è Sempre Preparato!");
           return;
@@ -789,7 +824,7 @@
         preparedSpells.push(spellName);
       }
       
-      savePreparedSpells();
+      syncToCloud();
       setupCategories();
       renderSpells();
       updatePrepCounterUI();
@@ -797,10 +832,8 @@
 
     function analyzeTacticalFeatures(spell) {
       const text = ((spell.descrizione || '') + ' ' + (spell.tempo_di_lancio || '') + ' ' + (spell.livello_scuola || '')).toLowerCase();
-      
       const isConc = text.includes('concentration') || text.includes('concentrazione');
       const isRitual = text.includes('ritual') || text.includes('rituale');
-
       const costMatch = (spell.descrizione || '').match(/\b(?:worth|costing|valore di|costo di)?\s*(?:at least)?\s*(\d[\d,.]*)\s*(?:gp|mo|monete)\b/i);
       const isCostly = !!costMatch || (text.includes('gp') && (text.includes('worth') || text.includes('consumes') || text.includes('costo')));
       const costText = costMatch ? `${costMatch[1]} mo` : "Materiale Costoso";
@@ -811,13 +844,10 @@
     function extractLevel(spell) {
       const text = ((spell.livello_scuola || '') + ' ' + (spell.descrizione || '')).substring(0, 300).toLowerCase();
       if (text.includes("cantrip") || text.includes("trucchetto") || text.includes("livello 0") || text.includes("0° livello")) return 0;
-
       const matchEn = text.match(/\b([1-9])(?:st|nd|rd|th)?[-\s]*level\b/);
       if (matchEn) return parseInt(matchEn[1]);
-
       const matchIt = text.match(/\b([0-9])°?\s*livello\b/) || text.match(/\blivello\s*([0-9])\b/);
       if (matchIt) return parseInt(matchIt[1]);
-
       return -1;
     }
 
@@ -830,17 +860,14 @@
         renderSpells();
         updatePrepCounterUI();
       } catch (error) {
-        document.getElementById('spellsGrid').innerHTML = 
-          `<p style="color: red;">Errore nel caricamento del file 'incantesimi_chierico.json'. Assicurati che il file sia presente nella cartella!</p>`;
+        document.getElementById('spellsGrid').innerHTML = `<p style="color: red;">Errore nel caricamento del file 'incantesimi_chierico.json'.</p>`;
       }
     }
 
     function setupCategories() {
       const categoriesSet = new Set(["Tutti"]);
       spellsData.forEach(s => {
-        if (s.categorie) {
-          s.categorie.forEach(cat => categoriesSet.add(cat));
-        }
+        if (s.categorie) s.categorie.forEach(cat => categoriesSet.add(cat));
       });
 
       const container = document.getElementById('categoriesContainer');
@@ -894,17 +921,14 @@
         if (showOnlyPrepared && !isPrepared) return false;
 
         const matchesCategory = selectedCategory === "Tutti" || (spell.categorie && spell.categorie.includes(selectedCategory));
-        const matchesSearch = spell.nome.toLowerCase().includes(query) || 
-                              (spell.descrizione && spell.descrizione.toLowerCase().includes(query));
-        
-        const spellLevel = extractLevel(spell);
-        const matchesLevel = (selectedLevel === "ALL") || (spellLevel === parseInt(selectedLevel));
+        const matchesSearch = spell.nome.toLowerCase().includes(query) || (spell.descrizione && spell.descrizione.toLowerCase().includes(query));
+        const matchesLevel = (selectedLevel === "ALL") || (level === parseInt(selectedLevel));
 
         return matchesCategory && matchesSearch && matchesLevel;
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Nessun incantesimo trovato con i filtri selezionati.</p>';
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Nessun incantesimo trovato.</p>';
         return;
       }
 
@@ -917,7 +941,6 @@
         card.className = `card ${isPrepared ? 'is-prepared' : ''}`;
         
         const tagsHTML = (s.categorie || []).map(c => `<span class="tag-badge">${c}</span>`).join('');
-        
         const { isConc, isRitual, isCostly, costText } = analyzeTacticalFeatures(s);
         let tacticalHTML = '';
         if (isConc) tacticalHTML += `<span class="badge-tactical badge-conc">🎯 Concentrazione</span>`;
@@ -943,9 +966,7 @@
               ${prepareButtonHTML}
             </div>
             <div class="card-meta">${s.livello_scuola} • ${s.tempo_di_lancio}</div>
-            
             ${tacticalHTML ? `<div class="tactical-badges">${tacticalHTML}</div>` : ''}
-            
             <div class="card-tags">${tagsHTML}</div>
           </div>
           <div class="card-desc">${s.descrizione || 'Nessuna descrizione disponibile.'}</div>
