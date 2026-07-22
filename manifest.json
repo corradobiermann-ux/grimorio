@@ -1,0 +1,21 @@
+{
+  "name": "Grimorio del Chierico",
+  "short_name": "Grimorio",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121110",
+  "theme_color": "#121110",
+  "description": "Grimorio per la gestione degli incantesimi del Chierico D&D 5e",
+  "icons": [
+    {
+      "src": "header.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "header.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
