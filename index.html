@@ -3,1234 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grimorio del Chierico</title>
-  
-  <!-- Firebase SDK (Compatibilità v8) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
+  <title>Modalità Combattimento - D&D 5e</title>
   <style>
     :root {
       --bg: #0f0d0a;
       --card-bg: rgba(24, 21, 18, 0.92);
-      --panel-bg: rgba(24, 21, 18, 0.95);
       --card-border: #8b6e3d;
       --border-subtle: #3a3125;
       --accent-yellow: #f1c40f;
       --text-main: #e2d9cc;
       --text-muted: #a39580;
       --danger-red: #c0392b;
+      --action-color: #e67e22;
+      --bonus-color: #2980b9;
+      --reaction-color: #8e44ad;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
       background-color: var(--bg);
-      background-image: linear-gradient(rgba(15, 13, 10, 0.85), rgba(15, 13, 10, 0.85)), url('sfondo.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
       color: var(--text-main);
       padding: 20px;
-      max-width: 1300px;
+      max-width: 1400px;
       margin: 0 auto;
-      line-height: 1.4;
     }
 
     header {
-      text-align: center;
-      margin-bottom: 20px;
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-      background: var(--card-bg);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-      min-height: 60px;
-    }
-
-    .header-banner-img {
-      width: 100%;
-      max-height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* BARRA FISSATA (STICKY) */
-    .stats-panel {
-      position: sticky;
-      top: 10px;
-      z-index: 1000;
-      background: var(--panel-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 12px 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .stats-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .stats-row.flex-between {
       justify-content: space-between;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 10px;
-    }
-
-    .stat-inline {
-      display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-main);
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--card-border);
     }
 
-    .stat-inline input {
-      background: #0a0907;
-      border: 1px solid var(--border-subtle);
+    h1 {
       color: var(--accent-yellow);
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: bold;
-      text-align: center;
-      width: 55px;
+      font-size: 1.8rem;
     }
 
-    .prep-counter-container {
-      font-size: 1rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-main);
-    }
-
-    .prep-counter-container strong {
-      color: var(--accent-yellow);
-      font-size: 1.1rem;
-    }
-
-    .actions-container {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn-action {
+    .btn-back {
       background: transparent;
-      color: var(--accent-yellow);
       border: 1px solid var(--accent-yellow);
-      padding: 6px 14px;
+      color: var(--accent-yellow);
+      padding: 8px 16px;
       border-radius: 6px;
-      font-weight: bold;
-      font-size: 0.85rem;
       cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-weight: bold;
+      text-decoration: none;
     }
 
-    .btn-action:hover {
+    .btn-back:hover {
       background: var(--accent-yellow);
       color: #000;
     }
 
-    .btn-danger {
-      border-color: var(--danger-red);
-      color: #e74c3c;
-    }
-
-    .btn-danger:hover {
-      background: var(--danger-red);
-      color: #fff;
-    }
-
-    /* Titles */
-    .section-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--accent-yellow);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    }
-
-    /* Slots Grid */
-    .slots-grid {
+    /* GRIGLIA A 3 COLONNE */
+    .combat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin-bottom: 25px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
 
-    .slot-level-box {
-      background: var(--card-bg);
-      backdrop-filter: blur(4px);
+    @media (max-width: 900px) {
+      .combat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .combat-column {
+      background: rgba(18, 15, 12, 0.8);
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
-      padding: 12px;
-      text-align: center;
-    }
-
-    .slot-level-title {
-      font-size: 0.95rem;
-      font-weight: bold;
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-
-    .slot-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .slot-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 2px solid var(--accent-yellow);
-      background: var(--accent-yellow);
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .slot-dot.used {
-      background: transparent;
-      border-color: #555;
-    }
-
-    /* Controls & Filters */
-    .controls-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .search-row {
-      display: flex;
-      gap: 12px;
-    }
-
-    .search-row input, .search-row select {
-      background: var(--card-bg);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .search-row input {
-      flex: 1;
-    }
-
-    .categories-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .btn-tag {
-      background: var(--card-bg);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-tag.active {
-      background: var(--accent-yellow);
-      color: #000;
-      border-color: var(--accent-yellow);
-      font-weight: bold;
-    }
-
-    .btn-prepared-toggle {
-      border-color: var(--accent-yellow);
-      color: var(--accent-yellow);
-      background: var(--card-bg);
-    }
-
-    .btn-prepared-toggle.active {
-      background: var(--accent-yellow);
-      color: #000;
-    }
-
-    /* Spells Grid */
-    .spells-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(6px);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-
-    .card-img {
-      width: 100%;
-      max-height: 160px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      border: 1px solid var(--border-subtle);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .card-title {
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: #fff;
-    }
-
-    .card-meta {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .tactical-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .badge-tactical {
-      font-size: 0.75rem;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-
-    .badge-conc {
-      background: rgba(52, 152, 219, 0.2);
-      color: #5dadec;
-      border: 1px solid rgba(52, 152, 219, 0.4);
-    }
-
-    .badge-ritual {
-      background: rgba(155, 89, 182, 0.2);
-      color: #be79df;
-      border: 1px solid rgba(155, 89, 182, 0.4);
-    }
-
-    .badge-costly {
-      background: rgba(230, 126, 34, 0.2);
-      color: #f39c12;
-      border: 1px solid rgba(230, 126, 34, 0.4);
-    }
-
-    .card-tags {
-      margin-top: 8px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .tag-badge {
-      font-size: 0.75rem;
-      background: #241f19;
-      border: 1px solid var(--border-subtle);
-      padding: 3px 8px;
-      border-radius: 6px;
-      color: var(--text-main);
-    }
-
-    .card-desc {
-      font-size: 0.9rem;
-      color: #d1d5db;
-      white-space: pre-line;
-      max-height: 220px;
-      overflow-y: auto;
-      padding-right: 5px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 10px;
-    }
-
-    .card-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 6px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      flex-wrap: wrap;
-    }
-
-    .btn-card-action {
-      background: transparent;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-card-action:hover {
-      border-color: var(--accent-yellow);
-      color: var(--accent-yellow);
-    }
-
-    .btn-card-action.active-lock {
-      border-color: var(--accent-yellow);
-      color: var(--accent-yellow);
-      background: rgba(241, 196, 15, 0.15);
-    }
-
-    .btn-card-action.btn-delete:hover {
-      border-color: var(--danger-red);
-      color: #e74c3c;
-    }
-
-    .btn-prepare {
-      background: transparent;
-      border: 1px solid var(--accent-yellow);
-      color: var(--accent-yellow);
-      padding: 5px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .btn-prepare.prepared {
-      background: var(--accent-yellow);
-      color: #000;
-    }
-
-    .btn-always-prepared, .btn-cantrip-badge {
-      font-size: 0.85rem;
-      color: var(--accent-yellow);
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    /* Toast Notification */
-    .toast {
-      position: fixed;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #181512;
-      border: 1px solid var(--accent-yellow);
-      color: var(--text-main);
-      padding: 12px 24px;
-      border-radius: 30px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
-      display: none;
-      z-index: 2000;
-      font-size: 0.95rem;
-      font-weight: bold;
-    }
-
-    /* MODAL FINESTRA MODIFICA / CREAZIONE */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 3000;
       padding: 15px;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-card {
-      background: var(--panel-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 24px;
-      width: 100%;
-      max-width: 550px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
 
-    .modal-header {
-      font-size: 1.25rem;
+    .column-header {
+      font-size: 1.2rem;
       font-weight: bold;
-      color: var(--accent-yellow);
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    .form-group {
+    .header-action { background: rgba(230, 126, 34, 0.2); color: var(--action-color); border: 1px solid var(--action-color); }
+    .header-bonus { background: rgba(41, 128, 185, 0.2); color: var(--bonus-color); border: 1px solid var(--bonus-color); }
+    .header-reaction { background: rgba(142, 68, 173, 0.2); color: var(--reaction-color); border: 1px solid var(--reaction-color); }
+
+    /* SCHEDE AZIONE */
+    .action-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
-    .form-group label {
+    .action-title {
+      font-weight: bold;
+      font-size: 1rem;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .action-type-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-spell { background: #27ae60; color: #fff; }
+    .badge-custom { background: #7f8c8d; color: #fff; }
+
+    .action-desc {
       font-size: 0.85rem;
       color: var(--text-muted);
-      font-weight: 600;
+      line-height: 1.3;
     }
 
-    .form-group input, .form-group textarea {
-      background: #0a0907;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 8px 12px;
+    .btn-add-action {
+      background: transparent;
+      border: 1px dashed var(--accent-yellow);
+      color: var(--accent-yellow);
+      padding: 10px;
       border-radius: 6px;
-      font-size: 0.95rem;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
       cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.2s;
     }
 
-    .checkbox-row input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent-yellow);
-      cursor: pointer;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 12px;
+    .btn-add-action:hover {
+      background: rgba(241, 196, 15, 0.1);
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="header.jpg" alt="Header Banner" class="header-banner-img" onerror="this.style.display='none'">
+    <h1>⚔️ Modalità Combattimento</h1>
+    <a href="index.html" class="btn-back">📖 Torna al Grimorio</a>
   </header>
 
-  <!-- BARRA STATISTICHE FISSATA IN ALTO (STICKY) -->
-  <div class="stats-panel">
-    <div class="stats-row">
-      <div class="stat-inline">
-        <span>🧙 Livello:</span>
-        <input type="number" id="clericLevelInput" min="1" max="20" onchange="updateStatsConfig()">
-      </div>
-      <div class="stat-inline">
-        <span>✨ Mod. Saggezza:</span>
-        <input type="number" id="wisModInput" onchange="updateStatsConfig()">
-      </div>
-      <div class="stat-inline">
-        <span>🎯 CD Incantesimi:</span>
-        <input type="number" id="spellSaveDcInput" onchange="saveCustomStats()">
-      </div>
-      <div class="stat-inline">
-        <span>⚔️ Bonus Attacco Inc.:</span>
-        <input type="number" id="spellAttackBonusInput" onchange="saveCustomStats()">
-      </div>
+  <main class="combat-grid">
+    <!-- COLONNA 1: AZIONI -->
+    <div class="combat-column">
+      <div class="column-header header-action">⚔️ Azioni (1/Turno)</div>
+      <div id="actionsList" class="actions-list"></div>
+      <button class="btn-add-action" onclick="addCustomAction('action')">➕ Aggiungi Azione Custom</button>
     </div>
 
-    <div class="stats-row flex-between">
-      <div class="prep-counter-container">
-        📖 Incantesimi Preparati: <strong id="prepCounterText">0 / 0</strong>
-      </div>
-      <div class="actions-container">
-        <button class="btn-action" onclick="longRest()">☀️ Riposo Lungo</button>
-        <button class="btn-action btn-danger" onclick="resetPreparedSpells()">🧹 Svuota Preparati</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tracker Slot Incantesimo -->
-  <div class="section-title">
-    <span>Slot Incantesimi Disponibili</span>
-  </div>
-  <div class="slots-grid" id="slotsGrid"></div>
-
-  <!-- Controlli & Filtri -->
-  <div class="controls-panel">
-    <div class="search-row">
-      <input type="text" id="searchInput" placeholder="Cerca incantesimo per nome o descrizione...">
-      <select id="levelSelect">
-        <option value="ALL">Tutti i Livelli</option>
-        <option value="0">Trucchetti (0)</option>
-        <option value="1">1° Livello</option>
-        <option value="2">2° Livello</option>
-        <option value="3">3° Livello</option>
-        <option value="4">4° Livello</option>
-        <option value="5">5° Livello</option>
-      </select>
-      <button class="btn-action" onclick="openAddModal()">➕ Nuovo</button>
+    <!-- COLONNA 2: AZIONI BONUS -->
+    <div class="combat-column">
+      <div class="column-header header-bonus">⚡ Azioni Bonus</div>
+      <div id="bonusList" class="actions-list"></div>
+      <button class="btn-add-action" onclick="addCustomAction('bonus')">➕ Aggiungi Azione Bonus</button>
     </div>
 
-    <div class="categories-container" id="categoriesContainer"></div>
-  </div>
-
-  <!-- Griglia Incantesimi -->
-  <div class="spells-grid" id="spellsGrid"></div>
-
-  <!-- Toast Notifiche -->
-  <div id="toastMessage" class="toast"></div>
-
-  <!-- MODAL FINESTRA DI CREAZIONE / MODIFICA INCANTESIMO -->
-  <div class="modal-overlay" id="spellModal">
-    <div class="modal-card">
-      <div class="modal-header" id="modalTitle">Aggiungi / Modifica Incantesimo</div>
-      
-      <input type="hidden" id="modalOriginalName">
-
-      <div class="form-group">
-        <label>Nome Incantesimo</label>
-        <input type="text" id="modalSpellName" placeholder="Es. Parola Guaritrice">
-      </div>
-
-      <div class="form-group">
-        <label>Livello e Scuola</label>
-        <input type="text" id="modalSpellLevel" placeholder="Es. 1° livello Evocazione (oppure Trucchetto)">
-      </div>
-
-      <div class="form-group">
-        <label>Tempo di Lancio</label>
-        <input type="text" id="modalSpellTime" placeholder="Es. 1 azione bonus">
-      </div>
-
-      <div class="form-group">
-        <label>Categorie / Filtri (Separate da virgola)</label>
-        <input type="text" id="modalSpellCategories" placeholder="Es. Cura, Danno, Generico, Utilità, Buff">
-      </div>
-
-      <div class="form-group">
-        <label>URL Immagine (Opzionale)</label>
-        <input type="text" id="modalSpellImg" placeholder="Es. immagini/curar_ferite.jpg oppure URL web">
-      </div>
-
-      <div class="form-group">
-        <label>Descrizione</label>
-        <textarea id="modalSpellDesc" placeholder="Inserisci la descrizione dettagliata..."></textarea>
-      </div>
-
-      <div class="form-group checkbox-row">
-        <input type="checkbox" id="modalSpellAlwaysPrepared">
-        <label for="modalSpellAlwaysPrepared">📌 Imposta come Sempre Preparato</label>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn-action btn-danger" onclick="closeModal()">Annulla</button>
-        <button class="btn-action" onclick="saveSpellFromModal()">💾 Salva Incantesimo</button>
-      </div>
+    <!-- COLONNA 3: REAZIONI -->
+    <div class="combat-column">
+      <div class="column-header header-reaction">🛡️ Reazioni</div>
+      <div id="reactionsList" class="actions-list"></div>
+      <button class="btn-add-action" onclick="addCustomAction('reaction')">➕ Aggiungi Reazione</button>
     </div>
-  </div>
+  </main>
 
   <script>
-    // ==========================================
-    // CONFIGURAZIONE FIREBASE
-    // ==========================================
-    const firebaseConfig = {
-      apiKey: "AIzaSyDkHnUTM1U8eXhT40X9IkbGrcEA8aPo6_w",
-      authDomain: "grimorio-chierico.firebaseapp.com",
-      databaseURL: "https://grimorio-chierico-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "grimorio-chierico",
-      storageBucket: "grimorio-chierico.firebasestorage.app",
-      messagingSenderId: "554552051710",
-      appId: "1:554552051710:web:af916b4822aab2c99722af"
-    };
+    // Recupera incantesimi e custom actions dal LocalStorage
+    const spells = JSON.parse(localStorage.getItem('dnd_custom_spells') || '[]');
+    const preparedNames = JSON.parse(localStorage.getItem('dnd_prepared_spells') || '[]');
+    let customActions = JSON.parse(localStorage.getItem('dnd_combat_custom_actions') || '[]');
 
-    let dbRef = null;
-    try {
-      firebase.initializeApp(firebaseConfig);
-      dbRef = firebase.database().ref("personaggi/snorri_chierico");
-    } catch (e) {
-      console.warn("Firebase non collegato. Modalità locale attiva.");
-    }
+    // Azioni Base D&D 5e di default
+    const defaultActions = [
+      { id: 'def1', type: 'action', title: 'Attacco Base', desc: 'Effettua un attacco ravvicinato o a distanza con un\'arma.', category: 'custom' },
+      { id: 'def2', type: 'action', title: 'Schivare (Dodge)', desc: 'I tiri per colpirci hanno svantaggio e i TS su DES hanno vantaggio.', category: 'custom' },
+      { id: 'def3', type: 'action', title: 'Disimpegnarsi (Disengage)', desc: 'I tuoi movimenti non provocano attacchi d\'opportunità per questo turno.', category: 'custom' },
+      { id: 'def4', type: 'action', title: 'Scatto (Dash)', desc: 'Raddoppia la tua velocità per il turno attuale.', category: 'custom' },
+      { id: 'def5', type: 'reaction', title: 'Attacco d\'Opportunità', desc: 'Quando un nemico esce dalla tua portata corporea.', category: 'custom' }
+    ];
 
-    let spellsData = [];
-    let selectedCategory = "Tutti";
-    let showOnlyPrepared = false;
+    function renderCombatView() {
+      const actionsList = document.getElementById('actionsList');
+      const bonusList = document.getElementById('bonusList');
+      const reactionsList = document.getElementById('reactionsList');
 
-    const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
+      actionsList.innerHTML = '';
+      bonusList.innerHTML = '';
+      reactionsList.innerHTML = '';
 
-    let usedSlots = JSON.parse(localStorage.getItem('cleric_used_slots') || '{}');
-    let preparedSpells = JSON.parse(localStorage.getItem('cleric_prepared_spells') || '[]');
-    let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
-    let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
-
-    // Carica eventuali incantesimi salvati in locale
-    const localCustomSpells = localStorage.getItem('cleric_custom_spells');
-    if (localCustomSpells) {
-      spellsData = JSON.parse(localCustomSpells);
-    }
-
-    if (dbRef) {
-      dbRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          if (data.usedSlots !== undefined) usedSlots = data.usedSlots;
-          if (data.preparedSpells !== undefined) preparedSpells = data.preparedSpells;
-          if (data.clericLevel !== undefined) {
-            clericLevel = data.clericLevel;
-            document.getElementById('clericLevelInput').value = clericLevel;
-          }
-          if (data.wisMod !== undefined) {
-            wisMod = data.wisMod;
-            document.getElementById('wisModInput').value = wisMod;
-          }
-          if (data.spellSaveDc !== undefined) document.getElementById('spellSaveDcInput').value = data.spellSaveDc;
-          if (data.spellAttackBonus !== undefined) document.getElementById('spellAttackBonusInput').value = data.spellAttackBonus;
-
-          if (data.spells && Array.isArray(data.spells)) {
-            spellsData = data.spells;
-            localStorage.setItem('cleric_custom_spells', JSON.stringify(spellsData));
-          }
-
-          localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
-          localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
-          localStorage.setItem('cleric_level', clericLevel);
-          localStorage.setItem('wis_mod', wisMod);
-
-          renderSlotTracker();
-          if (spellsData.length > 0) {
-            setupCategories();
-            renderSpells();
-            updatePrepCounterUI();
-          }
-        }
+      // 1. Render Azioni Predefinite & Custom
+      const allCustom = [...defaultActions, ...customActions];
+      allCustom.forEach(act => {
+        const card = createActionCard(act.title, act.desc, 'custom');
+        if (act.type === 'action') actionsList.appendChild(card);
+        if (act.type === 'bonus') bonusList.appendChild(card);
+        if (act.type === 'reaction') reactionsList.appendChild(card);
       });
-    }
 
-    function syncToCloud() {
-      localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
-      localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
-      localStorage.setItem('cleric_level', clericLevel);
-      localStorage.setItem('wis_mod', wisMod);
-      localStorage.setItem('spell_save_dc', document.getElementById('spellSaveDcInput').value);
-      localStorage.setItem('spell_attack_bonus', document.getElementById('spellAttackBonusInput').value);
-      localStorage.setItem('cleric_custom_spells', JSON.stringify(spellsData));
-
-      if (dbRef) {
-        dbRef.set({
-          usedSlots: usedSlots,
-          preparedSpells: preparedSpells,
-          clericLevel: clericLevel,
-          wisMod: wisMod,
-          spellSaveDc: document.getElementById('spellSaveDcInput').value,
-          spellAttackBonus: document.getElementById('spellAttackBonusInput').value,
-          spells: spellsData
-        });
-      }
-    }
-
-    function getProficiencyBonus(lvl) {
-      return Math.ceil(lvl / 4) + 1;
-    }
-
-    function autoCalcStats() {
-      const prof = getProficiencyBonus(clericLevel);
-      return { dc: 8 + prof + wisMod, atk: prof + wisMod };
-    }
-
-    document.getElementById('clericLevelInput').value = clericLevel;
-    document.getElementById('wisModInput').value = wisMod;
-
-    let savedDc = localStorage.getItem('spell_save_dc');
-    let savedAtk = localStorage.getItem('spell_attack_bonus');
-    const defaultStats = autoCalcStats();
-
-    document.getElementById('spellSaveDcInput').value = savedDc !== null ? savedDc : defaultStats.dc;
-    document.getElementById('spellAttackBonusInput').value = savedAtk !== null ? savedAtk : defaultStats.atk;
-
-    function isAlwaysPrepared(spell) {
-      return !!(spell && spell.alwaysPrepared);
-    }
-
-    function toggleAlwaysPreparedConfirm(spellName) {
-      const spell = spellsData.find(s => s.nome === spellName);
-      if (!spell) return;
-
-      const currentStatus = isAlwaysPrepared(spell);
-      const message = currentStatus
-        ? `Vuoi sbloccare '${spell.nome}' dalla lista degli incantesimi Sempre Preparati?`
-        : `Vuoi bloccare '${spell.nome}' come incantesimo Sempre Preparato?`;
-
-      if (confirm(message)) {
-        spell.alwaysPrepared = !currentStatus;
+      // 2. Render Incantesimi (Filtra solo quelli preparati o trucchetti/sempre preparati)
+      spells.forEach(spell => {
+        const isPrepared = preparedNames.includes(spell.nome) || spell.alwaysPrepared || isCantrip(spell);
         
-        // Se diventa sempre preparato, rimuovilo dai preparati "normali" per non occupare doppio spazio
-        if (spell.alwaysPrepared) {
-          preparedSpells = preparedSpells.filter(name => name !== spell.nome);
+        if (isPrepared) {
+          const time = (spell.tempo_di_lancio || '').toLowerCase();
+          const card = createActionCard(spell.nome, `${spell.livello_scuola} — ${spell.descrizione.substring(0, 100)}...`, 'spell');
+
+          if (time.includes('bonus')) {
+            bonusList.appendChild(card);
+          } else if (time.includes('reazione') || time.includes('reaction')) {
+            reactionsList.appendChild(card);
+          } else if (time.includes('azione') || time.includes('action')) {
+            actionsList.appendChild(card);
+          }
         }
-
-        syncToCloud();
-        setupCategories();
-        renderSpells();
-        updatePrepCounterUI();
-        showToast(spell.alwaysPrepared ? `📌 '${spell.nome}' impostato come Sempre Preparato!` : `🔓 '${spell.nome}' sbloccato.`);
-      }
+      });
     }
 
-    function getMaxPrepared() {
-      const lvl = parseInt(document.getElementById('clericLevelInput').value || '7');
-      const mod = parseInt(document.getElementById('wisModInput').value || '3');
-      return Math.max(1, lvl + mod);
+    function isCantrip(spell) {
+      const text = (spell.livello_scuola || '').toLowerCase();
+      return text.includes('trucchetto') || text.includes('0');
     }
 
-    function getNormalPreparedCount() {
-      return preparedSpells.filter(spellName => {
-        const spell = spellsData.find(s => s.nome === spellName);
-        if (!spell) return true;
-        const level = extractLevel(spell);
-        return level > 0 && !isAlwaysPrepared(spell);
-      }).length;
+    function createActionCard(title, desc, type) {
+      const card = document.createElement('div');
+      card.className = 'action-card';
+      const badgeClass = type === 'spell' ? 'badge-spell' : 'badge-custom';
+      const badgeText = type === 'spell' ? 'Incantesimo' : 'Abilità/Base';
+
+      card.innerHTML = `
+        <div class="action-title">
+          <span>${title}</span>
+          <span class="action-type-badge ${badgeClass}">${badgeText}</span>
+        </div>
+        <div class="action-desc">${desc}</div>
+      `;
+      return card;
     }
 
-    function updateStatsConfig() {
-      clericLevel = parseInt(document.getElementById('clericLevelInput').value || '7');
-      wisMod = parseInt(document.getElementById('wisModInput').value || '3');
-
-      const calc = autoCalcStats();
-      document.getElementById('spellSaveDcInput').value = calc.dc;
-      document.getElementById('spellAttackBonusInput').value = calc.atk;
-
-      syncToCloud();
-      updatePrepCounterUI();
-    }
-
-    function saveCustomStats() {
-      syncToCloud();
-    }
-
-    function updatePrepCounterUI() {
-      const current = getNormalPreparedCount();
-      const max = getMaxPrepared();
-      const counterText = document.getElementById('prepCounterText');
+    function addCustomAction(type) {
+      const title = prompt("Nome dell'azione/abilità:");
+      if (!title) return;
+      const desc = prompt("Breve descrizione:");
       
-      if (counterText) {
-        counterText.textContent = `${current} / ${max}`;
-        counterText.style.color = (current >= max) ? '#e74c3c' : 'var(--accent-yellow)';
-      }
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById('toastMessage');
-      toast.textContent = message;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
-    }
-
-    function resetPreparedSpells() {
-      if (preparedSpells.length === 0) {
-        showToast("ℹ️ Nessun incantesimo da svuotare!");
-        return;
-      }
-
-      if (confirm("Vuoi davvero azzerare la lista degli incantesimi preparati?")) {
-        preparedSpells = [];
-        syncToCloud();
-        setupCategories();
-        renderSpells();
-        updatePrepCounterUI();
-        showToast("🧹 Lista incantesimi preparati svuotata!");
-      }
-    }
-
-    function toggleSlot(level, index) {
-      if (!usedSlots[level]) usedSlots[level] = 0;
-      usedSlots[level] = (index < usedSlots[level]) ? index : index + 1;
-      syncToCloud();
-      renderSlotTracker();
-    }
-
-    function longRest() {
-      usedSlots = {};
-      syncToCloud();
-      renderSlotTracker();
-      showToast("☀️ Riposo Lungo: slot incantesimo ripristinati!");
-    }
-
-    function renderSlotTracker() {
-      const container = document.getElementById('slotsGrid');
-      container.innerHTML = '';
-
-      Object.keys(maxSlotsConfig).forEach(lvl => {
-        const max = maxSlotsConfig[lvl];
-        const used = usedSlots[lvl] || 0;
-
-        const box = document.createElement('div');
-        box.className = 'slot-level-box';
-
-        let dotsHTML = '';
-        for (let i = 0; i < max; i++) {
-          const isUsed = i < used;
-          dotsHTML += `<div class="slot-dot ${isUsed ? 'used' : ''}" onclick="toggleSlot(${lvl}, ${i})"></div>`;
-        }
-
-        box.innerHTML = `
-          <div class="slot-level-title">${lvl}° Liv. (${max - used}/${max})</div>
-          <div class="slot-dots">${dotsHTML}</div>
-        `;
-        container.appendChild(box);
-      });
-    }
-
-    function togglePrepared(spellName) {
-      const spell = spellsData.find(s => s.nome === spellName);
-
-      if (spell) {
-        const level = extractLevel(spell);
-        if (level === 0) {
-          showToast("✨ I trucchetti (Livello 0) non richiedono preparazione!");
-          return;
-        }
-        if (isAlwaysPrepared(spell)) {
-          showToast("✨ Questo incantesimo è impostato come Sempre Preparato!");
-          return;
-        }
-      }
-
-      if (preparedSpells.includes(spellName)) {
-        preparedSpells = preparedSpells.filter(name => name !== spellName);
-      } else {
-        const currentCount = getNormalPreparedCount();
-        const max = getMaxPrepared();
-        if (currentCount >= max) {
-          showToast("⚠️ Numero massimo incantesimi raggiunto!");
-          return;
-        }
-        preparedSpells.push(spellName);
-      }
-      
-      syncToCloud();
-      setupCategories();
-      renderSpells();
-      updatePrepCounterUI();
-    }
-
-    function analyzeTacticalFeatures(spell) {
-      const text = ((spell.descrizione || '') + ' ' + (spell.tempo_di_lancio || '') + ' ' + (spell.livello_scuola || '')).toLowerCase();
-      const isConc = text.includes('concentration') || text.includes('concentrazione');
-      const isRitual = text.includes('ritual') || text.includes('rituale');
-      const costMatch = (spell.descrizione || '').match(/\b(?:worth|costing|valore di|costo di)?\s*(?:at least)?\s*(\d[\d,.]*)\s*(?:gp|mo|monete)\b/i);
-      const isCostly = !!costMatch || (text.includes('gp') && (text.includes('worth') || text.includes('consumes') || text.includes('costo')));
-      const costText = costMatch ? `${costMatch[1]} mo` : "Materiale Costoso";
-
-      return { isConc, isRitual, isCostly, costText };
-    }
-
-    function extractLevel(spell) {
-      const text = ((spell.livello_scuola || '') + ' ' + (spell.descrizione || '')).substring(0, 300).toLowerCase();
-      if (text.includes("cantrip") || text.includes("trucchetto") || text.includes("livello 0") || text.includes("0° livello")) return 0;
-      const matchEn = text.match(/\b([1-9])(?:st|nd|rd|th)?[-\s]*level\b/);
-      if (matchEn) return parseInt(matchEn[1]);
-      const matchIt = text.match(/\b([0-9])°?\s*livello\b/) || text.match(/\blivello\s*([0-9])\b/);
-      if (matchIt) return parseInt(matchIt[1]);
-      return -1;
-    }
-
-    async function loadSpells() {
-      if (spellsData.length === 0) {
-        try {
-          const response = await fetch('incantesimi_chierico.json');
-          spellsData = await response.json();
-        } catch (error) {
-          console.warn("Impossibile caricare incantesimi_chierico.json");
-        }
-      }
-      renderSlotTracker();
-      setupCategories();
-      renderSpells();
-      updatePrepCounterUI();
-    }
-
-    function setupCategories() {
-      const categoriesSet = new Set(["Tutti"]);
-      spellsData.forEach(s => {
-        if (s.categorie) {
-          s.categorie.forEach(cat => {
-            if (cat && cat.trim()) categoriesSet.add(cat.trim());
-          });
-        }
-      });
-
-      const container = document.getElementById('categoriesContainer');
-      container.innerHTML = '';
-
-      const totalPreparedShow = spellsData.filter(s => {
-        const lvl = extractLevel(s);
-        return preparedSpells.includes(s.nome) || isAlwaysPrepared(s) || lvl === 0;
-      }).length;
-
-      const btnPrepared = document.createElement('button');
-      btnPrepared.className = `btn-tag btn-prepared-toggle ${showOnlyPrepared ? 'active' : ''}`;
-      btnPrepared.textContent = `⭐ Solo Preparati / Disponibili (${totalPreparedShow})`;
-      btnPrepared.onclick = () => {
-        showOnlyPrepared = !showOnlyPrepared;
-        setupCategories();
-        renderSpells();
-      };
-      container.appendChild(btnPrepared);
-
-      const sep = document.createElement('span');
-      sep.style.borderRight = '1px solid var(--border-subtle)';
-      sep.style.margin = '0 5px';
-      container.appendChild(sep);
-
-      categoriesSet.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = `btn-tag ${(!showOnlyPrepared && cat === selectedCategory) ? 'active' : ''}`;
-        btn.textContent = cat;
-        btn.onclick = () => {
-          showOnlyPrepared = false;
-          selectedCategory = cat;
-          setupCategories();
-          renderSpells();
-        };
-        container.appendChild(btn);
-      });
-    }
-
-    function renderSpells() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const selectedLevel = document.getElementById('levelSelect').value;
-      const grid = document.getElementById('spellsGrid');
-      grid.innerHTML = '';
-
-      const filtered = spellsData.filter(spell => {
-        const isAlways = isAlwaysPrepared(spell);
-        const level = extractLevel(spell);
-        const isPrepared = preparedSpells.includes(spell.nome) || isAlways || level === 0;
-
-        if (showOnlyPrepared && !isPrepared) return false;
-
-        const matchesCategory = selectedCategory === "Tutti" || (spell.categorie && spell.categorie.includes(selectedCategory));
-        const matchesSearch = spell.nome.toLowerCase().includes(query) || (spell.descrizione && spell.descrizione.toLowerCase().includes(query));
-        const matchesLevel = (selectedLevel === "ALL") || (level === parseInt(selectedLevel));
-
-        return matchesCategory && matchesSearch && matchesLevel;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Nessun incantesimo trovato.</p>';
-        return;
-      }
-
-      filtered.forEach(s => {
-        const card = document.createElement('div');
-        const isAlways = isAlwaysPrepared(s);
-        const level = extractLevel(s);
-        const isPrepared = preparedSpells.includes(s.nome) || isAlways || level === 0;
-
-        card.className = 'card';
-        
-        const imgUrl = s.immagine || s.img || s.image || s.foto || '';
-        const imgHTML = imgUrl ? `<img src="${imgUrl}" alt="${s.nome}" class="card-img" onerror="this.style.display='none'">` : '';
-
-        const tagsHTML = (s.categorie || []).map(c => `<span class="tag-badge">${c}</span>`).join('');
-        const { isConc, isRitual, isCostly, costText } = analyzeTacticalFeatures(s);
-        let tacticalHTML = '';
-        if (isConc) tacticalHTML += `<span class="badge-tactical badge-conc">🎯 Concentrazione</span>`;
-        if (isRitual) tacticalHTML += `<span class="badge-tactical badge-ritual">📜 Rituale</span>`;
-        if (isCostly) tacticalHTML += `<span class="badge-tactical badge-costly">💎 ${costText}</span>`;
-
-        let prepareButtonHTML = '';
-        if (level === 0) {
-          prepareButtonHTML = `<span class="btn-cantrip-badge">✨ Trucchetto</span>`;
-        } else if (isAlways) {
-          prepareButtonHTML = `<span class="btn-always-prepared">✨ Sempre Preparato</span>`;
-        } else {
-          prepareButtonHTML = `
-            <button class="btn-prepare ${isPrepared ? 'prepared' : ''}" onclick="togglePrepared('${s.nome.replace(/'/g, "\\'")}')">
-              ${isPrepared ? '★ Preparato' : '☆ Prepara'}
-            </button>`;
-        }
-
-        const safeName = s.nome.replace(/'/g, "\\'");
-
-        card.innerHTML = `
-          <div>
-            ${imgHTML}
-            <div class="card-header">
-              <div class="card-title">${s.nome}</div>
-              ${prepareButtonHTML}
-            </div>
-            <div class="card-meta">${s.livello_scuola || ''} • ${s.tempo_di_lancio || ''}</div>
-            ${tacticalHTML ? `<div class="tactical-badges">${tacticalHTML}</div>` : ''}
-            <div class="card-tags">${tagsHTML}</div>
-          </div>
-          <div class="card-desc">${s.descrizione || 'Nessuna descrizione disponibile.'}</div>
-          <div class="card-actions">
-            <button class="btn-card-action ${isAlways ? 'active-lock' : ''}" onclick="toggleAlwaysPreparedConfirm('${safeName}')">
-              ${isAlways ? '🔓 Sblocca Sempre Prep.' : '📌 Blocca Sempre Prep.'}
-            </button>
-            <button class="btn-card-action" onclick="openEditModal('${safeName}')">✏️ Modifica</button>
-            <button class="btn-card-action btn-delete" onclick="deleteSpell('${safeName}')">🗑️ Elimina</button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    // ==========================================
-    // GESTIONE FINESTRA MODAL (CREA / MODIFICA)
-    // ==========================================
-    function openAddModal() {
-      document.getElementById('modalTitle').textContent = "➕ Aggiungi Nuovo Incantesimo";
-      document.getElementById('modalOriginalName').value = "";
-      document.getElementById('modalSpellName').value = "";
-      document.getElementById('modalSpellLevel').value = "";
-      document.getElementById('modalSpellTime').value = "";
-      document.getElementById('modalSpellCategories').value = "Danno, Cura";
-      document.getElementById('modalSpellImg').value = "";
-      document.getElementById('modalSpellDesc').value = "";
-      document.getElementById('modalSpellAlwaysPrepared').checked = false;
-      
-      document.getElementById('spellModal').classList.add('active');
-    }
-
-    function openEditModal(spellName) {
-      const spell = spellsData.find(s => s.nome === spellName);
-      if (!spell) return;
-
-      document.getElementById('modalTitle').textContent = `✏️ Modifica: ${spell.nome}`;
-      document.getElementById('modalOriginalName').value = spell.nome;
-      document.getElementById('modalSpellName').value = spell.nome || "";
-      document.getElementById('modalSpellLevel').value = spell.livello_scuola || "";
-      document.getElementById('modalSpellTime').value = spell.tempo_di_lancio || "";
-      document.getElementById('modalSpellCategories').value = (spell.categorie || []).join(', ');
-      document.getElementById('modalSpellImg').value = spell.immagine || spell.img || spell.image || "";
-      document.getElementById('modalSpellDesc').value = spell.descrizione || "";
-      document.getElementById('modalSpellAlwaysPrepared').checked = !!spell.alwaysPrepared;
-
-      document.getElementById('spellModal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('spellModal').classList.remove('active');
-    }
-
-    function saveSpellFromModal() {
-      const originalName = document.getElementById('modalOriginalName').value;
-      const name = document.getElementById('modalSpellName').value.trim();
-      const level = document.getElementById('modalSpellLevel').value.trim();
-      const time = document.getElementById('modalSpellTime').value.trim();
-      const categoriesRaw = document.getElementById('modalSpellCategories').value;
-      const img = document.getElementById('modalSpellImg').value.trim();
-      const desc = document.getElementById('modalSpellDesc').value.trim();
-      const alwaysPrepared = document.getElementById('modalSpellAlwaysPrepared').checked;
-
-      if (!name) {
-        alert("Inserisci un nome per l'incantesimo!");
-        return;
-      }
-
-      const categories = categoriesRaw
-        .split(',')
-        .map(c => c.trim())
-        .filter(c => c.length > 0);
-
-      const spellObj = {
-        nome: name,
-        livello_scuola: level,
-        tempo_di_lancio: time,
-        categorie: categories,
-        descrizione: desc,
-        immagine: img,
-        alwaysPrepared: alwaysPrepared
+      const newAction = {
+        id: Date.now(),
+        type: type,
+        title: title,
+        desc: desc || '',
+        category: 'custom'
       };
 
-      if (originalName) {
-        // Modifica esistente
-        const index = spellsData.findIndex(s => s.nome === originalName);
-        if (index !== -1) {
-          spellsData[index] = spellObj;
-          if (originalName !== name) {
-            preparedSpells = preparedSpells.map(p => p === originalName ? name : p);
-          }
-        }
-        showToast(`✏️ '${name}' aggiornato con successo!`);
-      } else {
-        // Nuovo incantesimo
-        spellsData.push(spellObj);
-        showToast(`✨ '${name}' aggiunto al grimorio!`);
-      }
-
-      syncToCloud();
-      closeModal();
-      setupCategories();
-      renderSpells();
-      updatePrepCounterUI();
+      customActions.push(newAction);
+      localStorage.setItem('dnd_combat_custom_actions', JSON.stringify(customActions));
+      renderCombatView();
     }
 
-    function deleteSpell(spellName) {
-      if (confirm(`Sei sicuro di voler eliminare '${spellName}' dal grimorio?`)) {
-        spellsData = spellsData.filter(s => s.nome !== spellName);
-        preparedSpells = preparedSpells.filter(p => p !== spellName);
-        
-        syncToCloud();
-        setupCategories();
-        renderSpells();
-        updatePrepCounterUI();
-        showToast(`🗑️ '${spellName}' eliminato.`);
-      }
-    }
-
-    document.getElementById('searchInput').addEventListener('input', renderSpells);
-    document.getElementById('levelSelect').addEventListener('change', renderSpells);
-
-    loadSpells();
+    renderCombatView();
   </script>
 </body>
 </html>
