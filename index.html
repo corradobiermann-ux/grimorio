@@ -12,16 +12,14 @@
   <style>
     :root {
       --bg: #0f0d0a;
-      --card-bg: #181512;
+      --card-bg: rgba(24, 21, 18, 0.92);
       --panel-bg: rgba(24, 21, 18, 0.95);
       --card-border: #8b6e3d;
       --border-subtle: #3a3125;
       --accent-yellow: #f1c40f;
-      --accent-yellow-hover: #ffe055;
       --text-main: #e2d9cc;
       --text-muted: #a39580;
       --danger-red: #c0392b;
-      --danger-red-hover: #e74c3c;
     }
 
     * {
@@ -33,6 +31,12 @@
 
     body {
       background-color: var(--bg);
+      /* IMMAGINE DI SFONDO DELLA PAGINA (Sostituisci 'sfondo.jpg' col tuo file o URL) */
+      background-image: linear-gradient(rgba(15, 13, 10, 0.85), rgba(15, 13, 10, 0.85)), url('sfondo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       color: var(--text-main);
       padding: 20px;
       max-width: 1300px;
@@ -43,6 +47,26 @@
     header {
       text-align: center;
       margin-bottom: 20px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    }
+
+    /* IMMAGINE BANNER NELL'HEADER */
+    .header-banner-img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .header-title-container {
+      padding: 15px 20px;
+      background: rgba(15, 13, 10, 0.8);
+      backdrop-filter: blur(4px);
     }
 
     h1 {
@@ -50,8 +74,6 @@
       font-size: 2rem;
       font-weight: 800;
       letter-spacing: 0.5px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--card-border);
     }
 
     /* BARRA FISSATA (STICKY) */
@@ -60,12 +82,12 @@
       top: 10px;
       z-index: 1000;
       background: var(--panel-bg);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--card-border);
       border-radius: 10px;
       padding: 12px 20px;
       margin-bottom: 25px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -163,6 +185,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     /* Slots Grid */
@@ -175,6 +198,7 @@
 
     .slot-level-box {
       background: var(--card-bg);
+      backdrop-filter: blur(4px);
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
       padding: 12px;
@@ -263,7 +287,7 @@
     .btn-prepared-toggle {
       border-color: var(--accent-yellow);
       color: var(--accent-yellow);
-      background: transparent;
+      background: var(--card-bg);
     }
 
     .btn-prepared-toggle.active {
@@ -280,6 +304,7 @@
 
     .card {
       background: var(--card-bg);
+      backdrop-filter: blur(6px);
       border: 1px solid var(--card-border);
       border-radius: 12px;
       padding: 16px;
@@ -287,7 +312,7 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
     .card-img {
@@ -423,7 +448,11 @@
 <body>
 
   <header>
-    <h1>Grimorio del Chierico — Snorri</h1>
+    <!-- Immagine dell'Header (Sostituisci 'header.jpg' o nascondila se non presente) -->
+    <img src="header.jpg" alt="Header Banner" class="header-banner-img" onerror="this.style.display='none'">
+    <div class="header-title-container">
+      <h1>Grimorio del Chierico — Snorri</h1>
+    </div>
   </header>
 
   <!-- BARRA STATISTICHE FISSATA IN ALTO (STICKY) -->
