@@ -3,341 +3,249 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grimorio del Chierico - D&D 5e</title>
-
-  <!-- COLLEGAMENTO PWA (PER GENERARE L'APP) -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#121110">
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js');
-      });
-    }
-  </script>
-
-  <!-- LIBRERIE FIREBASE PER LA SINCRONIZZAZIONE IN CLOUD -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+  <title>Grimorio del Chierico - Snorri</title>
+  
+  <!-- Firebase SDK (Compatibilità v8) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
   <style>
     :root {
-      --bg-color: #121110;
-      --card-bg: rgba(35, 30, 26, 0.88);
-      --card-header-bg: rgba(20, 18, 16, 0.6);
-      --accent: #d4a359;
-      --accent-hover: #e5b76e;
-      --text: #ece7de;
-      --text-muted: #b3a99c;
-      --border: #52473b;
-      --tag-bg: rgba(61, 52, 42, 0.8);
-      --conc-color: #e67e22;
-      --ritual-color: #3498db;
-      --gold-color: #f1c40f;
-      --danger: #d9534f;
+      --bg: #121418;
+      --card-bg: #1e222b;
+      --card-border: #2e3545;
+      --accent: #e5a93b;
+      --accent-hover: #f5b94b;
+      --text: #f0f2f5;
+      --text-muted: #9aa4b2;
+      --border: #333c4d;
+      --danger: #e74c3c;
+      --success: #2ecc71;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
       color: var(--text);
-      padding: 20px;
+      padding: 15px;
       max-width: 1200px;
       margin: 0 auto;
-      
-      background-image: 
-        linear-gradient(rgba(18, 17, 16, 0.85), rgba(18, 17, 16, 0.85)), 
-        url('sfondo.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-color: var(--bg-color);
+      line-height: 1.5;
     }
 
-    /* BANNER TESTATA IN PRIMO PIANO */
     header {
-      margin-bottom: 25px;
-      border: 1px solid var(--border);
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 1.8rem;
+    }
+
+    /* Stats Panel */
+    .stats-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
       border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-      background: var(--card-bg);
-    }
-
-    .header-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    /* TRACKER SLOT INCANTESIMO */
-    .slot-tracker-panel {
-      background: var(--card-bg);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 10px;
       padding: 15px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      align-items: center;
     }
 
-    .slot-tracker-header {
+    .stat-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-group label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .stat-group input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .btn-action {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      height: 40px;
+      align-self: flex-end;
+    }
+
+    .btn-action:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+
+    /* Slots Section */
+    .section-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--accent);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .slot-tracker-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: var(--accent);
-    }
-
-    .btn-long-rest {
-      background: #2d4a27;
-      color: #92e085;
-      border: 1px solid #48733e;
-      padding: 6px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-    }
-
-    .btn-long-rest:hover {
-      background: #3b6133;
     }
 
     .slots-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
     .slot-level-box {
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 10px;
       text-align: center;
     }
 
     .slot-level-title {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 5px;
-      text-transform: uppercase;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 8px;
     }
 
     .slot-dots {
       display: flex;
       justify-content: center;
-      gap: 5px;
+      gap: 8px;
     }
 
     .slot-dot {
-      width: 16px;
-      height: 16px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       border: 2px solid var(--accent);
       background: var(--accent);
       cursor: pointer;
-      transition: transform 0.1s;
-      box-shadow: 0 0 5px var(--accent);
+      transition: transform 0.1s, background 0.2s;
     }
 
     .slot-dot.used {
       background: transparent;
-      border-color: var(--border);
-      box-shadow: none;
     }
 
-    .slot-dot:hover {
-      transform: scale(1.2);
+    .slot-dot:active {
+      transform: scale(0.9);
     }
 
-    /* PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY) */
-    .prep-stats-panel {
-      position: sticky;
-      top: 10px;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 15px;
-      background: rgba(28, 24, 20, 0.96);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--accent);
-      border-radius: 10px;
-      padding: 12px 18px;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
-    }
-
-    .prep-inputs {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      font-size: 0.9rem;
-    }
-
-    .prep-inputs label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-muted);
-    }
-
-    .prep-inputs input {
-      width: 55px;
-      padding: 4px 8px;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--accent);
-      font-weight: bold;
-      text-align: center;
-      outline: none;
-    }
-
-    .prep-actions {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .prep-counter {
-      font-size: 1rem;
-      font-weight: bold;
-    }
-
-    .prep-counter span {
-      color: var(--accent);
-    }
-
-    .btn-reset-prep {
-      background: rgba(192, 57, 43, 0.25);
-      color: #e74c3c;
-      border: 1px solid #c0392b;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
-    }
-
-    .btn-reset-prep:hover {
-      background: #c0392b;
-      color: white;
-    }
-
-    /* CONTROLLI E FILTRI */
-    .controls {
+    /* Controls & Filters */
+    .controls-panel {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .filters-row {
-      display: flex;
       gap: 12px;
-      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
-    .search-bar {
-      flex: 1;
-      min-width: 250px;
+    .search-row {
+      display: flex;
+      gap: 10px;
     }
 
-    .search-bar input, .level-select select {
-      width: 100%;
-      padding: 12px 15px;
+    .search-row input, .search-row select {
       background: var(--card-bg);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      border: 1px solid var(--card-border);
       color: var(--text);
+      padding: 10px;
+      border-radius: 8px;
       font-size: 1rem;
-      outline: none;
     }
 
-    .level-select {
-      min-width: 200px;
+    .search-row input {
+      flex: 1;
     }
 
-    .categories-filter {
+    .categories-container {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      align-items: center;
     }
 
     .btn-tag {
-      background: var(--tag-bg);
-      backdrop-filter: blur(4px);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
       border-radius: 20px;
+      font-size: 0.85rem;
       cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
+      transition: all 0.2s;
     }
 
-    .btn-tag.active, .btn-tag:hover {
+    .btn-tag.active {
       background: var(--accent);
-      color: #1a1816;
+      color: #000;
+      border-color: var(--accent);
       font-weight: bold;
     }
 
     .btn-prepared-toggle {
-      background: rgba(42, 36, 25, 0.9);
+      border-color: var(--accent);
       color: var(--accent);
-      border: 1px solid var(--accent);
     }
 
-    .btn-prepared-toggle.active {
-      background: var(--accent);
-      color: #1a1816;
-      font-weight: bold;
-    }
-
-    /* SCHEDE INCANTESIMI */
-    .grid {
+    /* Spells Grid */
+    .spells-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
     }
 
     .card {
       background: var(--card-bg);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
+      border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 18px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      gap: 10px;
+      transition: border-color 0.2s;
     }
 
     .card.is-prepared {
       border-color: var(--accent);
-      box-shadow: 0 0 12px rgba(212, 163, 89, 0.3);
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
+      box-shadow: 0 0 8px rgba(229, 169, 59, 0.2);
     }
 
     .card-header {
@@ -345,235 +253,173 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
-      margin-bottom: 5px;
     }
 
     .card-title {
-      font-size: 1.2rem;
-      color: var(--accent);
       font-weight: bold;
-    }
-
-    .btn-prepare {
-      background: transparent;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 4px 10px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      white-space: nowrap;
-      transition: all 0.2s ease;
-    }
-
-    .btn-prepare.prepared {
-      background: var(--accent);
-      color: #1a1816;
-      font-weight: bold;
-    }
-
-    .btn-always-prepared {
-      background: rgba(212, 163, 89, 0.18);
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.78rem;
-      font-weight: bold;
-      white-space: nowrap;
-      cursor: default;
-    }
-
-    .btn-cantrip-badge {
-      background: rgba(52, 152, 219, 0.18);
-      color: #3498db;
-      border: 1px solid #3498db;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.78rem;
-      font-weight: bold;
-      white-space: nowrap;
-      cursor: default;
+      font-size: 1.1rem;
+      color: var(--text);
     }
 
     .card-meta {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 10px;
-      font-style: italic;
+      margin-top: 2px;
     }
 
-    /* BADGES TATTICI */
     .tactical-badges {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 10px;
+      margin-top: 6px;
     }
 
     .badge-tactical {
       font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
       font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: inline-flex;
-      align-items: center;
+    }
+
+    .badge-conc { background: rgba(52, 152, 219, 0.2); color: #3498db; }
+    .badge-ritual { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
+    .badge-costly { background: rgba(230, 126, 34, 0.2); color: #e67e22; }
+
+    .card-tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
       gap: 4px;
     }
 
-    .badge-conc {
-      background: rgba(230, 126, 34, 0.2);
-      color: var(--conc-color);
-      border: 1px solid var(--conc-color);
-    }
-
-    .badge-ritual {
-      background: rgba(52, 152, 219, 0.2);
-      color: var(--ritual-color);
-      border: 1px solid var(--ritual-color);
-    }
-
-    .badge-costly {
-      background: rgba(241, 196, 15, 0.2);
-      color: var(--gold-color);
-      border: 1px solid var(--gold-color);
-    }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 12px;
-    }
-
     .tag-badge {
-      background: var(--tag-bg);
-      color: var(--accent);
-      font-size: 0.75rem;
-      padding: 3px 8px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
+      font-size: 0.7rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-muted);
     }
 
     .card-desc {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      color: var(--text);
-      white-space: pre-wrap;
-      max-height: 150px;
+      font-size: 0.9rem;
+      color: #ccc;
+      white-space: pre-line;
+      max-height: 200px;
       overflow-y: auto;
       padding-right: 5px;
-      border-top: 1px solid var(--border);
-      padding-top: 10px;
     }
 
-    .card-desc::-webkit-scrollbar { width: 4px; }
-    .card-desc::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .btn-prepare {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
 
-    /* TOAST NOTIFICA AVVISO */
-    .toast-warning {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: #c0392b;
-      color: white;
-      padding: 14px 22px;
-      border-radius: 8px;
+    .btn-prepare.prepared {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
       font-weight: bold;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-      z-index: 1000;
-      border: 1px solid #e74c3c;
-      display: none;
-      animation: fadeIn 0.3s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .btn-always-prepared, .btn-cantrip-badge {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 1000;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- BANNER TESTATA -->
   <header>
-    <img src="header.jpg" alt="Snorri Hansson - Grimorio del Chierico" class="header-img">
+    <h1>Grimorio del Chierico — Snorri</h1>
   </header>
 
-  <!-- TRACKER SLOT INCANTESIMO -->
-  <div class="slot-tracker-panel">
-    <div class="slot-tracker-header">
-      <span class="slot-tracker-title">⚡ Tracker Slot Incantesimo</span>
-      <button class="btn-long-rest" onclick="longRest()">☀️ Riposo Lungo (Ripristina Tutti Slot)</button>
+  <!-- Pannello Statistiche Personaggio -->
+  <div class="stats-panel">
+    <div class="stat-group">
+      <label for="clericLevelInput">Livello</label>
+      <input type="number" id="clericLevelInput" min="1" max="20" onchange="updateStatsConfig()">
     </div>
-    <div class="slots-grid" id="slotsGrid">
-      <!-- Generato dinamicamente -->
+    <div class="stat-group">
+      <label for="wisModInput">Mod. SAG</label>
+      <input type="number" id="wisModInput" onchange="updateStatsConfig()">
     </div>
+    <div class="stat-group">
+      <label for="spellSaveDcInput">CD Incantesimi</label>
+      <input type="number" id="spellSaveDcInput" onchange="saveCustomStats()">
+    </div>
+    <div class="stat-group">
+      <label for="spellAttackBonusInput">Bonus Attacco</label>
+      <input type="number" id="spellAttackBonusInput" onchange="saveCustomStats()">
+    </div>
+    <button class="btn-action" onclick="longRest()">☀️ Riposo Lungo</button>
+    <button class="btn-action btn-danger" onclick="resetPreparedSpells()">🧹 Svuota Preparati</button>
   </div>
 
-  <!-- PANNELLO INCANTESIMI PREPARATI E STATISTICHE (STICKY) -->
-  <div class="prep-stats-panel">
-    <div class="prep-inputs">
-      <label>🧙 Livello: 
-        <input type="number" id="clericLevelInput" value="7" min="1" max="20" onchange="updateStatsConfig()">
-      </label>
-      <label>✨ Mod. Saggezza: 
-        <input type="number" id="wisModInput" value="3" min="-5" max="10" onchange="updateStatsConfig()">
-      </label>
-      <label>🎯 CD Incantesimi: 
-        <input type="number" id="spellSaveDcInput" value="14" min="1" max="30" onchange="saveCustomStats()">
-      </label>
-      <label>⚔️ Bonus Attacco Inc.: 
-        <input type="number" id="spellAttackBonusInput" value="6" min="-5" max="30" onchange="saveCustomStats()">
-      </label>
+  <!-- Tracker Slot Incantesimo -->
+  <div class="section-title">
+    <span>Slot Incantesimi Disponibili</span>
+  </div>
+  <div class="slots-grid" id="slotsGrid"></div>
+
+  <!-- Contatore Incantesimi Preparati & Controlli -->
+  <div class="controls-panel">
+    <div class="section-title">
+      <span>Incantesimi</span>
+      <span style="font-size: 0.9rem; color: var(--text-muted);">
+        Preparati: <strong id="prepCounterText" style="color: var(--accent);">0 / 0</strong>
+      </span>
     </div>
-    
-    <div class="prep-actions">
-      <div class="prep-counter">
-        📖 Incantesimi Preparati: <span id="prepCounterText">0 / 10</span>
-      </div>
-      <button class="btn-reset-prep" onclick="resetPreparedSpells()">🧹 Svuota Preparati</button>
+
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Cerca incantesimo per nome o descrizione...">
+      <select id="levelSelect">
+        <option value="ALL">Tutti i Livelli</option>
+        <option value="0">Trucchetti (0)</option>
+        <option value="1">1° Livello</option>
+        <option value="2">2° Livello</option>
+        <option value="3">3° Livello</option>
+        <option value="4">4° Livello</option>
+        <option value="5">5° Livello</option>
+      </select>
     </div>
+
+    <div class="categories-container" id="categoriesContainer"></div>
   </div>
 
-  <div class="controls">
-    <div class="filters-row">
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Cerca per nome, testo o componente...">
-      </div>
-      
-      <div class="level-select">
-        <select id="levelSelect">
-          <option value="ALL">Tutti i Livelli (0 - 9)</option>
-          <option value="0">Livello 0 (Trucchetti)</option>
-          <option value="1">1° Livello</option>
-          <option value="2">2° Livello</option>
-          <option value="3">3° Livello</option>
-          <option value="4">4° Livello</option>
-          <option value="5">5° Livello</option>
-          <option value="6">6° Livello</option>
-          <option value="7">7° Livello</option>
-          <option value="8">8° Livello</option>
-          <option value="9">9° Livello</option>
-        </select>
-      </div>
-    </div>
+  <!-- Griglia Incantesimi -->
+  <div class="spells-grid" id="spellsGrid"></div>
 
-    <div class="categories-filter" id="categoriesContainer">
-      <!-- Categorie e filtro Preparati -->
-    </div>
-  </div>
+  <!-- Toast Notifiche -->
+  <div id="toastMessage" class="toast"></div>
 
-  <div class="grid" id="spellsGrid">
-    <!-- Schede incantesimi -->
-  </div>
-
-  <!-- MESSAGGIO DI AVVISO TOAST -->
-  <div id="toastMessage" class="toast-warning"></div>
-
+  <!-- LOGICA JAVASCRIPT & SINCRONIZZAZIONE REALTIME FIREBASE -->
   <script>
     // ==========================================
-    // CONFIGURAZIONE FIREBASE (CORRETTA PER EUROPA)
+    // CONFIGURAZIONE FIREBASE (EUROPA)
     // ==========================================
     const firebaseConfig = {
       apiKey: "AIzaSyDkHnUTM1U8eXhT40X9IkbGrcEA8aPo6_w",
@@ -636,10 +482,19 @@
           if (data.spellSaveDc !== undefined) document.getElementById('spellSaveDcInput').value = data.spellSaveDc;
           if (data.spellAttackBonus !== undefined) document.getElementById('spellAttackBonusInput').value = data.spellAttackBonus;
 
+          // Aggiorna anche la memoria locale per coerenza
+          localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
+          localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
+          localStorage.setItem('cleric_level', clericLevel);
+          localStorage.setItem('wis_mod', wisMod);
+
+          // Rilancia la grafica
           renderSlotTracker();
-          setupCategories();
-          renderSpells();
-          updatePrepCounterUI();
+          if (spellsData.length > 0) {
+            setupCategories();
+            renderSpells();
+            updatePrepCounterUI();
+          }
         }
       });
     }
