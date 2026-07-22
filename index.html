@@ -42,12 +42,44 @@
       position: fixed;
       top: 0; left: 0; width: 100vw; height: 100vh;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 9998;
       background: 
         radial-gradient(circle at 8% 15%, rgba(139, 0, 0, 0.45) 0%, transparent 25%),
         radial-gradient(circle at 92% 85%, rgba(120, 0, 0, 0.5) 0%, transparent 30%),
         radial-gradient(circle at 50% 95%, rgba(160, 0, 0, 0.35) 0%, transparent 35%),
         radial-gradient(ellipse at center, transparent 50%, rgba(90, 0, 0, 0.75) 100%);
+    }
+
+    /* EFFETTO FIAMME - FRENESIA DI GRAUP */
+    body.rage-mode.graup-frenzy {
+      --card-border: #ff5500;
+      --accent-yellow: #ffaa00;
+    }
+
+    body.rage-mode.graup-frenzy::after {
+      content: "";
+      position: fixed;
+      bottom: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      background: 
+        radial-gradient(ellipse at 20% 100%, rgba(255, 102, 0, 0.5) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 100%, rgba(255, 51, 0, 0.5) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 100%, rgba(255, 204, 0, 0.3) 0%, transparent 50%);
+      animation: flameFlicker 1.2s infinite alternate ease-in-out;
+    }
+
+    body.rage-mode.graup-frenzy .card,
+    body.rage-mode.graup-frenzy .stats-panel,
+    body.rage-mode.graup-frenzy .combat-column {
+      box-shadow: 0 0 18px rgba(255, 85, 0, 0.6);
+      border-color: #ff6600 !important;
+    }
+
+    @keyframes flameFlicker {
+      0% { opacity: 0.7; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.05); }
+      100% { opacity: 0.8; transform: scaleY(0.98); }
     }
 
     @keyframes ragePulse {
@@ -130,8 +162,8 @@
     .stat-inline {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.95rem;
+      gap: 6px;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--text-main);
     }
@@ -142,10 +174,10 @@
       color: var(--accent-yellow);
       padding: 4px 8px;
       border-radius: 6px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: bold;
       text-align: center;
-      width: 55px;
+      width: 50px;
     }
 
     .prep-counter-container {
@@ -381,6 +413,7 @@
       justify-content: space-between;
       gap: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      position: relative;
     }
 
     .card-title {
@@ -404,6 +437,37 @@
       padding-right: 5px;
       border-top: 1px solid rgba(255,255,255,0.08);
       padding-top: 10px;
+    }
+
+    .card-footer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 8px;
+      margin-top: 5px;
+    }
+
+    .btn-card-icon {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-card-icon:hover {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    .btn-card-icon.active-lock {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+      background: rgba(241, 196, 15, 0.15);
     }
 
     .btn-prepare {
@@ -505,24 +569,24 @@
       border-radius: 30px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.8);
       display: none;
-      z-index: 2000;
+      z-index: 10000;
       font-size: 0.95rem;
       font-weight: bold;
     }
 
-    /* MODAL FINESTRA MODIFICA / CREAZIONE */
+    /* MODAL OVERLAYS */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(5px);
       display: none;
       justify-content: center;
       align-items: center;
-      z-index: 3000;
+      z-index: 10001;
       padding: 15px;
     }
 
@@ -579,6 +643,20 @@
       min-height: 90px;
     }
 
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-yellow);
+      cursor: pointer;
+    }
+
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -610,8 +688,14 @@
         <input type="number" id="spellSaveDcInput" onchange="saveCustomStats()">
       </div>
       <div class="stat-inline">
-        <span>⚔️ Bonus Attacco Inc.:</span>
+        <span>⚔️ Bonus Attacco:</span>
         <input type="number" id="spellAttackBonusInput" onchange="saveCustomStats()">
+      </div>
+      <div class="stat-inline">
+        <span>🩸 Ire Usate:</span>
+        <input type="number" id="usedRagesInput" min="0" onchange="updateRageStats()">
+        <span>/</span>
+        <input type="number" id="maxRagesInput" min="1" onchange="updateRageStats()">
       </div>
     </div>
 
@@ -620,7 +704,7 @@
         📖 Incantesimi Preparati: <strong id="prepCounterText">0 / 0</strong>
       </div>
       <div class="actions-container">
-        <button class="btn-action btn-rage" id="rageBtn" onclick="toggleRage()">🩸 ENTRA IN IRA</button>
+        <button class="btn-action btn-rage" id="rageBtn" onclick="handleRageButtonClick()">🩸 ENTRA IN IRA</button>
         <button class="btn-action btn-mode-toggle" id="viewToggleBtn" onclick="toggleView()">⚔️ Modalità Combattimento</button>
         <button class="btn-action" onclick="longRest()">☀️ Riposo Lungo</button>
         <button class="btn-action btn-danger" onclick="resetPreparedSpells()">🧹 Svuota Preparati</button>
@@ -629,8 +713,8 @@
   </div>
 
   <!-- AVVISO ATTIVO DURANTE L'IRA -->
-  <div class="rage-banner">
-    💥 <strong>IRA ATTIVA!</strong> Vantaggio su prove di Forza e TS su Forza | +2 ai Danni sulle armi da Mischia su Forza | Resistenza a Danni Contundenti, Perforanti e Taglienti. <br>
+  <div class="rage-banner" id="rageBannerText">
+    💥 <strong>IRA ATTIVA!</strong> Vantaggio su prove di Forza e TS su Forza | +2 Danni alle armi da Mischia su Forza | Resistenza a Danni Contundenti, Perforanti e Taglienti. <br>
     ⚠️ <strong>NOTA:</strong> Non puoi lanciare né concentrarti su incantesimi mentre sei in Ira!
   </div>
 
@@ -689,7 +773,7 @@
             <span>Incanalare Divinità</span>
             <span class="action-badge">Azione Chierico</span>
           </div>
-          <div class="action-card-desc">Usa la tua energia divina (es. Scacciare Non Morti o effetto del Dominio). N.B: Usabile anche in Ira poiché non è un incantesimo!</div>
+          <div class="action-card-desc">Usa la tua energia divina (es. Scacciare Non Morti o effetto del Dominio). Usabile anche durante l'Ira in quanto capacità di classe!</div>
         </div>
 
         <div class="action-card">
@@ -697,7 +781,7 @@
             <span>Lanciare un Incantesimo</span>
             <span class="action-badge">Magia</span>
           </div>
-          <div class="action-card-desc">Lancia un incantesimo con tempo di lancio di 1 Azione dalla tua lista di incantesimi preparati. <em>(Non usabile durante l'Ira)</em>.</div>
+          <div class="action-card-desc">Lancia un incantesimo con tempo di lancio di 1 Azione dalla tua lista di incantesimi preparati. <em>(Non usabile in Ira)</em>.</div>
         </div>
 
         <div class="action-card">
@@ -705,7 +789,7 @@
             <span>Schivata (Dodge)</span>
             <span class="action-badge">Difesa</span>
           </div>
-          <div class="action-card-desc">Fino all'inizio del tuo prossimo turno, i tiri per colpirne contro di te hanno svantaggio se vedi l'attaccante. TS su Destrezza con Vantaggio.</div>
+          <div class="action-card-desc">Fino all'inizio del tuo prossimo turno, i tiri per colpirne contro di te hanno svantaggio. TS su Destrezza con Vantaggio.</div>
         </div>
 
         <div class="action-card">
@@ -726,7 +810,7 @@
             <span style="color:#ff4d4d;">Ira del Barbaro</span>
             <span class="action-badge" style="background:#800000; color:#fff;">Ira</span>
           </div>
-          <div class="action-card-desc">Entra in Ira per 1 minuto. Guadagni resistenza a danni fisici, +2 ai danni da Forza e vantaggio alle prove di Forza.</div>
+          <div class="action-card-desc">Entra in Ira o Frenesia. Guadagni resistenza ai danni fisici, +2 ai danni da Forza e vantaggio alle prove di Forza.</div>
         </div>
 
         <div class="action-card">
@@ -772,6 +856,24 @@
   <!-- Toast Notifiche -->
   <div id="toastMessage" class="toast"></div>
 
+  <!-- MODAL SCELTA IRA -->
+  <div class="modal-overlay" id="rageChoiceModal">
+    <div class="modal-card" style="max-width: 420px; text-align: center;">
+      <div class="modal-header">🩸 Scatena il Furore</div>
+      <p style="margin: 10px 0; color: var(--text-muted); font-size: 0.95rem;">Scegli quale tipo di Ira attivare in questo combattimento:</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+        <button class="btn-action btn-rage" style="justify-content: center; padding: 12px;" onclick="confirmRage('standard')">
+          🔴 Ira Standard (Sangue)
+        </button>
+        <button class="btn-action btn-rage" style="justify-content: center; padding: 12px; background: linear-gradient(45deg, #800000, #ff5500); border-color: #ffaa00;" onclick="confirmRage('graup')">
+          🔥 Frenesia di Graup (Sangue & Fiamme)
+        </button>
+        <button class="btn-action btn-danger" style="justify-content: center; margin-top: 5px;" onclick="closeRageModal()">Annulla</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL CREAZIONE / MODIFICA INCANTESIMO -->
   <div class="modal-overlay" id="spellModal">
     <div class="modal-card">
@@ -796,12 +898,17 @@
 
       <div class="form-group">
         <label>Categorie / Filtri (Separate da virgola)</label>
-        <input type="text" id="modalSpellCategories" placeholder="Es. Cura, Danno, Generico, Utilità, Buff">
+        <input type="text" id="modalSpellCategories" placeholder="Es. Cura, Danno, Utilità, Buff">
       </div>
 
       <div class="form-group">
         <label>Descrizione</label>
         <textarea id="modalSpellDesc" placeholder="Inserisci la descrizione dettagliata..."></textarea>
+      </div>
+
+      <div class="form-group checkbox-row">
+        <input type="checkbox" id="modalSpellAlwaysPrepared">
+        <label for="modalSpellAlwaysPrepared">📌 Imposta come Sempre Preparato (Dominio)</label>
       </div>
 
       <div class="modal-actions">
@@ -837,7 +944,8 @@
     let selectedCategory = "Tutti";
     let showOnlyPrepared = false;
     let isRaging = false;
-    let currentView = 'spellbook'; // 'spellbook' o 'combat'
+    let currentRageType = null; // 'standard' o 'graup'
+    let currentView = 'spellbook';
 
     const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
 
@@ -845,8 +953,10 @@
     let preparedSpells = JSON.parse(localStorage.getItem('cleric_prepared_spells') || '[]');
     let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
     let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
+    let usedRages = parseInt(localStorage.getItem('used_rages') || '0');
+    let maxRages = parseInt(localStorage.getItem('max_rages') || '3');
 
-    // Carica eventuali incantesimi salvati in locale
+    // Carica incantesimi salvati
     const localCustomSpells = localStorage.getItem('cleric_custom_spells');
     if (localCustomSpells) {
       spellsData = JSON.parse(localCustomSpells);
@@ -866,6 +976,14 @@
             wisMod = data.wisMod;
             document.getElementById('wisModInput').value = wisMod;
           }
+          if (data.usedRages !== undefined) {
+            usedRages = data.usedRages;
+            document.getElementById('usedRagesInput').value = usedRages;
+          }
+          if (data.maxRages !== undefined) {
+            maxRages = data.maxRages;
+            document.getElementById('maxRagesInput').value = maxRages;
+          }
           if (data.spellSaveDc !== undefined) document.getElementById('spellSaveDcInput').value = data.spellSaveDc;
           if (data.spellAttackBonus !== undefined) document.getElementById('spellAttackBonusInput').value = data.spellAttackBonus;
 
@@ -878,6 +996,8 @@
           localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
           localStorage.setItem('cleric_level', clericLevel);
           localStorage.setItem('wis_mod', wisMod);
+          localStorage.setItem('used_rages', usedRages);
+          localStorage.setItem('max_rages', maxRages);
 
           renderSlotTracker();
           if (spellsData.length > 0) {
@@ -889,20 +1009,66 @@
       });
     }
 
-    function toggleRage() {
-      isRaging = !isRaging;
-      const rageBtn = document.getElementById('rageBtn');
+    // GESTIONE IRA & FRENESIA
+    function handleRageButtonClick() {
       if (isRaging) {
-        document.body.classList.add('rage-mode');
-        rageBtn.classList.add('active');
-        rageBtn.innerHTML = "🩸 IRA ATTIVA (ESCI)";
-        showToast("🔥 SEI ENTRATO IN IRA! Danni e resistenze attivi!");
+        exitRage();
       } else {
-        document.body.classList.remove('rage-mode');
-        rageBtn.classList.remove('active');
-        rageBtn.innerHTML = "🩸 ENTRA IN IRA";
-        showToast("🛡️ Sei uscito dall'Ira.");
+        if (usedRages >= maxRages) {
+          showToast("⚠️ Hai esaurito le tue Ire per oggi! Fai un Riposo Lungo.");
+          return;
+        }
+        document.getElementById('rageChoiceModal').classList.add('active');
       }
+    }
+
+    function closeRageModal() {
+      document.getElementById('rageChoiceModal').classList.remove('active');
+    }
+
+    function confirmRage(type) {
+      closeRageModal();
+      usedRages++;
+      document.getElementById('usedRagesInput').value = usedRages;
+      
+      isRaging = true;
+      currentRageType = type;
+
+      const rageBtn = document.getElementById('rageBtn');
+      const bannerText = document.getElementById('rageBannerText');
+      document.body.classList.add('rage-mode');
+
+      if (type === 'graup') {
+        document.body.classList.add('graup-frenzy');
+        rageBtn.innerHTML = "🔥 FRENESIA ATTIVA (ESCI)";
+        bannerText.innerHTML = "🔥 <strong>FRENESIA DI GRAUP ATTIVA!</strong> Sangue e Fiamme ti avvolgono! Vantaggio Forza | +2 Danni | Resistenze Fisiche Attive. <br>⚠️ <strong>NOTA:</strong> Impossibile lanciare o concentrarsi su incantesimi!";
+        showToast("🔥 SEI ENTRATO NELLA FRENESIA DI GRAUP! Ire usate: " + usedRages + "/" + maxRages);
+      } else {
+        rageBtn.innerHTML = "🩸 IRA ATTIVA (ESCI)";
+        bannerText.innerHTML = "💥 <strong>IRA ATTIVA!</strong> Vantaggio su prove di Forza e TS su Forza | +2 Danni alle armi da Mischia su Forza | Resistenza Danni Fisici. <br>⚠️ <strong>NOTA:</strong> Impossibile lanciare o concentrarsi su incantesimi!";
+        showToast("🩸 SEI ENTRATO IN IRA STANDARD! Ire usate: " + usedRages + "/" + maxRages);
+      }
+
+      rageBtn.classList.add('active');
+      syncToCloud();
+    }
+
+    function exitRage() {
+      isRaging = false;
+      currentRageType = null;
+      document.body.classList.remove('rage-mode', 'graup-frenzy');
+      
+      const rageBtn = document.getElementById('rageBtn');
+      rageBtn.classList.remove('active');
+      rageBtn.innerHTML = "🩸 ENTRA IN IRA";
+      
+      showToast("🛡️ Sei uscito dall'Ira.");
+    }
+
+    function updateRageStats() {
+      usedRages = parseInt(document.getElementById('usedRagesInput').value || '0');
+      maxRages = parseInt(document.getElementById('maxRagesInput').value || '3');
+      syncToCloud();
     }
 
     function toggleView() {
@@ -925,11 +1091,37 @@
       }
     }
 
+    function isAlwaysPrepared(spell) {
+      return !!(spell && spell.alwaysPrepared);
+    }
+
+    function toggleAlwaysPreparedConfirm(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+      if (!spell) return;
+
+      const currentStatus = isAlwaysPrepared(spell);
+      spell.alwaysPrepared = !currentStatus;
+
+      if (spell.alwaysPrepared) {
+        preparedSpells = preparedSpells.filter(name => name !== spell.nome);
+        showToast(`📌 '${spell.nome}' impostato come Sempre Preparato!`);
+      } else {
+        showToast(`🔓 '${spell.nome}' rimosso da Sempre Preparati.`);
+      }
+
+      syncToCloud();
+      setupCategories();
+      renderSpells();
+      updatePrepCounterUI();
+    }
+
     function syncToCloud() {
       localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
       localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
       localStorage.setItem('cleric_level', clericLevel);
       localStorage.setItem('wis_mod', wisMod);
+      localStorage.setItem('used_rages', usedRages);
+      localStorage.setItem('max_rages', maxRages);
       localStorage.setItem('spell_save_dc', document.getElementById('spellSaveDcInput').value);
       localStorage.setItem('spell_attack_bonus', document.getElementById('spellAttackBonusInput').value);
       localStorage.setItem('cleric_custom_spells', JSON.stringify(spellsData));
@@ -940,6 +1132,8 @@
           preparedSpells: preparedSpells,
           clericLevel: clericLevel,
           wisMod: wisMod,
+          usedRages: usedRages,
+          maxRages: maxRages,
           spellSaveDc: document.getElementById('spellSaveDcInput').value,
           spellAttackBonus: document.getElementById('spellAttackBonusInput').value,
           spells: spellsData
@@ -958,6 +1152,8 @@
 
     document.getElementById('clericLevelInput').value = clericLevel;
     document.getElementById('wisModInput').value = wisMod;
+    document.getElementById('usedRagesInput').value = usedRages;
+    document.getElementById('maxRagesInput').value = maxRages;
 
     let savedDc = localStorage.getItem('spell_save_dc');
     let savedAtk = localStorage.getItem('spell_attack_bonus');
@@ -981,7 +1177,12 @@
     }
 
     function getNormalPreparedCount() {
-      return preparedSpells.length;
+      return preparedSpells.filter(spellName => {
+        const spell = spellsData.find(s => s.nome === spellName);
+        if (!spell) return true;
+        const level = extractLevel(spell);
+        return level > 0 && !isAlwaysPrepared(spell);
+      }).length;
     }
 
     function updateStatsConfig() {
@@ -1015,7 +1216,7 @@
       const toast = document.getElementById('toastMessage');
       toast.textContent = message;
       toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+      setTimeout(() => { toast.style.display = 'none'; }, 3200);
     }
 
     function resetPreparedSpells() {
@@ -1043,9 +1244,12 @@
 
     function longRest() {
       usedSlots = {};
+      usedRages = 0;
+      document.getElementById('usedRagesInput').value = 0;
+      if (isRaging) exitRage();
       syncToCloud();
       renderSlotTracker();
-      showToast("☀️ Riposo Lungo: slot incantesimo ripristinati!");
+      showToast("☀️ Riposo Lungo: Slot incantesimo e Ire ripristinati!");
     }
 
     function renderSlotTracker() {
@@ -1082,6 +1286,10 @@
           showToast("✨ I trucchetti (Livello 0) non richiedono preparazione!");
           return;
         }
+        if (isAlwaysPrepared(spell)) {
+          showToast("📌 Questo incantesimo è Sempre Preparato!");
+          return;
+        }
       }
 
       if (preparedSpells.includes(spellName)) {
@@ -1115,9 +1323,14 @@
       const container = document.getElementById('categoriesContainer');
       container.innerHTML = '';
 
+      const totalPreparedShow = spellsData.filter(s => {
+        const lvl = extractLevel(s);
+        return preparedSpells.includes(s.nome) || isAlwaysPrepared(s) || lvl === 0;
+      }).length;
+
       const btnPrepared = document.createElement('button');
       btnPrepared.className = `btn-tag btn-prepared-toggle ${showOnlyPrepared ? 'active' : ''}`;
-      btnPrepared.textContent = `⭐ Solo Preparati (${preparedSpells.length})`;
+      btnPrepared.textContent = `⭐ Solo Preparati / Disponibili (${totalPreparedShow})`;
       btnPrepared.onclick = () => {
         showOnlyPrepared = !showOnlyPrepared;
         setupCategories();
@@ -1146,8 +1359,9 @@
       grid.innerHTML = '';
 
       const filtered = spellsData.filter(spell => {
+        const isAlways = isAlwaysPrepared(spell);
         const level = extractLevel(spell);
-        const isPrep = preparedSpells.includes(spell.nome) || level === 0;
+        const isPrep = preparedSpells.includes(spell.nome) || isAlways || level === 0;
 
         if (showOnlyPrepared && !isPrep) return false;
 
@@ -1165,6 +1379,7 @@
 
       filtered.forEach(spell => {
         const isPrep = preparedSpells.includes(spell.nome);
+        const isAlways = isAlwaysPrepared(spell);
         const level = extractLevel(spell);
 
         const card = document.createElement('div');
@@ -1173,21 +1388,55 @@
           <div>
             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
               <div class="card-title">${spell.nome}</div>
-              ${level > 0 ? `
-                <button class="btn-prepare ${isPrep ? 'prepared' : ''}" onclick="togglePrepared('${spell.nome.replace(/'/g, "\\'")}')">
+              ${level > 0 ? (
+                isAlways ? 
+                `<span style="color:var(--accent-yellow); font-size:0.8rem; font-weight:bold;">📌 Sempre Prep.</span>` :
+                `<button class="btn-prepare ${isPrep ? 'prepared' : ''}" onclick="togglePrepared('${spell.nome.replace(/'/g, "\\'")}')">
                   ${isPrep ? 'Preparato' : 'Prepara'}
-                </button>
-              ` : '<span style="color:var(--accent-yellow); font-size:0.8rem; font-weight:bold;">Trucchetto</span>'}
+                </button>`
+              ) : '<span style="color:var(--accent-yellow); font-size:0.8rem; font-weight:bold;">Trucchetto</span>'}
             </div>
             <div class="card-meta">${spell.livello_scuola || ''} | ${spell.tempo_di_lancio || ''}</div>
           </div>
           <div class="card-desc">${spell.descrizione || ''}</div>
+          <div class="card-footer-actions">
+            <button class="btn-card-icon ${isAlways ? 'active-lock' : ''}" onclick="toggleAlwaysPreparedConfirm('${spell.nome.replace(/'/g, "\\'")}')">
+              📌 Sempre Preparato
+            </button>
+            <button class="btn-card-icon" onclick="openEditModal('${spell.nome.replace(/'/g, "\\'")}')">
+              ✏️ Modifica
+            </button>
+          </div>
         `;
         grid.appendChild(card);
       });
     }
 
     function openAddModal() {
+      document.getElementById('modalTitle').textContent = "Aggiungi Incantesimo";
+      document.getElementById('modalOriginalName').value = "";
+      document.getElementById('modalSpellName').value = "";
+      document.getElementById('modalSpellLevel').value = "";
+      document.getElementById('modalSpellTime').value = "";
+      document.getElementById('modalSpellCategories').value = "";
+      document.getElementById('modalSpellDesc').value = "";
+      document.getElementById('modalSpellAlwaysPrepared').checked = false;
+      document.getElementById('spellModal').classList.add('active');
+    }
+
+    function openEditModal(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+      if (!spell) return;
+
+      document.getElementById('modalTitle').textContent = "Modifica Incantesimo";
+      document.getElementById('modalOriginalName').value = spell.nome;
+      document.getElementById('modalSpellName').value = spell.nome;
+      document.getElementById('modalSpellLevel').value = spell.livello_scuola || "";
+      document.getElementById('modalSpellTime').value = spell.tempo_di_lancio || "";
+      document.getElementById('modalSpellCategories').value = spell.categorie ? spell.categorie.join(', ') : "";
+      document.getElementById('modalSpellDesc').value = spell.descrizione || "";
+      document.getElementById('modalSpellAlwaysPrepared').checked = !!spell.alwaysPrepared;
+
       document.getElementById('spellModal').classList.add('active');
     }
 
@@ -1196,37 +1445,57 @@
     }
 
     function saveSpellFromModal() {
+      const originalName = document.getElementById('modalOriginalName').value;
       const name = document.getElementById('modalSpellName').value.trim();
       const level = document.getElementById('modalSpellLevel').value.trim();
       const time = document.getElementById('modalSpellTime').value.trim();
       const catInput = document.getElementById('modalSpellCategories').value.trim();
       const desc = document.getElementById('modalSpellDesc').value.trim();
+      const isAlways = document.getElementById('modalSpellAlwaysPrepared').checked;
 
       if (!name) {
-        alert("Inserisci almeno il nome dell'incantesimo!");
+        alert("Inserisci il nome dell'incantesimo!");
         return;
       }
 
       const categories = catInput ? catInput.split(',').map(c => c.trim()) : ["Generico"];
 
-      const newSpell = {
-        nome: name,
-        livello_scuola: level || "1° Livello",
-        tempo_di_lancio: time || "1 azione",
-        categorie: categories,
-        descrizione: desc
-      };
+      if (originalName) {
+        // Modifica esistente
+        const spell = spellsData.find(s => s.nome === originalName);
+        if (spell) {
+          spell.nome = name;
+          spell.livello_scuola = level;
+          spell.tempo_di_lancio = time;
+          spell.categorie = categories;
+          spell.descrizione = desc;
+          spell.alwaysPrepared = isAlways;
 
-      spellsData.push(newSpell);
+          // Se cambia nome, aggiorna lista preparati
+          if (originalName !== name) {
+            preparedSpells = preparedSpells.map(n => n === originalName ? name : n);
+          }
+        }
+      } else {
+        // Nuovo incantesimo
+        spellsData.push({
+          nome: name,
+          livello_scuola: level || "1° Livello",
+          tempo_di_lancio: time || "1 azione",
+          categorie: categories,
+          descrizione: desc,
+          alwaysPrepared: isAlways
+        });
+      }
+
       syncToCloud();
       setupCategories();
       renderSpells();
+      updatePrepCounterUI();
       closeModal();
-      showToast(`✨ '${name}' aggiunto al grimorio!`);
+      showToast(`💾 '${name}' salvato con successo!`);
     }
 
-    // Inizializzazione al caricamento
-    loadSpells();
     async function loadSpells() {
       if (spellsData.length === 0) {
         try {
@@ -1241,6 +1510,9 @@
       renderSpells();
       updatePrepCounterUI();
     }
+
+    // Inizializzazione
+    loadSpells();
   </script>
 </body>
 </html>
