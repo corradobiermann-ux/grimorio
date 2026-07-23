@@ -179,10 +179,9 @@
       text-align: center;
       width: 50px;
     }
-    
-    /* Varianti larghezze input */
+
     .stat-inline input.input-md { width: 65px; }
-    .stat-inline input.input-lg { width: 85px; text-align: left;}
+    .stat-inline input.input-lg { width: 85px; text-align: left; }
 
     .prep-counter-container {
       font-size: 1rem;
@@ -404,78 +403,254 @@
       position: relative;
     }
 
-    .card-title { font-weight: 800; font-size: 1.15rem; color: #fff; }
-    .card-meta { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+    .card-title {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #fff;
+    }
+
+    .card-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
     .card-desc {
-      font-size: 0.9rem; color: #d1d5db; white-space: pre-line;
-      max-height: 220px; overflow-y: auto; padding-right: 5px;
-      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;
+      font-size: 0.9rem;
+      color: #d1d5db;
+      white-space: pre-line;
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 5px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 10px;
     }
 
     .card-footer-actions {
-      display: flex; justify-content: space-between; align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px; margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 8px;
+      margin-top: 5px;
     }
 
-    /* STILI MODALITÀ COMBATTIMENTO */
-    .combat-view { display: none; }
-    .combat-view.active { display: block; }
-    
+    .btn-card-icon {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-card-icon:hover {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    .btn-card-icon.active-lock {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+      background: rgba(241, 196, 15, 0.15);
+    }
+
+    .btn-prepare {
+      background: transparent;
+      border: 1px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .btn-prepare.prepared {
+      background: var(--accent-yellow);
+      color: #000;
+    }
+
+    /* STILI MODALITÀ COMBATTIMENTO (TRE COLONNE) */
+    .combat-view {
+      display: none;
+    }
+
+    .combat-view.active {
+      display: block;
+    }
+
     .combat-columns-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
     }
 
     .combat-column {
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
     .column-header {
-      font-size: 1.2rem; font-weight: 800; color: var(--accent-yellow);
-      border-bottom: 2px solid var(--card-border); padding-bottom: 8px;
-      display: flex; align-items: center; gap: 8px;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .action-card {
-      background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-subtle);
-      border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 6px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .action-card-header {
-      display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      color: #fff;
     }
 
     .action-badge {
-      font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;
-      background: var(--border-subtle); color: var(--text-main); text-transform: uppercase;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--border-subtle);
+      color: var(--text-main);
+      text-transform: uppercase;
     }
 
-    .action-card-desc { font-size: 0.85rem; color: var(--text-muted); }
+    .action-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
 
     .toast {
-      position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-      background: #181512; border: 1px solid var(--accent-yellow); color: var(--text-main);
-      padding: 12px 24px; border-radius: 30px; box-shadow: 0 6px 20px rgba(0,0,0,0.8);
-      display: none; z-index: 10000; font-size: 0.95rem; font-weight: bold;
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #181512;
+      border: 1px solid var(--accent-yellow);
+      color: var(--text-main);
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+      display: none;
+      z-index: 10000;
+      font-size: 0.95rem;
+      font-weight: bold;
     }
 
-    /* Modali */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
-      display: none; justify-content: center; align-items: center; z-index: 10001; padding: 15px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+      padding: 15px;
     }
-    .modal-overlay.active { display: flex; }
-    
-    .modal-card {
-      background: var(--panel-bg); border: 1px solid var(--card-border); border-radius: 12px;
-      padding: 24px; width: 100%; max-width: 550px; max-height: 90vh; overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.9); display: flex; flex-direction: column; gap: 15px;
-    }
-    .modal-header { font-size: 1.25rem; font-weight: bold; color: var(--accent-yellow); border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px; }
 
-    /* Nuovi stili per Widget Reminder Cure */
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 550px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .modal-header {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: var(--accent-yellow);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .form-group input, .form-group textarea {
+      background: #0a0907;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-yellow);
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+    }
+
+    /* WIDGET REMINDER CURE */
     .healing-widget {
       position: fixed;
       bottom: 25px;
@@ -484,29 +659,49 @@
       display: flex;
       align-items: flex-end;
     }
+
     .healing-icon {
-      width: 48px; height: 48px;
+      width: 50px;
+      height: 50px;
       background: #1abc9c;
       color: #fff;
       border-radius: 50%;
-      display: flex; justify-content: center; align-items: center;
-      font-size: 1.8rem; font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.7);
       cursor: help;
       border: 2px solid #16a085;
       transition: transform 0.2s;
     }
-    .healing-icon:hover { transform: scale(1.1); }
-    
-    .healing-tooltip {
-      visibility: hidden; opacity: 0;
-      background: var(--panel-bg); border: 1px solid #1abc9c; color: var(--text-main);
-      padding: 14px; border-radius: 8px; margin-left: 15px; margin-bottom: 5px;
-      width: 290px; box-shadow: 0 4px 15px rgba(0,0,0,0.8);
-      transition: opacity 0.3s, visibility 0.3s; font-size: 0.85rem; line-height: 1.5;
-    }
-    .healing-widget:hover .healing-tooltip { visibility: visible; opacity: 1; }
 
+    .healing-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .healing-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      background: var(--panel-bg);
+      border: 1px solid #1abc9c;
+      color: var(--text-main);
+      padding: 14px;
+      border-radius: 8px;
+      margin-left: 15px;
+      margin-bottom: 5px;
+      width: 300px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.8);
+      transition: opacity 0.3s, visibility 0.3s;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .healing-widget:hover .healing-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -517,7 +712,7 @@
 
   <!-- BARRA STATISTICHE FISSATA IN ALTO -->
   <div class="stats-panel">
-    <!-- 📊 NUOVA BARRA STATISTICHE SUPERIORI -->
+    <!-- 📊 BARRA STATISTICHE SUPERIORI (MODIFICABILI) -->
     <div class="stats-row" style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
       <div class="stat-inline">
         <span>🏃 Movimento:</span>
@@ -541,29 +736,29 @@
       </div>
     </div>
 
-    <!-- Barra Statistiche Originale -->
+    <!-- BARRA STATISTICHE CLASSE -->
     <div class="stats-row">
       <div class="stat-inline">
         <span>🧙 Livello:</span>
-        <input type="number" id="clericLevelInput" min="1" max="20" onchange="updateStatsConfig()">
+        <input type="number" id="clericLevelInput" min="1" max="20" value="5" onchange="updateStatsConfig()">
       </div>
       <div class="stat-inline">
         <span>✨ Mod. Saggezza:</span>
-        <input type="number" id="wisModInput" onchange="updateStatsConfig()">
+        <input type="number" id="wisModInput" value="4" onchange="updateStatsConfig()">
       </div>
       <div class="stat-inline">
         <span>🎯 CD Incantesimi:</span>
-        <input type="number" id="spellSaveDcInput" onchange="saveCustomStats()">
+        <input type="number" id="spellSaveDcInput" value="15" onchange="saveCustomStats()">
       </div>
       <div class="stat-inline">
         <span>⚔️ Bonus Attacco:</span>
-        <input type="number" id="spellAttackBonusInput" onchange="saveCustomStats()">
+        <input type="number" id="spellAttackBonusInput" value="7" onchange="saveCustomStats()">
       </div>
       <div class="stat-inline">
         <span>🩸 Ire Usate:</span>
-        <input type="number" id="usedRagesInput" min="0" onchange="updateRageStats()">
+        <input type="number" id="usedRagesInput" value="0" min="0" onchange="updateRageStats()">
         <span>/</span>
-        <input type="number" id="maxRagesInput" min="1" onchange="updateRageStats()">
+        <input type="number" id="maxRagesInput" value="3" min="1" onchange="updateRageStats()">
       </div>
     </div>
 
@@ -580,16 +775,21 @@
     </div>
   </div>
 
-  <!-- AVVISO ATTIVO DURANTE L'IRA (AGGIORNATO DINAMICAMENTE) -->
+  <!-- AVVISO ATTIVO DURANTE L'IRA -->
   <div class="rage-banner" id="rageBannerText">
-    <!-- Contenuto gestito da JS a seconda del tipo di Ira -->
+    💥 <strong>IRA ATTIVA!</strong> Vantaggio su prove di Forza e TS su Forza | +2 Danni alle armi da Mischia su Forza | Resistenza a Danni Contundenti, Perforanti e Taglienti. <br>
+    ⚠️ <strong>NOTA:</strong> Non puoi lanciare né concentrarti su incantesimi mentre sei in Ira!
   </div>
 
   <!-- VISTA 1: GRIMORIO ED INCANTESIMI -->
   <div id="spellbookView">
-    <div class="section-title"><span>Slot Incantesimi Disponibili</span></div>
+    <!-- Tracker Slot Incantesimo -->
+    <div class="section-title">
+      <span>Slot Incantesimi Disponibili</span>
+    </div>
     <div class="slots-grid" id="slotsGrid"></div>
 
+    <!-- Controlli & Filtri -->
     <div class="controls-panel">
       <div class="search-row">
         <input type="text" id="searchInput" oninput="renderSpells()" placeholder="Cerca incantesimo per nome o descrizione...">
@@ -604,27 +804,109 @@
         </select>
         <button class="btn-action" onclick="openAddModal()">➕ Nuovo</button>
       </div>
+
       <div class="categories-container" id="categoriesContainer"></div>
     </div>
 
+    <!-- Griglia Incantesimi -->
     <div class="spells-grid" id="spellsGrid"></div>
   </div>
 
   <!-- VISTA 2: MODALITÀ COMBATTIMENTO (3 COLONNE) -->
   <div id="combatView" class="combat-view">
-    <div class="section-title"><span>Tattica da Combattimento</span></div>
+    <div class="section-title">
+      <span>Tattica da Combattimento</span>
+    </div>
 
     <div class="combat-columns-grid">
       <!-- COLONNA 1: AZIONI -->
       <div class="combat-column">
         <div class="column-header">⚔️ Azioni</div>
-        <!-- (Le tue card azione originali omesse per brevità, sono identiche a prima...) -->
+        
+        <!-- 1) ATTACCO CON COMETA SIDERALE -->
+        <div class="action-card" style="border-color: var(--accent-yellow);">
+          <div class="action-card-header">
+            <span style="color:var(--accent-yellow);">☄️ Cometa Siderale</span>
+            <span class="action-badge" style="background:#553c13; color:#fff;">Artefatto</span>
+          </div>
+          <div class="action-card-desc">
+            <strong>Danno Base:</strong> 2d6 Contundenti | Pesante, Due Mani, Portata 2q (3m)<br>
+            <em>Mazzafrusto a due mani con la testa di un Dragolich dalle corna acuminate.</em>
+            <hr style="border:0; border-top:1px solid var(--border-subtle); margin:6px 0;">
+            <div style="font-size:0.82rem; line-height:1.35; color:#dcd3c5;">
+              <strong>⚡ Infusione Planare (Azione Gratuita - 1 min):</strong>
+              <ul style="padding-left:16px; margin:3px 0;">
+                <li><strong>Necrotica:</strong> Emetti oscurità di 4q + <strong>2d6 danni Necrotici</strong>.</li>
+                <li><strong>Radiante:</strong> Emetti luce intensa 4q (+4q fioca) + <strong>2d6 danni Radianti</strong>.</li>
+              </ul>
+              <strong>🌌 Eco di Null (1/Giorno):</strong> Lancia l'incantesimo <em>Guardian of Faith</em> (aspetto di Dragolich Nero).<br>
+              <strong>🐉 Morsa del Drago (BC/Riposo Lungo):</strong> Su colpo, TS FOR 18 o la creatura è <u>Afferrata</u>. Quando afferrata, puoi usare un'Azione per infliggere <strong>3d6 danni Necrotici o Radianti</strong>.
+            </div>
+          </div>
+        </div>
+
+        <!-- 2) ATTACCO RECKLESS -->
         <div class="action-card">
           <div class="action-card-header">
             <span>💥 Attacco Sprezzante (Reckless)</span>
             <span class="action-badge">Barbaro</span>
           </div>
-          <div class="action-card-desc">Guadagni <strong>Vantaggio</strong> a tutti i tiri per colpirne con armi da mischia basati su Forza...</div>
+          <div class="action-card-desc">
+            Guadagni <strong>Vantaggio</strong> a tutti i tiri per colpirne con armi da mischia basati su Forza in questo turno, ma i tiri per colpire contro di te hanno Vantaggio fino al tuo prossimo turno.
+            <div style="margin-top: 8px;">
+              <button class="btn-action" id="recklessBtn" onclick="toggleReckless()" style="width: 100%; justify-content: center;">
+                ⚡ Attiva Attacco Sprezzante
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3) CHANNEL DIVINITY CON MENÙ A TENDINA -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>✨ Incanalare Divinità (Channel Divinity)</span>
+            <span class="action-badge">Chierico</span>
+          </div>
+          <div class="action-card-desc">
+            <select id="channelDivinitySelect" onchange="updateChannelDivinityUI()" style="width: 100%; padding: 6px 10px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
+              <option value="">-- Seleziona Abilità --</option>
+              <option value="turn_undead">💀 Turn Undead</option>
+              <option value="preserve_life">💚 Preserve Life</option>
+              <option value="destroy_undead">💥 Destroy Undead</option>
+            </select>
+            <div id="channelDivinityDesc" style="margin-top: 8px; font-size: 0.83rem; color: #d1d5db; display: none; border-top: 1px dashed var(--border-subtle); padding-top: 6px; line-height: 1.35;"></div>
+          </div>
+        </div>
+
+        <!-- 4) ATTACCO CON MAGIA CON MENÙ A TENDINA -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>✨ Attacco con Magia (1 Azione)</span>
+            <span class="action-badge">Incantesimi</span>
+          </div>
+          <div class="action-card-desc">
+            <select id="actionSpellsSelect" onchange="updateActionSpellUI()" style="width: 100%; padding: 6px 10px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
+              <option value="">-- Seleziona Incantesimo Preparato (1 Azione) --</option>
+            </select>
+            <div id="actionSpellDesc" style="margin-top: 8px; font-size: 0.83rem; color: #d1d5db; display: none; border-top: 1px dashed var(--border-subtle); padding-top: 6px; line-height: 1.35;"></div>
+          </div>
+        </div>
+
+        <!-- AZIONI STANDARD -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Schivata (Dodge)</span>
+            <span class="action-badge">Difesa</span>
+          </div>
+          <div class="action-card-desc">Fino all'inizio del tuo prossimo turno, i tiri per colpire contro di te hanno svantaggio. TS su Destrezza con Vantaggio.</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Scatto (Dash) / Disimpegno</span>
+            <span class="action-badge">Movimento</span>
+          </div>
+          <div class="action-card-desc"><strong>Scatto:</strong> Raddoppia il tuo movimento per questo turno. <br><strong>Disimpegno:</strong> Il tuo movimento non provoca attacchi d'opportunità.</div>
         </div>
       </div>
 
@@ -632,20 +914,21 @@
       <div class="combat-column">
         <div class="column-header">⚡ Azioni Bonus</div>
 
-        <!-- ⚡ NUOVO MENU AZIONI BONUS DINAMICO -->
-        <div class="action-card" style="border-color: #ffaa00;">
+        <!-- ⚡ NUOVO MENÙ AZIONI BONUS DEDICATO -->
+        <div class="action-card" style="border-color: var(--accent-yellow);">
           <div class="action-card-header">
-            <span style="color:#ffcc00;">Selettore Azioni Bonus</span>
-            <span class="action-badge" style="background:#b87333; color:#fff;">Dinamico</span>
+            <span style="color:var(--accent-yellow);">⚡ Selettore Azioni Bonus</span>
+            <span class="action-badge" style="background:#553c13; color:#fff;">Speciale</span>
           </div>
           <div class="action-card-desc">
-            <select id="bonusActionSelect" style="width: 100%; padding: 8px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
+            <select id="bonusActionsSelect" onchange="updateBonusActionUI()" style="width: 100%; padding: 6px 10px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
               <option value="">-- Seleziona Azione Bonus --</option>
               <option value="rage_move">🩸 Entra in Ira + Metà Movimento</option>
-              <optgroup label="Incantesimi Preparati (1 Azione Bonus)" id="bonusSpellsGroup">
-                <!-- Verrà popolato tramite JavaScript con gli incantesimi attivi -->
+              <optgroup label="Incantesimi Preparati (1 Azione Bonus)" id="bonusSpellsOptGroup">
+                <!-- Popolato automaticamente via JS -->
               </optgroup>
             </select>
+            <div id="bonusActionDesc" style="margin-top: 8px; font-size: 0.83rem; color: #d1d5db; display: none; border-top: 1px dashed var(--border-subtle); padding-top: 6px; line-height: 1.35;"></div>
           </div>
         </div>
 
@@ -654,19 +937,44 @@
             <span style="color:#ff4d4d;">Ira del Barbaro</span>
             <span class="action-badge" style="background:#800000; color:#fff;">Ira</span>
           </div>
-          <div class="action-card-desc">Entra in Ira o Frenesia. Guadagni resistenza ai danni fisici, +2 ai danni da Forza...</div>
+          <div class="action-card-desc">Entra in Ira o Frenesia. Guadagni resistenza ai danni fisici, +2 ai danni da Forza e vantaggio alle prove di Forza.</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Parola Guaritrice</span>
+            <span class="action-badge">Incantesimo Bonus</span>
+          </div>
+          <div class="action-card-desc">Ripristina Punti Vita a una creatura a vista entro 18 metri. <em>(1d4 + Mod SGG)</em>. Utile prima di entrare in Ira!</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Arma Spirituale</span>
+            <span class="action-badge">Incantesimo Bonus</span>
+          </div>
+          <div class="action-card-desc">Esegui un attacco d'incantesimo in mischia con l'arma spettrale evocata in precedenza.</div>
         </div>
       </div>
 
       <!-- COLONNA 3: REAZIONI -->
       <div class="combat-column">
         <div class="column-header">🛡️ Reazioni</div>
+
         <div class="action-card">
           <div class="action-card-header">
             <span>Attacco d'Opportunità</span>
             <span class="action-badge">Reazione</span>
           </div>
-          <div class="action-card-desc">Esegui un attacco in mischia con la tua arma contro una creatura nemica che esce dalla tua portata...</div>
+          <div class="action-card-desc">Esegui un attacco in mischia con la tua arma contro una creatura nemica che esce dalla tua portata senza disimpegnarsi.</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Abilità Reattive / Incantesimi</span>
+            <span class="action-badge">Reazione Spec.</span>
+          </div>
+          <div class="action-card-desc">Lancia incantesimi di reazione (es. <em>Assorbire Elementi</em>) prima dell'Ira o attiva abilità di classe reattive.</div>
         </div>
       </div>
     </div>
@@ -677,13 +985,13 @@
     <div class="healing-icon">+</div>
     <div class="healing-tooltip">
       <strong style="color: #1abc9c; font-size: 1rem;">❇️ Favore di Philianne & Bonus Cura</strong><br><br>
-      Quando lanci un incantesimo di guarigione, calcola il valore finale usando:<br><br>
+      Quando lanci un incantesimo di guarigione, calcola il valore finale usando la formula:<br><br>
       <div style="background: #0a0907; padding: 8px; border-radius: 4px; border: 1px solid #3a3125; text-align: center; margin-bottom: 8px;">
-        <strong>Cura Base</strong> <br>+ (2 + Livello incantesimo) <br><strong id="widgetRageBonusValue" style="color: #ff4d4d;">+ Danno da Ira (Se in Ira)</strong>
+        $$\text{Cura Totale} = \text{Cura Base} + (2 + L_{\text{incantesimo}}) + \text{Bonus Ira}$$
       </div>
       <ul style="padding-left: 15px; color: var(--text-muted);">
-        <li><strong>Bonus Fisso:</strong> Sempre attivo.</li>
-        <li><strong>Favore di Philianne:</strong> Aggiunge il tuo Danno da Ira (es. +2) se la modalità Ira è attualmente attiva.</li>
+        <li><strong>Bonus Fisso:</strong> $+ 2 + \text{Livello dell'incantesimo}$.</li>
+        <li><strong>Favore di Philianne:</strong> Aggiungi un valore pari al tuo Danno da Ira <span id="widgetRageBonusStatus" style="color:#ff4d4d;">(Attivo solo se sei attualmente in Ira)</span>.</li>
       </ul>
     </div>
   </div>
@@ -709,14 +1017,78 @@
     </div>
   </div>
 
+  <!-- MODAL CREAZIONE / MODIFICA INCANTESIMO -->
+  <div class="modal-overlay" id="spellModal">
+    <div class="modal-card">
+      <div class="modal-header" id="modalTitle">Aggiungi / Modifica Incantesimo</div>
+      
+      <input type="hidden" id="modalOriginalName">
+
+      <div class="form-group">
+        <label>Nome Incantesimo</label>
+        <input type="text" id="modalSpellName" placeholder="Es. Parola Guaritrice">
+      </div>
+
+      <div class="form-group">
+        <label>Livello e Scuola</label>
+        <input type="text" id="modalSpellLevel" placeholder="Es. 1° livello Evocazione (oppure Trucchetto)">
+      </div>
+
+      <div class="form-group">
+        <label>Tempo di Lancio</label>
+        <input type="text" id="modalSpellTime" placeholder="Es. 1 azione bonus">
+      </div>
+
+      <div class="form-group">
+        <label>Categorie / Filtri (Separate da virgola)</label>
+        <input type="text" id="modalSpellCategories" placeholder="Es. Cura, Danno, Utilità, Buff">
+      </div>
+
+      <div class="form-group">
+        <label>Descrizione</label>
+        <textarea id="modalSpellDesc" placeholder="Inserisci la descrizione dettagliata..."></textarea>
+      </div>
+
+      <div class="form-group checkbox-row">
+        <input type="checkbox" id="modalSpellAlwaysPrepared">
+        <label for="modalSpellAlwaysPrepared">📌 Imposta come Sempre Preparato (Dominio)</label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-action btn-danger" onclick="closeModal()">Annulla</button>
+        <button class="btn-action" onclick="saveSpellFromModal()">💾 Salva Incantesimo</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ==========================================
-    // VARIABILI STATO IRA E LOGICA DI COMBATTIMENTO
+    // STATO APPLICAZIONE & VARIABILI
     // ==========================================
     let isRaging = false;
     let currentRageType = null;
-    let preparedSpellsCache = []; // Qui verranno inseriti gli incantesimi preparati da Firebase
+    let isRecklessActive = false;
 
+    // Database di Esempio Incantesimi Preparati (Sostituito poi da Firebase)
+    let sampleSpells = [
+      { id: "1", name: "Parola Guaritrice", level: "1", time: "1 Azione Bonus", prepared: true, desc: "Cura una creatura a vista entro 18m." },
+      { id: "2", name: "Arma Spirituale", level: "2", time: "1 Azione Bonus", prepared: true, desc: "Crea un'arma spettrale che attacca a comando." },
+      { id: "3", name: "Santuario", level: "1", time: "1 Azione Bonus", prepared: true, desc: "Protegge una creatura dai tiri per colpire." },
+      { id: "4", name: "Guida", level: "0", time: "1 Azione", prepared: true, desc: "+1d4 a una prova di abilità." },
+      { id: "5", name: "Infliggi Ferite", level: "1", time: "1 Azione", prepared: true, desc: "Attacco d'incantesimo in mischia per 3d10 danni necrotici." }
+    ];
+
+    // ==========================================
+    // INIZIALIZZAZIONE & EVENTI
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      populateBonusActionMenu();
+      populateActionSpellsMenu();
+    });
+
+    // ==========================================
+    // LOGICA IRA & FRENESIA DI GRAUP
+    // ==========================================
     function handleRageButtonClick() {
       if (isRaging) {
         endRage();
@@ -731,25 +1103,28 @@
 
     function confirmRage(type) {
       const hdMaxInput = document.getElementById('hdMaxInput');
+      const hdCurrentInput = document.getElementById('hdCurrentInput');
       let currentMaxHd = parseInt(hdMaxInput.value) || 0;
 
-      // Logica Frenesia di Graup
+      // ⚠️ Costo di Attivazione Frenesia di Graup (Automatico)
       if (type === 'graup') {
         if (currentMaxHd <= 0) {
-          alert("💀 I tuoi Dadi Vita Massimi sono già 0. La tua volontà è stata consumata da Graup. Sei MORTO.");
+          alert("💀 I tuoi Dadi Vita Massimi sono 0! La tua volontà è stata consumata da Graup. Il personaggio è CONSIDERATO MORTO.");
           return;
         }
 
-        // Detrazione Dadi Vita Massimi
         currentMaxHd -= 2;
+        if (currentMaxHd < 0) currentMaxHd = 0;
         hdMaxInput.value = currentMaxHd;
 
-        if (currentMaxHd <= 0) {
-          alert("💀 L'attivazione della Frenesia di Graup ha ridotto i tuoi Dadi Vita Massimi a 0 o meno. La tua volontà è stata consumata da Graup. Il personaggio è considerato MORTO.");
-          hdMaxInput.value = 0;
-          // Opzionale: bloccare altre azioni qui
+        if (parseInt(hdCurrentInput.value) > currentMaxHd) {
+          hdCurrentInput.value = currentMaxHd;
+        }
+
+        if (currentMaxHd === 0) {
+          alert("💀 PERICOLO! I tuoi Dadi Vita Massimi sono arrivati a 0! La tua volontà è stata consumata da Graup e il personaggio è CONSIDERATO MORTO.");
         } else {
-          showToast(`Frenesia attivata! 2 Dadi Vita Max consumati. Rimanenti: ${currentMaxHd}`);
+          showToast(`🔥 Frenesia attivata! Detratti 2 Dadi Vita Massimi (Rimasti: ${currentMaxHd})`);
         }
       }
 
@@ -758,8 +1133,8 @@
       
       const body = document.body;
       const banner = document.getElementById('rageBannerText');
-      const widgetBonusText = document.getElementById('widgetRageBonusValue');
       const rageBtn = document.getElementById('rageBtn');
+      const widgetStatus = document.getElementById('widgetRageBonusStatus');
 
       body.classList.add('rage-mode');
       rageBtn.innerText = "🩸 TERMINA IRA";
@@ -768,21 +1143,23 @@
       if (type === 'graup') {
         body.classList.add('graup-frenzy');
         banner.innerHTML = `
-          💥 <strong>FRENESIA DI GRAUP ATTIVA!</strong> Costo pagato: -2 Dadi Vita Max. <br>
-          🔥 <strong>Aura Tempesta di Fuoco (3m):</strong> Danni fuoco pari al Danno da Ira all'inizio del turno nemico.<br>
-          🔥 <strong>Potenziamento Attacchi:</strong> +1d6 danni extra. Tutti i danni diventano Fuoco (ignora Res. Fuoco).<br>
-          💡 <strong>Illuminazione & Taglia:</strong> Emetti luce intensa 9m / fioca 18m. La tua Taglia diventa <strong>Grande</strong>.<br>
-          🛡️ <strong>Resistenze Tecniche:</strong> Ottieni Resistenza ai danni da Fuoco e Freddo.
+          🔥 <strong>FRENESIA DI GRAUP ATTIVA!</strong> <br>
+          • ⚠️ <strong>Costo:</strong> -2 Dadi Vita Max applicato. <br>
+          • 💡 <strong>Illuminazione:</strong> Luce intensa 9m, fioca 18m. <br>
+          • 📏 <strong>Taglia:</strong> Diventi di taglia <strong>Grande</strong>. <br>
+          • 🌋 <strong>Tempesta di Fuoco (Aura 3m):</strong> Nemici entro 2q subiscono all'inizio del turno danni fuoco = Danno da Ira. <br>
+          • ⚔️ <strong>Attacchi:</strong> +1d6 danni extra. Tutti i danni diventano Fuoco e ignorano la Resistenza al Fuoco. <br>
+          • 🛡️ <strong>Resistenze:</strong> Resistenza a Fuoco e Freddo (+ Contundenti, Perforanti, Taglienti).
         `;
-        widgetBonusText.innerText = "+ Danno da Ira (Attivo - Frenesia)";
-        widgetBonusText.style.color = "#ffaa00";
+        widgetStatus.innerText = "(ATTIVO! Aggiungi Danno da Ira alle cure)";
+        widgetStatus.style.color = "#ffaa00";
       } else {
         banner.innerHTML = `
           💥 <strong>IRA ATTIVA!</strong> Vantaggio su prove di Forza e TS su Forza | +2 Danni alle armi da Mischia su Forza | Resistenza a Danni Contundenti, Perforanti e Taglienti. <br>
           ⚠️ <strong>NOTA:</strong> Non puoi lanciare né concentrarti su incantesimi mentre sei in Ira!
         `;
-        widgetBonusText.innerText = "+ Danno da Ira (Attivo)";
-        widgetBonusText.style.color = "#ff3333";
+        widgetStatus.innerText = "(ATTIVO! Aggiungi Danno da Ira alle cure)";
+        widgetStatus.style.color = "#ff3333";
       }
 
       closeRageModal();
@@ -791,60 +1168,142 @@
     function endRage() {
       isRaging = false;
       currentRageType = null;
+      
       document.body.classList.remove('rage-mode', 'graup-frenzy');
       const rageBtn = document.getElementById('rageBtn');
       rageBtn.innerText = "🩸 ENTRA IN IRA";
       rageBtn.classList.remove('active');
       
-      const widgetBonusText = document.getElementById('widgetRageBonusValue');
-      widgetBonusText.innerText = "+ Danno da Ira (Solo se in Ira)";
-      widgetBonusText.style.color = "var(--text-muted)";
+      const widgetStatus = document.getElementById('widgetRageBonusStatus');
+      widgetStatus.innerText = "(Attivo solo se sei attualmente in Ira)";
+      widgetStatus.style.color = "#ff4d4d";
+      
       showToast("Ira terminata.");
     }
 
     // ==========================================
-    // AGGIORNAMENTO DINAMICO AZIONI BONUS
+    // FILTRO DINAMICO MENÙ AZIONI BONUS
     // ==========================================
-    // Questa funzione va chiamata ogni volta che l'elenco degli incantesimi preparati cambia.
-    function updateBonusActionMenu(preparedSpellsArray) {
-      const group = document.getElementById('bonusSpellsGroup');
-      if (!group) return;
-      group.innerHTML = '';
-      
-      // Filtra solo gli incantesimi che contengono "azione bonus" (o varianti) nel tempo di lancio
-      const bonusSpells = preparedSpellsArray.filter(spell => 
-        spell.time && spell.time.toLowerCase().includes('azione bonus')
+    function populateBonusActionMenu() {
+      const optGroup = document.getElementById('bonusSpellsOptGroup');
+      if (!optGroup) return;
+      optGroup.innerHTML = '';
+
+      // Filtra incantesimi preparati con tempo lancio "1 azione bonus" o "azione bonus"
+      const bonusSpells = sampleSpells.filter(s => 
+        s.prepared && s.time.toLowerCase().includes('bonus')
       );
-      
+
       if (bonusSpells.length === 0) {
         const opt = document.createElement('option');
         opt.disabled = true;
-        opt.text = "Nessun incantesimo bonus preparato";
-        group.appendChild(opt);
+        opt.innerText = "Nessun incantesimo bonus preparato";
+        optGroup.appendChild(opt);
       } else {
-        bonusSpells.forEach(spell => {
+        bonusSpells.forEach(s => {
           const opt = document.createElement('option');
-          opt.value = spell.id; // o spell.name
-          opt.text = `✨ ${spell.name} (Liv. ${spell.level})`;
-          group.appendChild(opt);
+          opt.value = `spell_${s.id}`;
+          opt.innerText = `✨ ${s.name} (${s.level === "0" ? "Trucchetto" : s.level + "° Liv"})`;
+          optGroup.appendChild(opt);
         });
       }
     }
 
-    // Funzione utility toast
-    function showToast(msg) {
-      const toast = document.getElementById('toastMessage');
-      toast.innerText = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    function updateBonusActionUI() {
+      const val = document.getElementById('bonusActionsSelect').value;
+      const descDiv = document.getElementById('bonusActionDesc');
+
+      if (!val) {
+        descDiv.style.display = 'none';
+        return;
+      }
+
+      descDiv.style.display = 'block';
+
+      if (val === 'rage_move') {
+        descDiv.innerHTML = "<strong>🩸 Entra in Ira + Metà Movimento:</strong> Attivi l'Ira e puoi subito muoverti fino a metà della tua velocità come parte della stessa azione bonus.";
+      } else if (val.startsWith('spell_')) {
+        const spellId = val.replace('spell_', '');
+        const spell = sampleSpells.find(s => s.id === spellId);
+        if (spell) {
+          descDiv.innerHTML = `<strong>✨ ${spell.name}:</strong> ${spell.desc}`;
+        }
+      }
     }
 
-    // Funzione placeholder per i toggle della visualizzazione
+    // ==========================================
+    // MENÙ AZIONI STANDARD / INCANALARE / MAGIE
+    // ==========================================
+    function populateActionSpellsMenu() {
+      const select = document.getElementById('actionSpellsSelect');
+      if (!select) return;
+      
+      // Mantieni prima opzione
+      select.innerHTML = '<option value="">-- Seleziona Incantesimo Preparato (1 Azione) --</option>';
+
+      const actionSpells = sampleSpells.filter(s => 
+        s.prepared && !s.time.toLowerCase().includes('bonus')
+      );
+
+      actionSpells.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.innerText = `${s.name} (${s.level === "0" ? "Trucchetto" : s.level + "° Liv"})`;
+        select.appendChild(opt);
+      });
+    }
+
+    function updateActionSpellUI() {
+      const val = document.getElementById('actionSpellsSelect').value;
+      const descDiv = document.getElementById('actionSpellDesc');
+      if (!val) { descDiv.style.display = 'none'; return; }
+
+      const spell = sampleSpells.find(s => s.id === val);
+      if (spell) {
+        descDiv.style.display = 'block';
+        descDiv.innerHTML = `<strong>${spell.name}:</strong> ${spell.desc}`;
+      }
+    }
+
+    function updateChannelDivinityUI() {
+      const val = document.getElementById('channelDivinitySelect').value;
+      const descDiv = document.getElementById('channelDivinityDesc');
+
+      if (!val) { descDiv.style.display = 'none'; return; }
+      descDiv.style.display = 'block';
+
+      if (val === 'turn_undead') {
+        descDiv.innerHTML = "<strong>💀 Turn Undead:</strong> Ogni non morto entro 9m deve fare un TS Saggezza o essere scacciato per 1 minuto o finché non subisce danni.";
+      } else if (val === 'preserve_life') {
+        descDiv.innerHTML = "<strong>💚 Preserve Life:</strong> Ripristini PF pari a 5x Livello Chierico distribuiti tra creature entro 9m (fino a metà dei loro PF max).";
+      } else if (val === 'destroy_undead') {
+        descDiv.innerHTML = "<strong>💥 Destroy Undead:</strong> Se un non morto fallisce il TS su Scacciare ed ha GS pari o inferiore al limite, viene distrutto all'istante.";
+      }
+    }
+
+    function toggleReckless() {
+      isRecklessActive = !isRecklessActive;
+      const btn = document.getElementById('recklessBtn');
+      if (isRecklessActive) {
+        btn.innerText = "💥 ATTACCO SPREZZANTE ATTIVO";
+        btn.style.background = "var(--accent-yellow)";
+        btn.style.color = "#000";
+        showToast("Attacco Sprezzante Attivato! Vantaggio ai tuoi attacchi, ma i nemici hanno vantaggio contro di te.");
+      } else {
+        btn.innerText = "⚡ Attiva Attacco Sprezzante";
+        btn.style.background = "transparent";
+        btn.style.color = "var(--accent-yellow)";
+      }
+    }
+
+    // ==========================================
+    // UTILITY INTERFACCIA
+    // ==========================================
     function toggleView() {
       const combatView = document.getElementById('combatView');
       const spellbookView = document.getElementById('spellbookView');
       const toggleBtn = document.getElementById('viewToggleBtn');
-      
+
       if (combatView.classList.contains('active')) {
         combatView.classList.remove('active');
         spellbookView.style.display = 'block';
@@ -856,14 +1315,30 @@
       }
     }
 
-    // ESEMPIO: Da richiamare dopo aver caricato i dati da Firebase per testare il filtro
-    /*
-    updateBonusActionMenu([
-      { id: 1, name: "Parola Guaritrice", level: 1, time: "1 Azione Bonus" },
-      { id: 2, name: "Scudo della Fede", level: 1, time: "1 Azione Bonus" },
-      { id: 3, name: "Cura Ferite", level: 1, time: "1 Azione" } // Non apparirà
-    ]);
-    */
+    function showToast(msg) {
+      const toast = document.getElementById('toastMessage');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+
+    function longRest() {
+      document.getElementById('usedRagesInput').value = 0;
+      const maxHd = document.getElementById('hdMaxInput').value;
+      document.getElementById('hdCurrentInput').value = maxHd;
+      const maxHp = document.getElementById('hpMaxInput').value;
+      document.getElementById('hpCurrentInput').value = maxHp;
+      showToast("☀️ Riposo Lungo completato! Ire, PF e Dadi Vita ripristinati.");
+    }
+
+    function openAddModal() { document.getElementById('spellModal').classList.add('active'); }
+    function closeModal() { document.getElementById('spellModal').classList.remove('active'); }
+    function renderSpells() {}
+    function updateStatsConfig() {}
+    function saveCustomStats() {}
+    function updateRageStats() {}
+    function resetPreparedSpells() {}
+    function saveSpellFromModal() { closeModal(); }
   </script>
 </body>
 </html>
