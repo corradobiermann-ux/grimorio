@@ -1,368 +1,1650 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheda Personaggio - Frenesia di Graup & Incantesimi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { background-color: #0f172a; color: #f8fafc; }
-        .frenzy-active { border-color: #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.4); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grimorio & Combattimento Chierico/Barbaro</title>
+  
+  <!-- Firebase SDK (Compatibilità v8) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <style>
+    :root {
+      --bg: #0f0d0a;
+      --card-bg: rgba(24, 21, 18, 0.92);
+      --panel-bg: rgba(24, 21, 18, 0.95);
+      --card-border: #8b6e3d;
+      --border-subtle: #3a3125;
+      --accent-yellow: #f1c40f;
+      --text-main: #e2d9cc;
+      --text-muted: #a39580;
+      --danger-red: #c0392b;
+      --rage-red: #800000;
+    }
+
+    /* TEMA IRA DEL BARBARO (ROSSO SANGUE) */
+    body.rage-mode {
+      --bg: #120202;
+      --card-bg: rgba(45, 8, 8, 0.92);
+      --panel-bg: rgba(55, 10, 10, 0.95);
+      --card-border: #a81c1c;
+      --border-subtle: #631212;
+      --accent-yellow: #ff3333;
+      --text-main: #fce8e8;
+      --text-muted: #d49f9f;
+      animation: ragePulse 2.5s infinite alternate;
+    }
+
+    /* Overlay Macchie di Sangue & Vignettatura */
+    body.rage-mode::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9998;
+      background: 
+        radial-gradient(circle at 8% 15%, rgba(139, 0, 0, 0.45) 0%, transparent 25%),
+        radial-gradient(circle at 92% 85%, rgba(120, 0, 0, 0.5) 0%, transparent 30%),
+        radial-gradient(circle at 50% 95%, rgba(160, 0, 0, 0.35) 0%, transparent 35%),
+        radial-gradient(ellipse at center, transparent 50%, rgba(90, 0, 0, 0.75) 100%);
+    }
+
+    /* EFFETTO FIAMME - FRENESIA DI GRAUP */
+    body.rage-mode.graup-frenzy {
+      --card-border: #ff5500;
+      --accent-yellow: #ffaa00;
+    }
+
+    body.rage-mode.graup-frenzy::after {
+      content: "";
+      position: fixed;
+      bottom: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      background: 
+        radial-gradient(ellipse at 20% 100%, rgba(255, 102, 0, 0.5) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 100%, rgba(255, 51, 0, 0.5) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 100%, rgba(255, 204, 0, 0.3) 0%, transparent 50%);
+      animation: flameFlicker 1.2s infinite alternate ease-in-out;
+    }
+
+    body.rage-mode.graup-frenzy .card,
+    body.rage-mode.graup-frenzy .stats-panel,
+    body.rage-mode.graup-frenzy .combat-column {
+      box-shadow: 0 0 18px rgba(255, 85, 0, 0.6);
+      border-color: #ff6600 !important;
+    }
+
+    @keyframes flameFlicker {
+      0% { opacity: 0.7; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.05); }
+      100% { opacity: 0.8; transform: scaleY(0.98); }
+    }
+
+    @keyframes ragePulse {
+      0% { box-shadow: inset 0 0 30px rgba(180, 0, 0, 0.4); }
+      100% { box-shadow: inset 0 0 90px rgba(255, 0, 0, 0.7); }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: linear-gradient(rgba(15, 13, 10, 0.85), rgba(15, 13, 10, 0.85)), url('sfondo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: var(--text-main);
+      padding: 20px;
+      max-width: 1300px;
+      margin: 0 auto;
+      line-height: 1.4;
+      transition: background-color 0.5s ease;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      min-height: 60px;
+    }
+
+    .header-banner-img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* BARRA FISSATA (STICKY) */
+    .stats-panel {
+      position: sticky;
+      top: 10px;
+      z-index: 1000;
+      background: var(--panel-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color 0.3s;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .stats-row.flex-between {
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+    }
+
+    .stat-inline {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .stat-inline input {
+      background: #0a0907;
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-yellow);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      text-align: center;
+      width: 50px;
+    }
+
+    .prep-counter-container {
+      font-size: 1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .prep-counter-container strong {
+      color: var(--accent-yellow);
+      font-size: 1.1rem;
+    }
+
+    .actions-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: transparent;
+      color: var(--accent-yellow);
+      border: 1px solid var(--accent-yellow);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action:hover {
+      background: var(--accent-yellow);
+      color: #000;
+    }
+
+    .btn-rage {
+      background: #7a0909;
+      color: #fff;
+      border: 1px solid #ff3333;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+    }
+
+    .btn-rage:hover {
+      background: #b30c0c;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    }
+
+    .btn-rage.active {
+      background: #ff0000;
+      color: #fff;
+      animation: pulseRageBtn 1s infinite alternate;
+    }
+
+    @keyframes pulseRageBtn {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); box-shadow: 0 0 20px #ff0000; }
+    }
+
+    .btn-mode-toggle {
+      background: #2a2218;
+      border-color: var(--accent-yellow);
+    }
+
+    .btn-danger {
+      border-color: var(--danger-red);
+      color: #e74c3c;
+    }
+
+    .btn-danger:hover {
+      background: var(--danger-red);
+      color: #fff;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--accent-yellow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .rage-banner {
+      display: none;
+      background: rgba(180, 0, 0, 0.25);
+      border: 1px solid #ff1a1a;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      color: #ffcccc;
+      font-size: 0.9rem;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+
+    body.rage-mode .rage-banner {
+      display: block;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .slot-level-box {
+      background: var(--card-bg);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .slot-level-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .slot-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .slot-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-yellow);
+      background: var(--accent-yellow);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .slot-dot.used {
+      background: transparent;
+      border-color: #555;
+    }
+
+    .controls-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .search-row input, .search-row select {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .search-row input {
+      flex: 1;
+    }
+
+    .categories-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-tag {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-tag.active {
+      background: var(--accent-yellow);
+      color: #000;
+      border-color: var(--accent-yellow);
+      font-weight: bold;
+    }
+
+    .btn-prepared-toggle {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+      background: var(--card-bg);
+    }
+
+    .btn-prepared-toggle.active {
+      background: var(--accent-yellow);
+      color: #000;
+    }
+
+    .spells-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .card-title {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #fff;
+    }
+
+    .card-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      white-space: pre-line;
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 5px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 10px;
+    }
+
+    .card-footer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 8px;
+      margin-top: 5px;
+    }
+
+    .btn-card-icon {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-card-icon:hover {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    .btn-card-icon.active-lock {
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+      background: rgba(241, 196, 15, 0.15);
+    }
+
+    .btn-prepare {
+      background: transparent;
+      border: 1px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .btn-prepare.prepared {
+      background: var(--accent-yellow);
+      color: #000;
+    }
+
+    /* STILI MODALITÀ COMBATTIMENTO (TRE COLONNE) */
+    .combat-view {
+      display: none;
+    }
+
+    .combat-view.active {
+      display: block;
+    }
+
+    .combat-columns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .combat-column {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .column-header {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .action-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .action-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--border-subtle);
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .action-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #181512;
+      border: 1px solid var(--accent-yellow);
+      color: var(--text-main);
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+      display: none;
+      z-index: 10000;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+      padding: 15px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 550px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .modal-header {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: var(--accent-yellow);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .form-group input, .form-group textarea {
+      background: #0a0907;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-yellow);
+      cursor: pointer;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+    }
+  </style>
 </head>
-<body class="p-4 md:p-8 font-sans min-h-screen relative pb-28">
+<body>
 
-    <div class="max-w-4xl mx-auto space-y-6">
+  <header>
+    <img src="header.jpg" alt="Header Banner" class="header-banner-img" onerror="this.style.display='none'">
+  </header>
 
-        <!-- 📊 BARRA STATISTICHE SUPERIORI (MODIFICABILI) -->
-        <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 shadow-lg grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-            <!-- Movimento -->
-            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
-                <label class="block text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">Movimento</label>
-                <input type="text" id="stat-speed" value="9m" class="w-full text-center bg-transparent text-xl font-bold text-amber-400 focus:outline-none focus:border-b focus:border-amber-400">
-            </div>
-
-            <!-- CA -->
-            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
-                <label class="block text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">Classe Armatura</label>
-                <input type="number" id="stat-ac" value="16" class="w-full text-center bg-transparent text-xl font-bold text-blue-400 focus:outline-none focus:border-b focus:border-blue-400">
-            </div>
-
-            <!-- Punti Vita (PF) -->
-            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
-                <label class="block text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">Punti Vita (PF)</label>
-                <div class="flex items-center justify-center gap-1 text-xl font-bold text-emerald-400">
-                    <input type="number" id="hp-current" value="45" class="w-12 text-right bg-transparent focus:outline-none focus:border-b focus:border-emerald-400">
-                    <span>/</span>
-                    <input type="number" id="hp-max" value="45" class="w-12 text-left bg-transparent focus:outline-none focus:border-b focus:border-emerald-400">
-                </div>
-            </div>
-
-            <!-- Dadi Vita -->
-            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700">
-                <label class="block text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">Dadi Vita</label>
-                <div class="flex items-center justify-center gap-1 text-xl font-bold text-purple-400">
-                    <input type="number" id="hd-current" value="5" class="w-10 text-right bg-transparent focus:outline-none focus:border-b focus:border-purple-400">
-                    <span>/</span>
-                    <input type="number" id="hd-max" value="5" class="w-10 text-left bg-transparent focus:outline-none focus:border-b focus:border-purple-400">
-                </div>
-            </div>
-        </div>
-
-        <!-- 🔥 FRENESIA DI GRAUP -->
-        <div id="graup-card" class="bg-slate-800 border-2 border-slate-700 rounded-xl p-6 transition-all duration-300">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-red-500 flex items-center gap-2">
-                        <i class="fa-solid fa-fire"></i> Frenesia di Graup
-                    </h2>
-                    <p class="text-xs text-slate-400">Un potere antico e primordiale ribolle nel tuo petto.</p>
-                </div>
-                <button id="toggle-graup-btn" onclick="toggleGraup()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-all active:scale-95">
-                    Attiva Frenesia
-                </button>
-            </div>
-
-            <!-- Avviso Morte -->
-            <div id="death-warning" class="hidden bg-black/80 border border-red-600 text-red-500 p-4 rounded-lg text-center font-bold mb-4 animate-pulse">
-                💀 I tuoi Dadi Vita sono esauriti. La tua volontà è stata consumata da Graup. Il personaggio è MORTO.
-            </div>
-
-            <!-- Dettagli Frenesia -->
-            <div id="graup-details" class="hidden space-y-3 text-sm border-t border-slate-700 pt-4 text-slate-300">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                        <span class="font-bold text-amber-400 block mb-1">✨ Trasformazione & Luce</span>
-                        Taglia: <strong class="text-white">Grande</strong><br>
-                        Luce Intensa: <strong>9 metri</strong> | Fioca: <strong>18 metri</strong>
-                    </div>
-
-                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                        <span class="font-bold text-red-400 block mb-1">🔥 Tempesta di Fuoco (Aura)</span>
-                        Ogni creatura entro <strong>2 quadretti (3m)</strong> subisce all'inizio del suo turno danni da fuoco pari al tuo <strong>Danno da Ira</strong>.
-                    </div>
-
-                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                        <span class="font-bold text-orange-400 block mb-1">⚔️ Attacchi Potenziati</span>
-                        +<strong>1d6</strong> danni extra.<br>
-                        I danni diventano di tipo <strong>Fuoco</strong> e <u>ignorano la Resistenza al Fuoco</u>.
-                    </div>
-
-                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                        <span class="font-bold text-blue-400 block mb-1">🛡️ Resistenze Ottenute</span>
-                        Resistenza ai danni da <strong>Fuoco</strong> e <strong>Freddo</strong>.
-                    </div>
-                </div>
-
-                <blockquote class="bg-red-950/40 border-l-4 border-red-500 p-3 rounded text-xs text-red-300 mt-2">
-                    <strong>⚠️ Costo Effettuato:</strong> Consumati permanentemente <strong>2 Dadi Vita</strong> dal totale massimo.
-                </blockquote>
-            </div>
-        </div>
-
-        <!-- ⚔️ SELEZIONE AZIONI E AZIONI BONUS IN COMBATTIMENTO -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            <!-- MENÙ AZIONI PRINCIPALI -->
-            <div class="bg-slate-800 border border-slate-700 rounded-xl p-5">
-                <h3 class="text-lg font-bold text-blue-400 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-hand-fist"></i> Menù Azioni
-                </h3>
-                <div class="space-y-3">
-                    <label class="block text-xs text-slate-400">Azioni Standard e Incantesimi Preparati:</label>
-                    <select id="action-select" onchange="handleActionChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500">
-                        <option value="">-- Scegli un'Azione --</option>
-                        <option value="attacco">⚔️ Attacco con Arma</option>
-                        <option value="scatto">🏃 Scatto (Dash)</option>
-                        <option value="disingaggio">🛡️ Disingaggio</option>
-                        <optgroup id="action-spells-group" label="Incantesimi Preparati (Azione)">
-                            <!-- Popolato da JS -->
-                        </optgroup>
-                    </select>
-                    <div id="action-info" class="hidden bg-slate-900 p-3 rounded-lg border border-blue-500/30 text-xs text-slate-300"></div>
-                </div>
-            </div>
-
-            <!-- MENÙ AZIONI BONUS -->
-            <div class="bg-slate-800 border border-slate-700 rounded-xl p-5">
-                <h3 class="text-lg font-bold text-amber-400 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-bolt"></i> Menù Azioni Bonus
-                </h3>
-                <div class="space-y-3">
-                    <label class="block text-xs text-slate-400">Opzioni e Incantesimi Preparati (Solo Bonus):</label>
-                    <select id="bonus-select" onchange="handleBonusChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white focus:outline-none focus:border-amber-500">
-                        <option value="">-- Scegli un'Azione Bonus --</option>
-                        <option value="ira-movimento" class="font-bold text-red-400">🔥 Ira + Metà Movimento</option>
-                        <optgroup id="bonus-spells-group" label="Incantesimi Preparati (Azione Bonus)">
-                            <!-- Popolato da JS -->
-                        </optgroup>
-                    </select>
-                    <div id="bonus-info" class="hidden bg-slate-900 p-3 rounded-lg border border-amber-500/30 text-xs text-slate-300"></div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- 📖 GESTIONE INCANTESIMI & PREPARAZIONE (GRIMORIO COMPLETO) -->
-        <div class="bg-slate-800 border border-slate-700 rounded-xl p-5">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-purple-400 flex items-center gap-2">
-                    <i class="fa-solid fa-book-bookmark"></i> Lista Completa Incantesimi & Preparazione
-                </h3>
-                <span class="text-xs text-slate-400">Spunta gli incantesimi per prepararli</span>
-            </div>
-
-            <div id="spells-container" class="space-y-3">
-                <!-- Generato da JS -->
-            </div>
-        </div>
-
+  <!-- BARRA STATISTICHE FISSATA IN ALTO -->
+  <div class="stats-panel">
+    <div class="stats-row">
+      <div class="stat-inline">
+        <span>🧙 Livello:</span>
+        <input type="number" id="clericLevelInput" min="1" max="20" onchange="updateStatsConfig()">
+      </div>
+      <div class="stat-inline">
+        <span>✨ Mod. Saggezza:</span>
+        <input type="number" id="wisModInput" onchange="updateStatsConfig()">
+      </div>
+      <div class="stat-inline">
+        <span>🎯 CD Incantesimi:</span>
+        <input type="number" id="spellSaveDcInput" onchange="saveCustomStats()">
+      </div>
+      <div class="stat-inline">
+        <span>⚔️ Bonus Attacco:</span>
+        <input type="number" id="spellAttackBonusInput" onchange="saveCustomStats()">
+      </div>
+      <div class="stat-inline">
+        <span>🩸 Ire Usate:</span>
+        <input type="number" id="usedRagesInput" min="0" onchange="updateRageStats()">
+        <span>/</span>
+        <input type="number" id="maxRagesInput" min="1" onchange="updateRageStats()">
+      </div>
     </div>
 
-    <!-- ➕ WIDGET REMINDER CURE (IN BASSO A SINISTRA) -->
-    <div class="fixed bottom-5 left-5 z-50">
-        <button onclick="toggleHealingModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white w-14 h-14 rounded-full shadow-2xl border-2 border-emerald-300 flex items-center justify-center text-2xl transition-transform active:scale-95 group relative">
-            <i class="fa-solid fa-plus"></i>
-            <span class="absolute left-16 bg-slate-900 text-emerald-400 text-xs py-1 px-3 rounded shadow border border-slate-700 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                Reminder Bonus Cure
-            </span>
+    <div class="stats-row flex-between">
+      <div class="prep-counter-container">
+        📖 Incantesimi Preparati: <strong id="prepCounterText">0 / 0</strong>
+      </div>
+      <div class="actions-container">
+        <button class="btn-action btn-rage" id="rageBtn" onclick="handleRageButtonClick()">🩸 ENTRA IN IRA</button>
+        <button class="btn-action btn-mode-toggle" id="viewToggleBtn" onclick="toggleView()">⚔️ Modalità Combattimento</button>
+        <button class="btn-action" onclick="longRest()">☀️ Riposo Lungo</button>
+        <button class="btn-action btn-danger" onclick="resetPreparedSpells()">🧹 Svuota Preparati</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVVISO ATTIVO DURANTE L'IRA -->
+  <div class="rage-banner" id="rageBannerText">
+    💥 <strong>IRA ATTIVA!</strong> Vantaggio su prove di Forza e TS su Forza | +2 Danni alle armi da Mischia su Forza | Resistenza a Danni Contundenti, Perforanti e Taglienti. <br>
+    ⚠️ <strong>NOTA:</strong> Non puoi lanciare né concentrarti su incantesimi mentre sei in Ira!
+  </div>
+
+  <!-- VISTA 1: GRIMORIO ED INCANTESIMI -->
+  <div id="spellbookView">
+    <!-- Tracker Slot Incantesimo -->
+    <div class="section-title">
+      <span>Slot Incantesimi Disponibili</span>
+    </div>
+    <div class="slots-grid" id="slotsGrid"></div>
+
+    <!-- Controlli & Filtri -->
+    <div class="controls-panel">
+      <div class="search-row">
+        <input type="text" id="searchInput" oninput="renderSpells()" placeholder="Cerca incantesimo per nome o descrizione...">
+        <select id="levelSelect" onchange="renderSpells()">
+          <option value="ALL">Tutti i Livelli</option>
+          <option value="0">Trucchetti (0)</option>
+          <option value="1">1° Livello</option>
+          <option value="2">2° Livello</option>
+          <option value="3">3° Livello</option>
+          <option value="4">4° Livello</option>
+          <option value="5">5° Livello</option>
+        </select>
+        <button class="btn-action" onclick="openAddModal()">➕ Nuovo</button>
+      </div>
+
+      <div class="categories-container" id="categoriesContainer"></div>
+    </div>
+
+    <!-- Griglia Incantesimi -->
+    <div class="spells-grid" id="spellsGrid"></div>
+  </div>
+
+  <!-- VISTA 2: MODALITÀ COMBATTIMENTO (3 COLONNE) -->
+  <div id="combatView" class="combat-view">
+    <div class="section-title">
+      <span>Tattica da Combattimento</span>
+    </div>
+
+    <div class="combat-columns-grid">
+      <!-- COLONNA 1: AZIONI -->
+      <div class="combat-column">
+        <div class="column-header">⚔️ Azioni</div>
+        
+        <!-- 1) ATTACCO CON COMETA SIDERALE -->
+        <div class="action-card" style="border-color: var(--accent-yellow);">
+          <div class="action-card-header">
+            <span style="color:var(--accent-yellow);">☄️ Cometa Siderale</span>
+            <span class="action-badge" style="background:#553c13; color:#fff;">Artefatto</span>
+          </div>
+          <div class="action-card-desc">
+            <strong>Danno Base:</strong> 2d6 Contundenti | Pesante, Due Mani, Portata 2q (3m)<br>
+            <em>Mazzafrusto a due mani con la testa di un Dragolich dalle corna acuminate.</em>
+            <hr style="border:0; border-top:1px solid var(--border-subtle); margin:6px 0;">
+            <div style="font-size:0.82rem; line-height:1.35; color:#dcd3c5;">
+              <strong>⚡ Infusione Planare (Azione Gratuita - 1 min):</strong>
+              <ul style="padding-left:16px; margin:3px 0;">
+                <li><strong>Necrotica:</strong> Emetti oscurità di 4q + <strong>2d6 danni Necrotici</strong>.</li>
+                <li><strong>Radiante:</strong> Emetti luce intensa 4q (+4q fioca) + <strong>2d6 danni Radianti</strong>.</li>
+              </ul>
+              <strong>🌌 Eco di Null (1/Giorno):</strong> Lancia l'incantesimo <em>Guardian of Faith</em> (aspetto di Dragolich Nero).<br>
+              <strong>🐉 Morsa del Drago (BC/Riposo Lungo):</strong> Su colpo, TS FOR 18 o la creatura è <u>Afferrata</u>. Quando afferrata, puoi usare un'Azione per infliggere <strong>3d6 danni Necrotici o Radianti</strong>.
+            </div>
+          </div>
+        </div>
+
+        <!-- 2) ATTACCO RECKLESS -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>💥 Attacco Sprezzante (Reckless)</span>
+            <span class="action-badge">Barbaro</span>
+          </div>
+          <div class="action-card-desc">
+            Guadagni <strong>Vantaggio</strong> a tutti i tiri per colpirne con armi da mischia basati su Forza in questo turno, ma i tiri per colpire contro di te hanno Vantaggio fino al tuo prossimo turno.
+            <div style="margin-top: 8px;">
+              <button class="btn-action" id="recklessBtn" onclick="toggleReckless()" style="width: 100%; justify-content: center;">
+                ⚡ Attiva Attacco Sprezzante
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3) CHANNEL DIVINITY CON MENÙ A TENDINA -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>✨ Incanalare Divinità (Channel Divinity)</span>
+            <span class="action-badge">Chierico</span>
+          </div>
+          <div class="action-card-desc">
+            <select id="channelDivinitySelect" onchange="updateChannelDivinityUI()" style="width: 100%; padding: 6px 10px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
+              <option value="">-- Seleziona Abilità --</option>
+              <option value="turn_undead">💀 Turn Undead</option>
+              <option value="preserve_life">💚 Preserve Life</option>
+              <option value="destroy_undead">💥 Destroy Undead</option>
+            </select>
+            <div id="channelDivinityDesc" style="margin-top: 8px; font-size: 0.83rem; color: #d1d5db; display: none; border-top: 1px dashed var(--border-subtle); padding-top: 6px; line-height: 1.35;"></div>
+          </div>
+        </div>
+
+        <!-- 4) ATTACCO CON MAGIA CON MENÙ A TENDINA -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>✨ Attacco con Magia (1 Azione)</span>
+            <span class="action-badge">Incantesimi</span>
+          </div>
+          <div class="action-card-desc">
+            <select id="actionSpellsSelect" onchange="updateActionSpellUI()" style="width: 100%; padding: 6px 10px; background: #0a0907; color: var(--text-main); border: 1px solid var(--border-subtle); border-radius: 6px; margin-top: 4px; font-weight:bold;">
+              <option value="">-- Seleziona Incantesimo Preparato (1 Azione) --</option>
+            </select>
+            <div id="actionSpellDesc" style="margin-top: 8px; font-size: 0.83rem; color: #d1d5db; display: none; border-top: 1px dashed var(--border-subtle); padding-top: 6px; line-height: 1.35;"></div>
+          </div>
+        </div>
+
+        <!-- AZIONI STANDARD -->
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Schivata (Dodge)</span>
+            <span class="action-badge">Difesa</span>
+          </div>
+          <div class="action-card-desc">Fino all'inizio del tuo prossimo turno, i tiri per colpire contro di te hanno svantaggio. TS su Destrezza con Vantaggio.</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Scatto (Dash) / Disimpegno</span>
+            <span class="action-badge">Movimento</span>
+          </div>
+          <div class="action-card-desc"><strong>Scatto:</strong> Raddoppia il tuo movimento per questo turno. <br><strong>Disimpegno:</strong> Il tuo movimento non provoca attacchi d'opportunità.</div>
+        </div>
+      </div>
+
+      <!-- COLONNA 2: AZIONI BONUS -->
+      <div class="combat-column">
+        <div class="column-header">⚡ Azioni Bonus</div>
+
+        <div class="action-card" style="border-color: #ff3333;">
+          <div class="action-card-header">
+            <span style="color:#ff4d4d;">Ira del Barbaro</span>
+            <span class="action-badge" style="background:#800000; color:#fff;">Ira</span>
+          </div>
+          <div class="action-card-desc">Entra in Ira o Frenesia. Guadagni resistenza ai danni fisici, +2 ai danni da Forza e vantaggio alle prove di Forza.</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Parola Guaritrice</span>
+            <span class="action-badge">Incantesimo Bonus</span>
+          </div>
+          <div class="action-card-desc">Ripristina Punti Vita a una creatura a vista entro 18 metri. <em>(1d4 + Mod SGG)</em>. Utile prima di entrare in Ira!</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Arma Spirituale</span>
+            <span class="action-badge">Incantesimo Bonus</span>
+          </div>
+          <div class="action-card-desc">Esegui un attacco d'incantesimo in mischia con l'arma spettrale evocata in precedenza.</div>
+        </div>
+      </div>
+
+      <!-- COLONNA 3: REAZIONI -->
+      <div class="combat-column">
+        <div class="column-header">🛡️ Reazioni</div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Attacco d'Opportunità</span>
+            <span class="action-badge">Reazione</span>
+          </div>
+          <div class="action-card-desc">Esegui un attacco in mischia con la tua arma contro una creatura nemica che esce dalla tua portata senza disimpegnarsi.</div>
+        </div>
+
+        <div class="action-card">
+          <div class="action-card-header">
+            <span>Abilità Reattive / Incantesimi</span>
+            <span class="action-badge">Reazione Spec.</span>
+          </div>
+          <div class="action-card-desc">Lancia incantesimi di reazione (es. <em>Assorbire Elementi</em>) prima dell'Ira o attiva abilità di classe reattive.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifiche -->
+  <div id="toastMessage" class="toast"></div>
+
+  <!-- MODAL SCELTA IRA -->
+  <div class="modal-overlay" id="rageChoiceModal">
+    <div class="modal-card" style="max-width: 420px; text-align: center;">
+      <div class="modal-header">🩸 Scatena il Furore</div>
+      <p style="margin: 10px 0; color: var(--text-muted); font-size: 0.95rem;">Scegli quale tipo di Ira attivare in questo combattimento:</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+        <button class="btn-action btn-rage" style="justify-content: center; padding: 12px;" onclick="confirmRage('standard')">
+          🔴 Ira Standard (Sangue)
         </button>
-
-        <div id="healing-modal" class="hidden absolute bottom-16 left-0 w-80 bg-slate-900 border-2 border-emerald-500 rounded-xl p-4 shadow-2xl text-slate-200 text-sm">
-            <div class="flex justify-between items-center border-b border-slate-700 pb-2 mb-2">
-                <h4 class="font-bold text-emerald-400 flex items-center gap-2">
-                    <i class="fa-solid fa-notes-medical"></i> Bonus Incantesimi di Cura
-                </h4>
-                <button onclick="toggleHealingModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <p class="text-xs mb-3 text-slate-300">
-                Ogni volta che lanci un incantesimo di guarigione, applica i seguenti bonus extra al totale curato:
-            </p>
-
-            <div class="space-y-2 text-xs">
-                <div class="bg-slate-800 p-2 rounded border border-slate-700">
-                    <span class="text-emerald-300 font-bold">1. Bonus Base Cura:</span><br>
-                    <strong>+2 + Livello dell'Incantesimo</strong>
-                </div>
-
-                <div class="bg-slate-800 p-2 rounded border border-slate-700">
-                    <span class="text-amber-300 font-bold">2. Favore di Philianne:</span><br>
-                    Aggiungi un valore pari al tuo <strong>Danno da Ira</strong> (se sei in Ira).
-                </div>
-            </div>
-
-            <div class="mt-3 pt-2 border-t border-slate-800 text-center font-mono text-emerald-400 text-xs">
-                Cura Totale = Dado + (2 + Liv. Incantesimo) + Danno Ira
-            </div>
-        </div>
+        <button class="btn-action btn-rage" style="justify-content: center; padding: 12px; background: linear-gradient(45deg, #800000, #ff5500); border-color: #ffaa00;" onclick="confirmRage('graup')">
+          🔥 Frenesia di Graup (Sangue & Fiamme)
+        </button>
+        <button class="btn-action btn-danger" style="justify-content: center; margin-top: 5px;" onclick="closeRageModal()">Annulla</button>
+      </div>
     </div>
+  </div>
 
-    <!-- LOGICA JAVASCRIPT COMPLETA -->
-    <script>
-        // Data Store Incantesimi
-        let spells = [
-            { id: 'parola-guaritrice', name: 'Parola Guaritrice', level: 1, type: 'bonus', isHealing: true, prepared: true, desc: 'Cura 1d4 + Modificatore a distanza (18m).' },
-            { id: 'cura-ferite', name: 'Cura Ferite', level: 1, type: 'action', isHealing: true, prepared: true, desc: 'Cura 1d8 + Modificatore a contatto.' },
-            { id: 'sguardo-bruciante', name: 'Sguardo Bruciante', level: 1, type: 'bonus', isHealing: false, prepared: true, desc: 'Danni da fuoco bonus al prossimo attacco.' },
-            { id: 'arma-spirituale', name: 'Arma Spirituale', level: 2, type: 'bonus', isHealing: false, prepared: true, desc: 'Crea un\'arma spettrale che attacca come azione bonus.' },
-            { id: 'benedizione', name: 'Benedizione', level: 1, type: 'action', isHealing: false, prepared: true, desc: 'Aggiungi +1d4 ai tiri per colpire e ai tiri salvezza a 3 alleati.' },
-            { id: 'preghiera-guarigione', name: 'Preghiera di Guarigione', level: 2, type: 'action', isHealing: true, prepared: false, desc: 'Cura 2d8 + Modificatore fino a 6 creature.' },
-            { id: 'palla-di-fuoco', name: 'Palla di Fuoco', level: 3, type: 'action', isHealing: false, prepared: false, desc: 'Esplosione di fuoco per 8d6 danni in area.' },
-            { id: 'scudo-fede', name: 'Scudo della Fede', level: 1, type: 'bonus', isHealing: false, prepared: false, desc: 'Aumenta la CA del bersaglio di +2.' },
-            { id: 'ristorare-inferiore', name: 'Ristorare Inferiore', level: 2, type: 'action', isHealing: false, prepared: true, desc: 'Rimuove una malattia o condizione (Accecato, Assordato, Paralizzato, Avvelenato).' }
-        ];
+  <!-- MODAL CREAZIONE / MODIFICA INCANTESIMO -->
+  <div class="modal-overlay" id="spellModal">
+    <div class="modal-card">
+      <div class="modal-header" id="modalTitle">Aggiungi / Modifica Incantesimo</div>
+      
+      <input type="hidden" id="modalOriginalName">
 
-        let isGraupActive = false;
+      <div class="form-group">
+        <label>Nome Incantesimo</label>
+        <input type="text" id="modalSpellName" placeholder="Es. Parola Guaritrice">
+      </div>
 
-        // Inizializzazione UI
-        window.onload = function() {
-            renderSpellbook();
-            updateDropdowns();
+      <div class="form-group">
+        <label>Livello e Scuola</label>
+        <input type="text" id="modalSpellLevel" placeholder="Es. 1° livello Evocazione (oppure Trucchetto)">
+      </div>
+
+      <div class="form-group">
+        <label>Tempo di Lancio</label>
+        <input type="text" id="modalSpellTime" placeholder="Es. 1 azione bonus">
+      </div>
+
+      <div class="form-group">
+        <label>Categorie / Filtri (Separate da virgola)</label>
+        <input type="text" id="modalSpellCategories" placeholder="Es. Cura, Danno, Utilità, Buff">
+      </div>
+
+      <div class="form-group">
+        <label>Descrizione</label>
+        <textarea id="modalSpellDesc" placeholder="Inserisci la descrizione dettagliata..."></textarea>
+      </div>
+
+      <div class="form-group checkbox-row">
+        <input type="checkbox" id="modalSpellAlwaysPrepared">
+        <label for="modalSpellAlwaysPrepared">📌 Imposta come Sempre Preparato (Dominio)</label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-action btn-danger" onclick="closeModal()">Annulla</button>
+        <button class="btn-action" onclick="saveSpellFromModal()">💾 Salva Incantesimo</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // CONFIGURAZIONE FIREBASE
+    // ==========================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDkHnUTM1U8eXhT40X9IkbGrcEA8aPo6_w",
+      authDomain: "grimorio-chierico.firebaseapp.com",
+      databaseURL: "https://grimorio-chierico-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "grimorio-chierico",
+      storageBucket: "grimorio-chierico.firebasestorage.app",
+      messagingSenderId: "554552051710",
+      appId: "1:554552051710:web:af916b4822aab2c99722af"
+    };
+
+    let dbRef = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      dbRef = firebase.database().ref("personaggi/snorri_chierico");
+    } catch (e) {
+      console.warn("Firebase non collegato. Modalità locale attiva.");
+    }
+
+    let spellsData = [];
+    let selectedCategory = "Tutti";
+    let showOnlyPrepared = false;
+    let isRaging = false;
+    let currentRageType = null;
+    let isReckless = false;
+    let currentView = 'spellbook';
+
+    const maxSlotsConfig = { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 };
+
+    let usedSlots = JSON.parse(localStorage.getItem('cleric_used_slots') || '{}');
+    let preparedSpells = JSON.parse(localStorage.getItem('cleric_prepared_spells') || '[]');
+    let clericLevel = parseInt(localStorage.getItem('cleric_level') || '7');
+    let wisMod = parseInt(localStorage.getItem('wis_mod') || '3');
+    let usedRages = parseInt(localStorage.getItem('used_rages') || '0');
+    let maxRages = parseInt(localStorage.getItem('max_rages') || '3');
+
+    // Carica incantesimi salvati
+    const localCustomSpells = localStorage.getItem('cleric_custom_spells');
+    if (localCustomSpells) {
+      spellsData = JSON.parse(localCustomSpells);
+    }
+
+    if (dbRef) {
+      dbRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          if (data.usedSlots !== undefined) usedSlots = data.usedSlots;
+          if (data.preparedSpells !== undefined) preparedSpells = data.preparedSpells;
+          if (data.clericLevel !== undefined) {
+            clericLevel = data.clericLevel;
+            document.getElementById('clericLevelInput').value = clericLevel;
+          }
+          if (data.wisMod !== undefined) {
+            wisMod = data.wisMod;
+            document.getElementById('wisModInput').value = wisMod;
+          }
+          if (data.usedRages !== undefined) {
+            usedRages = data.usedRages;
+            document.getElementById('usedRagesInput').value = usedRages;
+          }
+          if (data.maxRages !== undefined) {
+            maxRages = data.maxRages;
+            document.getElementById('maxRagesInput').value = maxRages;
+          }
+          if (data.spellSaveDc !== undefined) document.getElementById('spellSaveDcInput').value = data.spellSaveDc;
+          if (data.spellAttackBonus !== undefined) document.getElementById('spellAttackBonusInput').value = data.spellAttackBonus;
+
+          if (data.spells && Array.isArray(data.spells)) {
+            spellsData = data.spells;
+            localStorage.setItem('cleric_custom_spells', JSON.stringify(spellsData));
+          }
+
+          localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
+          localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
+          localStorage.setItem('cleric_level', clericLevel);
+          localStorage.setItem('wis_mod', wisMod);
+          localStorage.setItem('used_rages', usedRages);
+          localStorage.setItem('max_rages', maxRages);
+
+          renderSlotTracker();
+          if (spellsData.length > 0) {
+            setupCategories();
+            renderSpells();
+            updatePrepCounterUI();
+            updateActionSpellsDropdown();
+          }
+        }
+      });
+    }
+
+    // GESTIONE ATTACCO RECKLESS
+    function toggleReckless() {
+      isReckless = !isReckless;
+      const btn = document.getElementById('recklessBtn');
+      if (isReckless) {
+        btn.style.background = 'var(--accent-yellow)';
+        btn.style.color = '#000';
+        btn.innerHTML = '⚡ ATTACCO SPREZZANTE ATTIVO';
+        showToast('💥 Attacco Sprezzante ATTIVATO! Vantaggio ai tuoi attacchi con Forza, ma i nemici hanno Vantaggio contro di te.');
+      } else {
+        btn.style.background = 'transparent';
+        btn.style.color = 'var(--accent-yellow)';
+        btn.innerHTML = '⚡ Attiva Attacco Sprezzante';
+        showToast('🛡️ Attacco Sprezzante disattivato.');
+      }
+    }
+
+    // GESTIONE CHANNEL DIVINITY
+    const channelDivinityTexts = {
+      turn_undead: `<strong>Turn Undead:</strong> As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.<br><br>A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.`,
+      preserve_life: `<strong>Preserve Life:</strong> As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can't use this feature on an undead or a construct.`,
+      destroy_undead: `<strong>Destroy Undead:</strong> When an undead fails its saving throw against your Turn Undead feature, the creature is instantly destroyed if its challenge rating is at or below a certain threshold, as shown in the Cleric table above.`
+    };
+
+    function updateChannelDivinityUI() {
+      const select = document.getElementById('channelDivinitySelect');
+      const descDiv = document.getElementById('channelDivinityDesc');
+      const val = select.value;
+
+      if (val && channelDivinityTexts[val]) {
+        descDiv.innerHTML = channelDivinityTexts[val];
+        descDiv.style.display = 'block';
+      } else {
+        descDiv.innerHTML = '';
+        descDiv.style.display = 'none';
+      }
+    }
+
+    // GESTIONE MENÙ ATTACCO CON MAGIA (1 AZIONE)
+    function updateActionSpellsDropdown() {
+      const select = document.getElementById('actionSpellsSelect');
+      if (!select) return;
+
+      const currentSelection = select.value;
+      select.innerHTML = '<option value="">-- Seleziona Incantesimo Preparato (1 Azione) --</option>';
+
+      const actionSpells = spellsData.filter(spell => {
+        const level = extractLevel(spell);
+        const isPrep = preparedSpells.includes(spell.nome) || isAlwaysPrepared(spell) || level === 0;
+        if (!isPrep) return false;
+
+        const time = (spell.tempo_di_lancio || '').toLowerCase();
+        // Controlla che sia un'azione e non azione bonus/reazione
+        const isOneAction = (time.includes("1 azione") || time.includes("1 action") || time.includes("azione")) && 
+                          !time.includes("bonus") && 
+                          !time.includes("reazione") && 
+                          !time.includes("reaction");
+        return isOneAction;
+      });
+
+      actionSpells.forEach(spell => {
+        const opt = document.createElement('option');
+        opt.value = spell.nome;
+        const levelStr = extractLevel(spell) === 0 ? "Trucchetto" : `${extractLevel(spell)}° Liv.`;
+        opt.textContent = `${spell.nome} (${levelStr})`;
+        select.appendChild(opt);
+      });
+
+      if (currentSelection) {
+        select.value = currentSelection;
+        updateActionSpellUI();
+      }
+    }
+
+    function updateActionSpellUI() {
+      const select = document.getElementById('actionSpellsSelect');
+      const descDiv = document.getElementById('actionSpellDesc');
+      const val = select.value;
+
+      const spell = spellsData.find(s => s.nome === val);
+      if (spell) {
+        descDiv.innerHTML = `<strong>${spell.nome}</strong> (${spell.livello_scuola || ''})<br><em>Tempo: ${spell.tempo_di_lancio || ''}</em><br><div style="margin-top:4px; max-height:150px; overflow-y:auto; white-space:pre-line;">${spell.descrizione || ''}</div>`;
+        descDiv.style.display = 'block';
+      } else {
+        descDiv.innerHTML = '';
+        descDiv.style.display = 'none';
+      }
+    }
+
+    // GESTIONE IRA & FRENESIA
+    function handleRageButtonClick() {
+      if (isRaging) {
+        exitRage();
+      } else {
+        if (usedRages >= maxRages) {
+          showToast("⚠️ Hai esaurito le tue Ire per oggi! Fai un Riposo Lungo.");
+          return;
+        }
+        document.getElementById('rageChoiceModal').classList.add('active');
+      }
+    }
+
+    function closeRageModal() {
+      document.getElementById('rageChoiceModal').classList.remove('active');
+    }
+
+    function confirmRage(type) {
+      closeRageModal();
+      usedRages++;
+      document.getElementById('usedRagesInput').value = usedRages;
+      
+      isRaging = true;
+      currentRageType = type;
+
+      const rageBtn = document.getElementById('rageBtn');
+      const bannerText = document.getElementById('rageBannerText');
+      document.body.classList.add('rage-mode');
+
+      if (type === 'graup') {
+        document.body.classList.add('graup-frenzy');
+        rageBtn.innerHTML = "🔥 FRENESIA ATTIVA (ESCI)";
+        bannerText.innerHTML = "🔥 <strong>FRENESIA DI GRAUP ATTIVA!</strong> Sangue e Fiamme ti avvolgono! Vantaggio Forza | +2 Danni | Resistenze Fisiche Attive. <br>⚠️ <strong>NOTA:</strong> Impossibile lanciare o concentrarsi su incantesimi!";
+        showToast("🔥 SEI ENTRATO NELLA FRENESIA DI GRAUP! Ire usate: " + usedRages + "/" + maxRages);
+      } else {
+        rageBtn.innerHTML = "🩸 IRA ATTIVA (ESCI)";
+        bannerText.innerHTML = "💥 <strong>IRA ATTIVA!</strong> Vantaggio su prove di Forza e TS su Forza | +2 Danni alle armi da Mischia su Forza | Resistenza Danni Fisici. <br>⚠️ <strong>NOTA:</strong> Impossibile lanciare o concentrarsi su incantesimi!";
+        showToast("🩸 SEI ENTRATO IN IRA STANDARD! Ire usate: " + usedRages + "/" + maxRages);
+      }
+
+      rageBtn.classList.add('active');
+      syncToCloud();
+    }
+
+    function exitRage() {
+      isRaging = false;
+      currentRageType = null;
+      document.body.classList.remove('rage-mode', 'graup-frenzy');
+      
+      const rageBtn = document.getElementById('rageBtn');
+      rageBtn.classList.remove('active');
+      rageBtn.innerHTML = "🩸 ENTRA IN IRA";
+      
+      showToast("🛡️ Sei uscito dall'Ira.");
+    }
+
+    function updateRageStats() {
+      usedRages = parseInt(document.getElementById('usedRagesInput').value || '0');
+      maxRages = parseInt(document.getElementById('maxRagesInput').value || '3');
+      syncToCloud();
+    }
+
+    function toggleView() {
+      const spellbook = document.getElementById('spellbookView');
+      const combat = document.getElementById('combatView');
+      const btn = document.getElementById('viewToggleBtn');
+
+      if (currentView === 'spellbook') {
+        currentView = 'combat';
+        spellbook.style.display = 'none';
+        combat.classList.add('active');
+        btn.innerHTML = "📜 Grimorio / Incantesimi";
+        updateActionSpellsDropdown();
+        showToast("⚔️ Passato a Modalità Combattimento");
+      } else {
+        currentView = 'spellbook';
+        spellbook.style.display = 'block';
+        combat.classList.remove('active');
+        btn.innerHTML = "⚔️ Modalità Combattimento";
+        showToast("📜 Passato al Grimorio");
+      }
+    }
+
+    function isAlwaysPrepared(spell) {
+      return !!(spell && spell.alwaysPrepared);
+    }
+
+    function toggleAlwaysPreparedConfirm(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+      if (!spell) return;
+
+      const currentStatus = isAlwaysPrepared(spell);
+      spell.alwaysPrepared = !currentStatus;
+
+      if (spell.alwaysPrepared) {
+        preparedSpells = preparedSpells.filter(name => name !== spell.nome);
+        showToast(`📌 '${spell.nome}' impostato come Sempre Preparato!`);
+      } else {
+        showToast(`🔓 '${spell.nome}' rimosso da Sempre Preparati.`);
+      }
+
+      syncToCloud();
+      setupCategories();
+      renderSpells();
+      updatePrepCounterUI();
+      updateActionSpellsDropdown();
+    }
+
+    function syncToCloud() {
+      localStorage.setItem('cleric_used_slots', JSON.stringify(usedSlots));
+      localStorage.setItem('cleric_prepared_spells', JSON.stringify(preparedSpells));
+      localStorage.setItem('cleric_level', clericLevel);
+      localStorage.setItem('wis_mod', wisMod);
+      localStorage.setItem('used_rages', usedRages);
+      localStorage.setItem('max_rages', maxRages);
+      localStorage.setItem('spell_save_dc', document.getElementById('spellSaveDcInput').value);
+      localStorage.setItem('spell_attack_bonus', document.getElementById('spellAttackBonusInput').value);
+      localStorage.setItem('cleric_custom_spells', JSON.stringify(spellsData));
+
+      if (dbRef) {
+        dbRef.set({
+          usedSlots: usedSlots,
+          preparedSpells: preparedSpells,
+          clericLevel: clericLevel,
+          wisMod: wisMod,
+          usedRages: usedRages,
+          maxRages: maxRages,
+          spellSaveDc: document.getElementById('spellSaveDcInput').value,
+          spellAttackBonus: document.getElementById('spellAttackBonusInput').value,
+          spells: spellsData
+        });
+      }
+    }
+
+    function getProficiencyBonus(lvl) {
+      return Math.ceil(lvl / 4) + 1;
+    }
+
+    function autoCalcStats() {
+      const prof = getProficiencyBonus(clericLevel);
+      return { dc: 8 + prof + wisMod, atk: prof + wisMod };
+    }
+
+    document.getElementById('clericLevelInput').value = clericLevel;
+    document.getElementById('wisModInput').value = wisMod;
+    document.getElementById('usedRagesInput').value = usedRages;
+    document.getElementById('maxRagesInput').value = maxRages;
+
+    let savedDc = localStorage.getItem('spell_save_dc');
+    let savedAtk = localStorage.getItem('spell_attack_bonus');
+    const defaultStats = autoCalcStats();
+
+    document.getElementById('spellSaveDcInput').value = savedDc !== null ? savedDc : defaultStats.dc;
+    document.getElementById('spellAttackBonusInput').value = savedAtk !== null ? savedAtk : defaultStats.atk;
+
+    function extractLevel(spell) {
+      const text = ((spell.livello_scuola || '') + ' ' + (spell.descrizione || '')).substring(0, 300).toLowerCase();
+      if (text.includes("cantrip") || text.includes("trucchetto") || text.includes("livello 0") || text.includes("0° livello")) return 0;
+      const matchIt = text.match(/\b([0-9])°?\s*livello\b/) || text.match(/\blivello\s*([0-9])\b/);
+      if (matchIt) return parseInt(matchIt[1]);
+      return 1;
+    }
+
+    function getMaxPrepared() {
+      const lvl = parseInt(document.getElementById('clericLevelInput').value || '7');
+      const mod = parseInt(document.getElementById('wisModInput').value || '3');
+      return Math.max(1, lvl + mod);
+    }
+
+    function getNormalPreparedCount() {
+      return preparedSpells.filter(spellName => {
+        const spell = spellsData.find(s => s.nome === spellName);
+        if (!spell) return true;
+        const level = extractLevel(spell);
+        return level > 0 && !isAlwaysPrepared(spell);
+      }).length;
+    }
+
+    function updateStatsConfig() {
+      clericLevel = parseInt(document.getElementById('clericLevelInput').value || '7');
+      wisMod = parseInt(document.getElementById('wisModInput').value || '3');
+
+      const calc = autoCalcStats();
+      document.getElementById('spellSaveDcInput').value = calc.dc;
+      document.getElementById('spellAttackBonusInput').value = calc.atk;
+
+      syncToCloud();
+      updatePrepCounterUI();
+    }
+
+    function saveCustomStats() {
+      syncToCloud();
+    }
+
+    function updatePrepCounterUI() {
+      const current = getNormalPreparedCount();
+      const max = getMaxPrepared();
+      const counterText = document.getElementById('prepCounterText');
+      
+      if (counterText) {
+        counterText.textContent = `${current} / ${max}`;
+        counterText.style.color = (current >= max) ? '#e74c3c' : 'var(--accent-yellow)';
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toastMessage');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3200);
+    }
+
+    function resetPreparedSpells() {
+      if (preparedSpells.length === 0) {
+        showToast("ℹ️ Nessun incantesimo da svuotare!");
+        return;
+      }
+
+      if (confirm("Vuoi davvero azzerare la lista degli incantesimi preparati?")) {
+        preparedSpells = [];
+        syncToCloud();
+        setupCategories();
+        renderSpells();
+        updatePrepCounterUI();
+        updateActionSpellsDropdown();
+        showToast("🧹 Lista incantesimi preparati svuotata!");
+      }
+    }
+
+    function toggleSlot(level, index) {
+      if (!usedSlots[level]) usedSlots[level] = 0;
+      usedSlots[level] = (index < usedSlots[level]) ? index : index + 1;
+      syncToCloud();
+      renderSlotTracker();
+    }
+
+    function longRest() {
+      usedSlots = {};
+      usedRages = 0;
+      document.getElementById('usedRagesInput').value = 0;
+      if (isRaging) exitRage();
+      syncToCloud();
+      renderSlotTracker();
+      showToast("☀️ Riposo Lungo: Slot incantesimo e Ire ripristinati!");
+    }
+
+    function renderSlotTracker() {
+      const container = document.getElementById('slotsGrid');
+      container.innerHTML = '';
+
+      Object.keys(maxSlotsConfig).forEach(lvl => {
+        const max = maxSlotsConfig[lvl];
+        const used = usedSlots[lvl] || 0;
+
+        const box = document.createElement('div');
+        box.className = 'slot-level-box';
+
+        let dotsHTML = '';
+        for (let i = 0; i < max; i++) {
+          const isUsed = i < used;
+          dotsHTML += `<div class="slot-dot ${isUsed ? 'used' : ''}" onclick="toggleSlot(${lvl}, ${i})"></div>`;
+        }
+
+        box.innerHTML = `
+          <div class="slot-level-title">${lvl}° Liv. (${max - used}/${max})</div>
+          <div class="slot-dots">${dotsHTML}</div>
+        `;
+        container.appendChild(box);
+      });
+    }
+
+    function togglePrepared(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+
+      if (spell) {
+        const level = extractLevel(spell);
+        if (level === 0) {
+          showToast("✨ I trucchetti (Livello 0) non richiedono preparazione!");
+          return;
+        }
+        if (isAlwaysPrepared(spell)) {
+          showToast("📌 Questo incantesimo è Sempre Preparato!");
+          return;
+        }
+      }
+
+      if (preparedSpells.includes(spellName)) {
+        preparedSpells = preparedSpells.filter(name => name !== spellName);
+      } else {
+        const currentCount = getNormalPreparedCount();
+        const max = getMaxPrepared();
+        if (currentCount >= max) {
+          showToast("⚠️ Numero massimo incantesimi raggiunto!");
+          return;
+        }
+        preparedSpells.push(spellName);
+      }
+      
+      syncToCloud();
+      setupCategories();
+      renderSpells();
+      updatePrepCounterUI();
+      updateActionSpellsDropdown();
+    }
+
+    function setupCategories() {
+      const categoriesSet = new Set(["Tutti"]);
+      spellsData.forEach(s => {
+        if (s.categorie) {
+          s.categorie.forEach(cat => {
+            if (cat && cat.trim()) categoriesSet.add(cat.trim());
+          });
+        }
+      });
+
+      const container = document.getElementById('categoriesContainer');
+      container.innerHTML = '';
+
+      const totalPreparedShow = spellsData.filter(s => {
+        const lvl = extractLevel(s);
+        return preparedSpells.includes(s.nome) || isAlwaysPrepared(s) || lvl === 0;
+      }).length;
+
+      const btnPrepared = document.createElement('button');
+      btnPrepared.className = `btn-tag btn-prepared-toggle ${showOnlyPrepared ? 'active' : ''}`;
+      btnPrepared.textContent = `⭐ Solo Preparati / Disponibili (${totalPreparedShow})`;
+      btnPrepared.onclick = () => {
+        showOnlyPrepared = !showOnlyPrepared;
+        setupCategories();
+        renderSpells();
+      };
+      container.appendChild(btnPrepared);
+
+      categoriesSet.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = `btn-tag ${(!showOnlyPrepared && cat === selectedCategory) ? 'active' : ''}`;
+        btn.textContent = cat;
+        btn.onclick = () => {
+          showOnlyPrepared = false;
+          selectedCategory = cat;
+          setupCategories();
+          renderSpells();
         };
+        container.appendChild(btn);
+      });
+    }
 
-        // Renderizza il Grimorio con Checkbox per Preparare gli Incantesimi
-        function renderSpellbook() {
-            const container = document.getElementById('spells-container');
-            container.innerHTML = '';
+    function renderSpells() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const selectedLevel = document.getElementById('levelSelect').value;
+      const grid = document.getElementById('spellsGrid');
+      grid.innerHTML = '';
 
-            spells.forEach((spell, index) => {
-                const item = document.createElement('div');
-                item.className = `flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg border ${spell.prepared ? 'bg-slate-900/90 border-purple-500/50' : 'bg-slate-900/40 border-slate-700/50'}`;
-                
-                item.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <input type="checkbox" ${spell.prepared ? 'checked' : ''} onchange="toggleSpellPrepared(${index})" class="w-4 h-4 accent-purple-500 rounded cursor-pointer">
-                        <div>
-                            <span class="font-bold text-sm ${spell.prepared ? 'text-purple-300' : 'text-slate-400'}">${spell.name}</span>
-                            <span class="text-xs px-2 py-0.5 rounded ml-2 ${spell.type === 'bonus' ? 'bg-amber-950 text-amber-400 border border-amber-800' : 'bg-blue-950 text-blue-400 border border-blue-800'}">
-                                ${spell.type === 'bonus' ? 'Azione Bonus' : 'Azione'}
-                            </span>
-                            <span class="text-xs text-slate-400 ml-1">(Liv. ${spell.level})</span>
-                            ${spell.isHealing ? '<span class="text-xs text-emerald-400 ml-1 font-bold">➕ Cura</span>' : ''}
-                            <p class="text-xs text-slate-400 mt-0.5">${spell.desc}</p>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
+      const filtered = spellsData.filter(spell => {
+        const isAlways = isAlwaysPrepared(spell);
+        const level = extractLevel(spell);
+        const isPrep = preparedSpells.includes(spell.nome) || isAlways || level === 0;
+
+        if (showOnlyPrepared && !isPrep) return false;
+
+        const matchesCategory = selectedCategory === "Tutti" || (spell.categorie && spell.categorie.includes(selectedCategory));
+        const matchesSearch = spell.nome.toLowerCase().includes(query) || (spell.descrizione && spell.descrizione.toLowerCase().includes(query));
+        const matchesLevel = (selectedLevel === "ALL") || (level === parseInt(selectedLevel));
+
+        return matchesCategory && matchesSearch && matchesLevel;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 20px;">Nessun incantesimo trovato.</p>';
+        return;
+      }
+
+      filtered.forEach(spell => {
+        const isPrep = preparedSpells.includes(spell.nome);
+        const isAlways = isAlwaysPrepared(spell);
+        const level = extractLevel(spell);
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div class="card-title">${spell.nome}</div>
+              ${level > 0 ? (
+                isAlways ? 
+                `<span style="color:var(--accent-yellow); font-size:0.8rem; font-weight:bold;">📌 Sempre Prep.</span>` :
+                `<button class="btn-prepare ${isPrep ? 'prepared' : ''}" onclick="togglePrepared('${spell.nome.replace(/'/g, "\\'")}')">
+                  ${isPrep ? 'Preparato' : 'Prepara'}
+                </button>`
+              ) : '<span style="color:var(--accent-yellow); font-size:0.8rem; font-weight:bold;">Trucchetto</span>'}
+            </div>
+            <div class="card-meta">${spell.livello_scuola || ''} | ${spell.tempo_di_lancio || ''}</div>
+          </div>
+          <div class="card-desc">${spell.descrizione || ''}</div>
+          <div class="card-footer-actions">
+            <button class="btn-card-icon ${isAlways ? 'active-lock' : ''}" onclick="toggleAlwaysPreparedConfirm('${spell.nome.replace(/'/g, "\\'")}')">
+              📌 Sempre Preparato
+            </button>
+            <button class="btn-card-icon" onclick="openEditModal('${spell.nome.replace(/'/g, "\\'")}')">
+              ✏️ Modifica
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = "Aggiungi Incantesimo";
+      document.getElementById('modalOriginalName').value = "";
+      document.getElementById('modalSpellName').value = "";
+      document.getElementById('modalSpellLevel').value = "";
+      document.getElementById('modalSpellTime').value = "";
+      document.getElementById('modalSpellCategories').value = "";
+      document.getElementById('modalSpellDesc').value = "";
+      document.getElementById('modalSpellAlwaysPrepared').checked = false;
+      document.getElementById('spellModal').classList.add('active');
+    }
+
+    function openEditModal(spellName) {
+      const spell = spellsData.find(s => s.nome === spellName);
+      if (!spell) return;
+
+      document.getElementById('modalTitle').textContent = "Modifica Incantesimo";
+      document.getElementById('modalOriginalName').value = spell.nome;
+      document.getElementById('modalSpellName').value = spell.nome;
+      document.getElementById('modalSpellLevel').value = spell.livello_scuola || "";
+      document.getElementById('modalSpellTime').value = spell.tempo_di_lancio || "";
+      document.getElementById('modalSpellCategories').value = spell.categorie ? spell.categorie.join(', ') : "";
+      document.getElementById('modalSpellDesc').value = spell.descrizione || "";
+      document.getElementById('modalSpellAlwaysPrepared').checked = !!spell.alwaysPrepared;
+
+      document.getElementById('spellModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('spellModal').classList.remove('active');
+    }
+
+    function saveSpellFromModal() {
+      const originalName = document.getElementById('modalOriginalName').value;
+      const name = document.getElementById('modalSpellName').value.trim();
+      const level = document.getElementById('modalSpellLevel').value.trim();
+      const time = document.getElementById('modalSpellTime').value.trim();
+      const catInput = document.getElementById('modalSpellCategories').value.trim();
+      const desc = document.getElementById('modalSpellDesc').value.trim();
+      const isAlways = document.getElementById('modalSpellAlwaysPrepared').checked;
+
+      if (!name) {
+        alert("Inserisci il nome dell'incantesimo!");
+        return;
+      }
+
+      const categories = catInput ? catInput.split(',').map(c => c.trim()) : ["Generico"];
+
+      if (originalName) {
+        const spell = spellsData.find(s => s.nome === originalName);
+        if (spell) {
+          spell.nome = name;
+          spell.livello_scuola = level;
+          spell.tempo_di_lancio = time;
+          spell.categorie = categories;
+          spell.descrizione = desc;
+          spell.alwaysPrepared = isAlways;
+
+          if (originalName !== name) {
+            preparedSpells = preparedSpells.map(n => n === originalName ? name : n);
+          }
         }
+      } else {
+        spellsData.push({
+          nome: name,
+          livello_scuola: level || "1° Livello",
+          tempo_di_lancio: time || "1 azione",
+          categorie: categories,
+          descrizione: desc,
+          alwaysPrepared: isAlways
+        });
+      }
 
-        function toggleSpellPrepared(index) {
-            spells[index].prepared = !spells[index].prepared;
-            renderSpellbook();
-            updateDropdowns();
+      syncToCloud();
+      setupCategories();
+      renderSpells();
+      updatePrepCounterUI();
+      updateActionSpellsDropdown();
+      closeModal();
+      showToast(`💾 '${name}' salvato con successo!`);
+    }
+
+    async function loadSpells() {
+      if (spellsData.length === 0) {
+        try {
+          const response = await fetch('incantesimi_chierico.json');
+          spellsData = await response.json();
+        } catch (error) {
+          console.warn("Impossibile caricare incantesimi_chierico.json locale.");
         }
+      }
+      renderSlotTracker();
+      setupCategories();
+      renderSpells();
+      updatePrepCounterUI();
+      updateActionSpellsDropdown();
+    }
 
-        // Aggiorna dinamicamente le opzioni dei Menù Azioni e Azioni Bonus
-        function updateDropdowns() {
-            const actionGroup = document.getElementById('action-spells-group');
-            const bonusGroup = document.getElementById('bonus-spells-group');
-
-            actionGroup.innerHTML = '';
-            bonusGroup.innerHTML = '';
-
-            spells.filter(s => s.prepared).forEach(spell => {
-                const opt = document.createElement('option');
-                opt.value = spell.id;
-                opt.textContent = `${spell.name} (Liv. ${spell.level})${spell.isHealing ? ' ➕' : ''}`;
-
-                if (spell.type === 'action') {
-                    actionGroup.appendChild(opt);
-                } else if (spell.type === 'bonus') {
-                    bonusGroup.appendChild(opt);
-                }
-            });
-        }
-
-        // Gestione Cambio Selezione Azione Principale
-        function handleActionChange() {
-            const val = document.getElementById('action-select').value;
-            const info = document.getElementById('action-info');
-            
-            if (!val) { info.classList.add('hidden'); return; }
-            info.classList.remove('hidden');
-
-            const spell = spells.find(s => s.id === val);
-            if (spell) {
-                let text = `<strong class="text-blue-400">${spell.name}</strong>: ${spell.desc}`;
-                if (spell.isHealing) {
-                    text += `<br><span class="text-emerald-400 font-semibold mt-1 block">💡 Ricorda il Bonus Cure (+) attivo!</span>`;
-                }
-                info.innerHTML = text;
-            } else if (val === 'attacco') {
-                info.innerHTML = `<strong>Attacco con Arma:</strong> Effettua un attacco. Se in Frenesia di Graup, aggiungi +1d6 danni da Fuoco e ignora la resistenza al fuoco.`;
-            } else {
-                info.innerHTML = `Esegui l'azione selezionata.`;
-            }
-        }
-
-        // Gestione Cambio Selezione Azione Bonus
-        function handleBonusChange() {
-            const val = document.getElementById('bonus-select').value;
-            const info = document.getElementById('bonus-info');
-
-            if (!val) { info.classList.add('hidden'); return; }
-            info.classList.remove('hidden');
-
-            if (val === 'ira-movimento') {
-                info.innerHTML = `<strong class="text-red-400">🔥 Ira + Metà Movimento:</strong> Entri in Ira come azione bonus e ti muovi immediatamente fino a metà del tuo movimento.`;
-                return;
-            }
-
-            const spell = spells.find(s => s.id === val);
-            if (spell) {
-                let text = `<strong class="text-amber-400">${spell.name}</strong>: ${spell.desc}`;
-                if (spell.isHealing) {
-                    text += `<br><span class="text-emerald-400 font-semibold mt-1 block">💡 Ricorda di applicare il Bonus Cure (+)!</span>`;
-                }
-                info.innerHTML = text;
-            }
-        }
-
-        // Frenesia di Graup Toggle Logic
-        function toggleGraup() {
-            const card = document.getElementById('graup-card');
-            const details = document.getElementById('graup-details');
-            const btn = document.getElementById('toggle-graup-btn');
-            const hdMaxInput = document.getElementById('hd-max');
-            const hdCurrInput = document.getElementById('hd-current');
-            const deathWarning = document.getElementById('death-warning');
-
-            if (!isGraupActive) {
-                let currentMaxHD = parseInt(hdMaxInput.value) || 0;
-                let currentHD = parseInt(hdCurrInput.value) || 0;
-
-                currentMaxHD = Math.max(0, currentMaxHD - 2);
-                currentHD = Math.min(currentHD, currentMaxHD);
-
-                hdMaxInput.value = currentMaxHD;
-                hdCurrInput.value = currentHD;
-
-                if (currentMaxHD <= 0) {
-                    deathWarning.classList.remove('hidden');
-                }
-
-                card.classList.add('frenzy-active');
-                details.classList.remove('hidden');
-                btn.textContent = 'Disattiva Frenesia';
-                btn.classList.replace('bg-red-600', 'bg-slate-600');
-                btn.classList.replace('hover:bg-red-700', 'hover:bg-slate-700');
-                isGraupActive = true;
-            } else {
-                card.classList.remove('frenzy-active');
-                details.classList.add('hidden');
-                btn.textContent = 'Attiva Frenesia';
-                btn.classList.replace('bg-slate-600', 'bg-red-600');
-                btn.classList.replace('hover:bg-slate-700', 'hover:bg-red-700');
-                isGraupActive = false;
-            }
-        }
-
-        function toggleHealingModal() {
-            document.getElementById('healing-modal').classList.toggle('hidden');
-        }
-    </script>
+    loadSpells();
+  </script>
 </body>
 </html>
